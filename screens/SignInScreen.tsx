@@ -2,16 +2,19 @@ import { Button, StyleSheet, TextInput } from "react-native";
 
 import React, { useCallback, useState } from "react";
 import { Text, View } from "../components/Themed";
-import { GlobalScreenProps } from "../types";
+import { GlobalScreenProps, ValidationStatus } from "../types";
+import SignInValidator from "../validators/SignInValidator";
 
 const SignInScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
   const [email, setEmail] = useState<string | undefined>(undefined);
   const [password, setPassword] = useState<string | undefined>(undefined);
-  const [validationError, setValidationError] = useState<boolean>(false);
+  const [validation, setValidation] = useState<ValidationStatus>({
+    validationError: false,
+  });
 
   const handleLogin = useCallback(() => {
-    const error = validateFields();
-    if (!error) {
+    const validationStatus = validateFields();
+    if (!validationStatus.validationError) {
       navigation.navigate("Root");
     }
   }, [email, password]);
@@ -21,13 +24,14 @@ const SignInScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
   }, []);
 
   const validateFields = useCallback(() => {
-    const validationError =
-      email?.trim().length! < 1 ||
-      !email?.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i) ||
-      password?.trim().length! < 1;
-    setValidationError(validationError);
-    return validationError;
-  }, [validationError, email, password]);
+    const validationStatus = new SignInValidator(
+      email,
+      password
+    ).getValidationStatus();
+
+    setValidation(validationStatus);
+    return validationStatus;
+  }, [validation, email, password]);
 
   return (
     <View style={styles.container}>
@@ -44,11 +48,9 @@ const SignInScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
           style={styles.input}
           placeholder="Password"
         />
-        {validationError && (
+        {validation.validationError && (
           <View style={styles.validationContainer}>
-            <Text style={styles.validationText}>
-              Please provide correct values
-            </Text>
+            <Text style={styles.validationText}>{validation.message}</Text>
           </View>
         )}
         <View style={styles.buttonsContainer}>
