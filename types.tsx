@@ -64,3 +64,8 @@ export type ValidationStatus = {
   validationError?: boolean;
   message?: string;
 };
+
+export type FormField<T>  = {
+  value?: T;
+  isTouched?: boolean;
+}

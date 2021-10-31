@@ -1,60 +1,102 @@
 import { Button, StyleSheet, TextInput } from "react-native";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Text, View } from "../components/Themed";
-import { GlobalScreenProps, ValidationStatus } from "../types";
-import SignInValidator from "../validators/SignInValidator";
+import { GlobalScreenProps } from "../types";
+
+const EMAIL_REGEX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+interface State {
+  email?: string;
+  password?: string;
+}
+
+const defaultValues: State = {
+  email: undefined,
+  password: undefined,
+};
 
 const SignInScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
-  const [email, setEmail] = useState<string | undefined>(undefined);
-  const [password, setPassword] = useState<string | undefined>(undefined);
-  const [validation, setValidation] = useState<ValidationStatus>({
-    validationError: false,
+  const [formError, setFormError] = useState<string | undefined>(undefined);
+  const { handleSubmit, reset, control, formState: {errors} } = useForm({
+    defaultValues,
   });
 
   const handleLogin = useCallback(() => {
-    const validationStatus = validateFields();
-    if (!validationStatus.validationError) {
-      navigation.navigate("Root");
-    }
-  }, [email, password]);
+    navigation.navigate("Root");
+    reset();
+  }, []);
 
   const handleRedirect = useCallback(() => {
     navigation.navigate("SignUp");
   }, []);
 
-  const validateFields = useCallback(() => {
-    const validationStatus = new SignInValidator(
-      email,
-      password
-    ).getValidationStatus();
-
-    setValidation(validationStatus);
-    return validationStatus;
-  }, [validation, email, password]);
+  useEffect(() => {
+    const formErrors = errors ? Object.keys(errors) : undefined;
+    const firstErrorKey = formErrors?.length ? formErrors[0] : undefined;
+    setFormError(
+      firstErrorKey
+        ? errors[firstErrorKey as keyof typeof errors]
+            ?.message
+        : undefined
+    );
+  }, [errors.email, errors.password]);
 
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          style={styles.input}
-          placeholder="E-mail"
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              value={field.value}
+              onChangeText={(value) => field.onChange(value)}
+              style={styles.input}
+              placeholder="E-mail"
+              keyboardType="email-address"
+            />
+          )}
+          rules={{
+            required: {
+              value: true,
+              message: "Email is required",
+            },
+            pattern: {
+              value: EMAIL_REGEX,
+              message: "Please provide correct e-mail",
+            },
+          }}
         />
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          style={styles.input}
-          placeholder="Password"
+
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              value={field.value}
+              onChangeText={(value) => field.onChange(value)}
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry
+            />
+          )}
+          rules={{
+            required: {
+              value: true,
+              message: "Password is required",
+            },
+          }}
         />
-        {validation.validationError && (
-          <View style={styles.validationContainer}>
-            <Text style={styles.validationText}>{validation.message}</Text>
-          </View>
-        )}
+
+        <View>{formError && <Text>{formError}</Text>}</View>
+
         <View style={styles.buttonsContainer}>
-          <Button title="Sing In" onPress={handleLogin} />
+          <Button title="Sing In" onPress={handleSubmit(handleLogin)} />
           <Button title="Sing Up" onPress={handleRedirect} />
         </View>
       </View>
