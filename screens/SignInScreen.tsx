@@ -4,9 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Text, View } from "../components/Themed";
 import { GlobalScreenProps } from "../types";
-
-const EMAIL_REGEX =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+import { EMAIL_REGEX } from "../constants/Util";
 
 interface State {
   email?: string;
@@ -20,7 +18,12 @@ const defaultValues: State = {
 
 const SignInScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
   const [formError, setFormError] = useState<string | undefined>(undefined);
-  const { handleSubmit, reset, control, formState: {errors} } = useForm({
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm({
     defaultValues,
   });
 
@@ -38,8 +41,7 @@ const SignInScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
     const firstErrorKey = formErrors?.length ? formErrors[0] : undefined;
     setFormError(
       firstErrorKey
-        ? errors[firstErrorKey as keyof typeof errors]
-            ?.message
+        ? errors[firstErrorKey as keyof typeof errors]?.message
         : undefined
     );
   }, [errors.email, errors.password]);
