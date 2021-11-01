@@ -1,4 +1,4 @@
-import { Button, StyleSheet, TextInput } from "react-native";
+import { Button, StyleSheet, TextInput, ScrollView } from "react-native";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -9,7 +9,7 @@ import { EMAIL_REGEX } from "../../constants/Util";
 interface State {
   firstName?: string;
   lastName?: string;
-  nickname?: string;  
+  nickname?: string;
   email?: string;
   password?: string;
 }
@@ -38,7 +38,6 @@ const SignUpScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
     reset();
   }, []);
 
-
   useEffect(() => {
     const formErrors = errors ? Object.keys(errors) : undefined;
     const firstErrorKey = formErrors?.length ? formErrors[0] : undefined;
@@ -50,118 +49,120 @@ const SignUpScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
   }, [errors.email, errors.password]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.formContainer}>
-      <Controller
-          name="firstName"
-          control={control}
-          render={({ field }) => (
-            <TextInput
-              {...field}
-              value={field.value}
-              onChangeText={(value) => field.onChange(value)}
-              style={styles.input}
-              placeholder="First Name"
-            />
-          )}
-          rules={{
-            required: {
-              value: true,
-              message: "First Name is required",
-            },
-          }}
-        />
-        <Controller
-          name="lastName"
-          control={control}
-          render={({ field }) => (
-            <TextInput
-              {...field}
-              value={field.value}
-              onChangeText={(value) => field.onChange(value)}
-              style={styles.input}
-              placeholder="Last Name"
-            />
-          )}
-          rules={{
-            required: {
-              value: true,
-              message: "Last Name is required",
-            },
-          }}
-        />
-        <Controller
-          name="nickname"
-          control={control}
-          render={({ field }) => (
-            <TextInput
-              {...field}
-              value={field.value}
-              onChangeText={(value) => field.onChange(value)}
-              style={styles.input}
-              placeholder="Nickname"
-            />
-          )}
-          rules={{
-            required: {
-              value: true,
-              message: "Nickname is required",
-            },
-          }}
-        />
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <TextInput
-              {...field}
-              value={field.value}
-              onChangeText={(value) => field.onChange(value)}
-              style={styles.input}
-              placeholder="E-mail"
-              keyboardType="email-address"
-            />
-          )}
-          rules={{
-            required: {
-              value: true,
-              message: "Email is required",
-            },
-            pattern: {
-              value: EMAIL_REGEX,
-              message: "Please provide correct e-mail",
-            },
-          }}
-        />
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.formContainer}>
+          <Controller
+            name="firstName"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                value={field.value}
+                onChangeText={(value) => field.onChange(value)}
+                style={styles.input}
+                placeholder="First Name"
+              />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: "First Name is required",
+              },
+            }}
+          />
+          <Controller
+            name="lastName"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                value={field.value}
+                onChangeText={(value) => field.onChange(value)}
+                style={styles.input}
+                placeholder="Last Name"
+              />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: "Last Name is required",
+              },
+            }}
+          />
+          <Controller
+            name="nickname"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                value={field.value}
+                onChangeText={(value) => field.onChange(value)}
+                style={styles.input}
+                placeholder="Nickname"
+              />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: "Nickname is required",
+              },
+            }}
+          />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                value={field.value}
+                onChangeText={(value) => field.onChange(value)}
+                style={styles.input}
+                placeholder="E-mail"
+                keyboardType="email-address"
+              />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: "Email is required",
+              },
+              pattern: {
+                value: EMAIL_REGEX,
+                message: "Please provide correct e-mail",
+              },
+            }}
+          />
 
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <TextInput
-              {...field}
-              value={field.value}
-              onChangeText={(value) => field.onChange(value)}
-              style={styles.input}
-              placeholder="Password"
-              secureTextEntry
-            />
-          )}
-          rules={{
-            required: {
-              value: true,
-              message: "Password is required",
-            },
-          }}
-        />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                value={field.value}
+                onChangeText={(value) => field.onChange(value)}
+                style={styles.input}
+                placeholder="Password"
+                secureTextEntry
+              />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: "Password is required",
+              },
+            }}
+          />
 
-        <View>{formError && <Text>{formError}</Text>}</View>
+          <View>{formError && <Text>{formError}</Text>}</View>
 
-        <View style={styles.buttonsContainer}>
-          <Button title="Sing Up" onPress={handleSignUp} />
+          <View style={styles.buttonsContainer}>
+            <Button title="Sing Up" onPress={handleSignUp} />
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
