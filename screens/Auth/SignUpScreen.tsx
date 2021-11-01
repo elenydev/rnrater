@@ -49,7 +49,7 @@ const SignUpScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
   }, [errors.email, errors.password]);
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.formContainer}>
           <Controller
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   formContainer: {
     width: "60%",
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 15,
     shadowColor: "#000",
-    elevation: 2,
+    elevation: 2
   },
   buttonsContainer: {
     width: "100%",
