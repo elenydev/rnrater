@@ -19,8 +19,8 @@ import useColorScheme from "../hooks/useColorScheme";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
-import SignUpScreen from "../screens/SignUpScreen";
-import SignInScreen from "../screens/SignInScreen";
+import SignUpScreen from "../screens/Auth/SignUpScreen";
+import SignInScreen from "../screens/Auth/SignInScreen";
 import {
   RootStackParamList,
   RootTabParamList,

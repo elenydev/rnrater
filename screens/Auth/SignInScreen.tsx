@@ -2,9 +2,9 @@ import { Button, StyleSheet, TextInput } from "react-native";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Text, View } from "../components/Themed";
-import { GlobalScreenProps } from "../types";
-import { EMAIL_REGEX } from "../constants/Util";
+import { Text, View } from "../../components/Themed";
+import { GlobalScreenProps } from "../../types";
+import { EMAIL_REGEX } from "../../constants/Util";
 
 interface State {
   email?: string;
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "90%",
-    fontSize: 20,
+    fontSize: 16,
     padding: 5,
     marginBottom: 8,
     borderBottomWidth: 1,
