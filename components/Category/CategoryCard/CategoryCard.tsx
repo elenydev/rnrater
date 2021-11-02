@@ -1,7 +1,12 @@
 import { Category } from "../../../infrastructure/components/interfaces/Category";
 import React, { FC } from "react";
 import { View, Text } from "../../../components/Themed";
-import { ImageBackground, StyleSheet } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  TouchableHighlight,
+} from "react-native";
 
 interface ComponentProps {
   category: Category;
@@ -10,15 +15,17 @@ interface ComponentProps {
 const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
   return (
     <View style={styles.container}>
-      <View style={styles.item}>
+      <TouchableHighlight style={styles.item}>
         <ImageBackground
           style={styles.image}
-          source={{
-            uri: "https://facebook.github.io/react/img/logo_og.png",
-          }}
-          resizeMode="cover"
-        />
-      </View>
+          source={require("../../../assets/images/icon.png")}
+          resizeMode="stretch"
+        >
+          <View style={styles.contentWrapper}>
+            <Text>{props.category.name}</Text>
+          </View>
+        </ImageBackground>
+      </TouchableHighlight>
     </View>
   );
 };
@@ -43,8 +50,15 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   image: {
+    height: "100%",
     width: "100%",
-    height: "auto",
+  },
+  contentWrapper: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 
