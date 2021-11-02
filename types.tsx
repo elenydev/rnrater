@@ -58,13 +58,3 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     BottomTabScreenProps<RootTabParamList, Screen>,
     NativeStackScreenProps<RootStackParamList>
   >;
-
-export type ValidationStatus = {
-  validationError?: boolean;
-  message?: string;
-};
-
-export type FormField<T>  = {
-  value?: T;
-  isTouched?: boolean;
-}
