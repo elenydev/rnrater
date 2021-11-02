@@ -26,9 +26,8 @@ export type AuthScreensList = {
 };
 
 export type RootTabParamList = {
-  TabOne: undefined;
+  Categories: undefined;
   TabTwo: undefined;
-  TabThree: undefined;
 };
 
 export type ScreensList = {
@@ -37,7 +36,7 @@ export type ScreensList = {
   NotFound: undefined;
   SignUp: undefined;
   SignIn: undefined;
-  TabOne: undefined;
+  Categories: undefined;
   TabTwo: undefined;
   TabThree: undefined;
 };
