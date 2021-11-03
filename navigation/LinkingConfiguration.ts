@@ -4,44 +4,58 @@
  * https://reactnavigation.org/docs/configuring-links
  */
 
-import { LinkingOptions } from '@react-navigation/native';
-import * as Linking from 'expo-linking';
+import { LinkingOptions } from "@react-navigation/native";
+import * as Linking from "expo-linking";
 
-import { RootStackParamList } from '../types';
+import { RootStackParamList } from "../types";
 
 const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: [Linking.makeUrl('/')],
+  prefixes: [Linking.makeUrl("/")],
   config: {
     screens: {
       Auth: {
         screens: {
           SignUp: {
             screens: {
-              SignUpScreen: "signUp"
-            }
+              SignUpScreen: "signUp",
+            },
           },
           SignIn: {
             screens: {
-              SignInScreen: "signIn"
-            }
-          }
-        }
+              SignInScreen: "signIn",
+            },
+          },
+        },
       },
       Root: {
         screens: {
           Categories: {
             screens: {
-              Categories: 'Categories',
+              Categories: "Categories",
             },
           },
           TabTwo: {
             screens: {
-              TabTwoScreen: 'two',
+              TabTwoScreen: "two",
             },
           },
         },
       },
-      NotFound: '*',
+      Category: {
+        screens: {
+          CategoryEntities: {
+            screens: {
+              AllEntites: "Category Entities",
+            },
+          },
+          CategoryEntity: {
+            screens: {
+              Entity: "Entity",
+            },
+          },
+        },
+      },
+      NotFound: "*",
     },
   },
 };

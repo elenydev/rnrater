@@ -17,7 +17,9 @@ import { ColorSchemeName, Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import Categories from "../screens/Categories";
+import Categories from "../screens/Categories/Categories";
+import CategoriesEntitiesList from "../screens/Categories/EntitiesList/EntitiesList";
+import CategoriesEntity from "../screens/Categories/EntitiesList/Entity/Entity";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
 import SignInScreen from "../screens/Auth/SignInScreen";
@@ -26,6 +28,7 @@ import {
   RootTabParamList,
   RootTabScreenProps,
   AuthScreensList,
+  CategoryScreensList,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 
@@ -63,6 +66,25 @@ function AuthNavigation() {
   );
 }
 
+const CategoryRoutes = createNativeStackNavigator<CategoryScreensList>();
+
+function CategoryNavigation() {
+  return (
+    <CategoryRoutes.Group>
+      <CategoryRoutes.Screen
+        name="CategoryEntities"
+        component={CategoriesEntitiesList}
+        options={{ title: "Entities" }}
+      />
+      <CategoryRoutes.Screen
+        name="CategoryEntity"
+        component={CategoriesEntity}
+        options={{ title: "Entity" }}
+      />
+    </CategoryRoutes.Group>
+  );
+}
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -74,6 +96,12 @@ function RootNavigator() {
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Category"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      {CategoryNavigation()}
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
