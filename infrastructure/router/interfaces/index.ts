@@ -2,8 +2,12 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import {
   CompositeScreenProps,
   NavigatorScreenParams,
+  RouteProp,
 } from "@react-navigation/native";
-import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 
 declare global {
   namespace ReactNavigation {
@@ -21,8 +25,20 @@ export type RootStackParamList = {
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
-export type CategoryStackScreenProps<Screen extends keyof CategoryScreensList> =
-  NativeStackNavigationProp<
+export type CategoryStackScreenRoutes = NativeStackNavigationProp<
+  {
+    CategoryEntities: {
+      categoryId: string;
+    };
+    CategoryEntity: {
+      categoryEntityId: string;
+    };
+  },
+  keyof CategoryScreensList
+>;
+
+export type CategoryStackRoutesProps<RouteName extends keyof CategoryScreensList> =
+  RouteProp<
     {
       CategoryEntities: {
         categoryId: string;
@@ -31,7 +47,7 @@ export type CategoryStackScreenProps<Screen extends keyof CategoryScreensList> =
         categoryEntityId: string;
       };
     },
-    Screen
+    RouteName
   >;
 
 export type AuthScreensList = {

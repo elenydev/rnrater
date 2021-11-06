@@ -1,21 +1,16 @@
 import { Category } from "../../../infrastructure/components/interfaces/Category";
 import React, { FC, useCallback } from "react";
 import { View, Text } from "../../../components/Themed";
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableHighlight,
-} from "react-native";
+import { ImageBackground, StyleSheet, TouchableHighlight } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { CategoryStackScreenProps } from "../../../types";
+import { CategoryStackScreenRoutes } from "../../../infrastructure/router/interfaces";
 
 interface ComponentProps {
   category: Category;
 }
 
 const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
-  const navigation =
-    useNavigation<CategoryStackScreenProps<'CategoryEntities'>>();
+  const navigation = useNavigation<CategoryStackScreenRoutes>();
 
   const onCardPress = useCallback(() => {
     navigation.navigate("CategoryEntities", {
