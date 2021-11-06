@@ -2,22 +2,25 @@ import { Category } from "../../../infrastructure/components/interfaces/Category
 import React, { FC, useCallback } from "react";
 import { View, Text } from "../../../components/Themed";
 import {
-  Image,
   ImageBackground,
   StyleSheet,
   TouchableHighlight,
 } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
+import { CategoryStackScreenProps } from "../../../types";
 
 interface ComponentProps {
   category: Category;
 }
 
 const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
-  const navigation = useNavigation();
-  
+  const navigation =
+    useNavigation<CategoryStackScreenProps<'CategoryEntities'>>();
+
   const onCardPress = useCallback(() => {
-    navigation.navigate('CategoryEntities');
+    navigation.navigate("CategoryEntities", {
+      categoryId: props.category.id,
+    });
   }, [navigation, props.category.id]);
 
   return (
@@ -62,10 +65,10 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
