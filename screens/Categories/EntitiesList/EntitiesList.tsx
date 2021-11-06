@@ -1,5 +1,5 @@
 import React from 'react'
-import EntitiesListComponent from '../../../components/Category/EntitiesList/EntitiesList';
+import EntitiesListComponent from '../../../components/Category/EntitiesList/CategoryEntitiesList';
 
 const EntitiesList = () => {
     return (

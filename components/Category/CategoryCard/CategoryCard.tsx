@@ -4,6 +4,7 @@ import { View, Text } from "../../../components/Themed";
 import { ImageBackground, StyleSheet, TouchableHighlight } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { CategoryStackScreenRoutes } from "../../../infrastructure/router/interfaces";
+import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
 
 interface ComponentProps {
   category: Category;
@@ -13,7 +14,7 @@ const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
   const navigation = useNavigation<CategoryStackScreenRoutes>();
 
   const onCardPress = useCallback(() => {
-    navigation.navigate("CategoryEntities", {
+    navigation.navigate(CategoryStackRoutes.CategoryEntities, {
       categoryId: props.category.id,
     });
   }, [navigation, props.category.id]);
