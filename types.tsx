@@ -14,6 +14,7 @@ declare global {
 export type RootStackParamList = {
   Auth: NavigatorScreenParams<AuthScreensList> | undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  Category: NavigatorScreenParams<CategoryScreensList> | undefined;
   NotFound: undefined;
 };
 
@@ -24,6 +25,11 @@ export type AuthScreensList = {
   SignUp: undefined;
   SignIn: undefined;
 };
+
+export type CategoryScreensList = {
+  CategoryEntities: undefined;
+  CategoryEntity: undefined;
+}
 
 export type RootTabParamList = {
   Categories: undefined;
@@ -39,6 +45,7 @@ export type ScreensList = {
   Categories: undefined;
   TabTwo: undefined;
   TabThree: undefined;
+  Category: undefined;
 };
 
 export type GlobalScreenProps<Screen extends keyof ScreensList> =

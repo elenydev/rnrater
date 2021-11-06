@@ -101,7 +101,7 @@ const SignInScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
               }}
             />
 
-            <View>{formError && <Text>{formError}</Text>}</View>
+            <View>{formError && <Text style={styles.validationText}>{formError}</Text>}</View>
 
             <View style={styles.buttonsContainer}>
               <Button title="Sing In" onPress={handleSubmit(handleLogin)} />

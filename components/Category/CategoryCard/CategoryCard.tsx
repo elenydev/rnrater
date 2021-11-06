@@ -1,5 +1,5 @@
 import { Category } from "../../../infrastructure/components/interfaces/Category";
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import { View, Text } from "../../../components/Themed";
 import {
   Image,
@@ -7,15 +7,22 @@ import {
   StyleSheet,
   TouchableHighlight,
 } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 interface ComponentProps {
   category: Category;
 }
 
 const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
+  const navigation = useNavigation();
+  
+  const onCardPress = useCallback(() => {
+    navigation.navigate('CategoryEntities');
+  }, [navigation, props.category.id]);
+
   return (
     <View style={styles.container}>
-      <TouchableHighlight style={styles.item}>
+      <TouchableHighlight style={styles.item} onPress={onCardPress}>
         <ImageBackground
           style={styles.image}
           source={require("../../../assets/images/icon.png")}
