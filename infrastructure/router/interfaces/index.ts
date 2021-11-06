@@ -21,7 +21,7 @@ export type RootStackParamList = {
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
-export type CategoryStackScreenProps<Screen extends keyof CategoryScreensList> =
+export type CategoryStackScreenProps =
   NativeStackNavigationProp<
     {
       CategoryEntities: {
@@ -31,7 +31,7 @@ export type CategoryStackScreenProps<Screen extends keyof CategoryScreensList> =
         categoryEntityId: string;
       };
     },
-    Screen
+    keyof CategoryScreensList
   >;
 
 export type AuthScreensList = {

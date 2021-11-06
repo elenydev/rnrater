@@ -15,7 +15,7 @@ interface ComponentProps {
 
 const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
   const navigation =
-    useNavigation<CategoryStackScreenProps<'CategoryEntities'>>();
+    useNavigation<CategoryStackScreenProps>();
 
   const onCardPress = useCallback(() => {
     navigation.navigate("CategoryEntities", {
