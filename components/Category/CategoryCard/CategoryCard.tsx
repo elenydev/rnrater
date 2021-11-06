@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { CategoryStackScreenProps } from "../../../types";
+import { CategoryStackScreenProps } from "../../../infrastructure/router/interfaces";
 
 interface ComponentProps {
   category: Category;
