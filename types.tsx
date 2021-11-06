@@ -3,7 +3,7 @@ import {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 
 declare global {
   namespace ReactNavigation {
@@ -21,6 +21,19 @@ export type RootStackParamList = {
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
+export type CategoryStackScreenProps<Screen extends keyof CategoryScreensList> =
+  NativeStackNavigationProp<
+    {
+      CategoryEntities: {
+        categoryId: string;
+      };
+      CategoryEntity: {
+        categoryEntityId: string;
+      };
+    },
+    Screen
+  >;
+
 export type AuthScreensList = {
   SignUp: undefined;
   SignIn: undefined;
@@ -29,7 +42,7 @@ export type AuthScreensList = {
 export type CategoryScreensList = {
   CategoryEntities: undefined;
   CategoryEntity: undefined;
-}
+};
 
 export type RootTabParamList = {
   Categories: undefined;
