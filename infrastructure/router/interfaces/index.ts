@@ -8,6 +8,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { AuthStackRoutes, CategoryStackRoutes, RootScreenTabs as RootScreenTabsList, RootStackRoutes } from "../enums";
 
 declare global {
   namespace ReactNavigation {
@@ -16,10 +17,10 @@ declare global {
 }
 
 export type RootStackParamList = {
-  Auth: NavigatorScreenParams<AuthScreensList> | undefined;
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  Category: NavigatorScreenParams<CategoryScreensList> | undefined;
-  NotFound: undefined;
+  [RootStackRoutes.Auth]: NavigatorScreenParams<AuthScreensList> | undefined;
+  [RootStackRoutes.Root]: NavigatorScreenParams<RootScreenTabs> | undefined;
+  [RootStackRoutes.Category]: NavigatorScreenParams<CategoryScreensList> | undefined;
+  [RootStackRoutes.NotFound]: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -27,10 +28,10 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 
 export type CategoryStackScreenRoutes = NativeStackNavigationProp<
   {
-    CategoryEntities: {
+    [CategoryStackRoutes.CategoryEntities]: {
       categoryId: string;
     };
-    CategoryEntity: {
+    [CategoryStackRoutes.CategoryEntity]: {
       categoryEntityId: string;
     };
   },
@@ -40,10 +41,10 @@ export type CategoryStackScreenRoutes = NativeStackNavigationProp<
 export type CategoryStackRoutesProps<RouteName extends keyof CategoryScreensList> =
   RouteProp<
     {
-      CategoryEntities: {
+      [CategoryStackRoutes.CategoryEntities]: {
         categoryId: string;
       };
-      CategoryEntity: {
+      [CategoryStackRoutes.CategoryEntity]: {
         categoryEntityId: string;
       };
     },
@@ -51,30 +52,28 @@ export type CategoryStackRoutesProps<RouteName extends keyof CategoryScreensList
   >;
 
 export type AuthScreensList = {
-  SignUp: undefined;
-  SignIn: undefined;
+  [AuthStackRoutes.SignUp]: undefined;
+  [AuthStackRoutes.SignIn]: undefined;
 };
 
 export type CategoryScreensList = {
-  CategoryEntities: undefined;
-  CategoryEntity: undefined;
+  [CategoryStackRoutes.CategoryEntities]: undefined;
+  [CategoryStackRoutes.CategoryEntity]: undefined;
 };
 
-export type RootTabParamList = {
-  Categories: undefined;
-  TabTwo: undefined;
+export type RootScreenTabs = {
+  [RootScreenTabsList.Categories]: undefined;
+  [RootScreenTabsList.TabTwo]: undefined;
 };
 
 export type ScreensList = {
-  Auth: undefined;
-  Root: undefined;
-  NotFound: undefined;
-  SignUp: undefined;
-  SignIn: undefined;
-  Categories: undefined;
-  TabTwo: undefined;
-  TabThree: undefined;
-  Category: undefined;
+  [RootStackRoutes.Auth]: undefined;
+  [RootStackRoutes.Root]: undefined;
+  [RootStackRoutes.NotFound]: undefined;
+  [AuthStackRoutes.SignUp]: undefined;
+  [AuthStackRoutes.SignIn]: undefined;
+  [RootStackRoutes.Category]: undefined;
+  [RootScreenTabsList.TabTwo]: undefined;
 };
 
 export type GlobalScreenProps<Screen extends keyof ScreensList> =
@@ -89,8 +88,8 @@ export type AuthTabScreenProps<Screen extends keyof AuthScreensList> =
     NativeStackScreenProps<AuthScreensList>
   >;
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
+export type RootTabScreenProps<Screen extends keyof RootScreenTabs> =
   CompositeScreenProps<
-    BottomTabScreenProps<RootTabParamList, Screen>,
+    BottomTabScreenProps<RootScreenTabs, Screen>,
     NativeStackScreenProps<RootStackParamList>
   >;

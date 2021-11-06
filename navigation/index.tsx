@@ -20,12 +20,18 @@ import SignUpScreen from "../screens/Auth/SignUpScreen";
 import SignInScreen from "../screens/Auth/SignInScreen";
 import {
   RootStackParamList,
-  RootTabParamList,
   RootTabScreenProps,
   AuthScreensList,
   CategoryScreensList,
+  RootScreenTabs
 } from "../infrastructure/router/interfaces";
 import LinkingConfiguration from "./LinkingConfiguration";
+import {
+  AuthStackRoutes,
+  CategoryStackRoutes,
+  RootStackRoutes,
+  RootScreenTabs as RootScreenTabsList,
+} from "../infrastructure/router/enums";
 
 export default function Navigation({
   colorScheme,
@@ -48,12 +54,12 @@ function AuthNavigation() {
   return (
     <AuthRoutes.Group>
       <AuthRoutes.Screen
-        name="SignIn"
+        name={AuthStackRoutes.SignIn}
         component={SignInScreen}
         options={{ title: "Sign In" }}
       />
       <AuthRoutes.Screen
-        name="SignUp"
+        name={AuthStackRoutes.SignUp}
         component={SignUpScreen}
         options={{ title: "Sign Up" }}
       />
@@ -67,12 +73,12 @@ function CategoryNavigation() {
   return (
     <CategoryRoutes.Group>
       <CategoryRoutes.Screen
-        name="CategoryEntities"
+        name={CategoryStackRoutes.CategoryEntities}
         component={CategoriesEntitiesList}
         options={{ title: "Entities" }}
       />
       <CategoryRoutes.Screen
-        name="CategoryEntity"
+        name={CategoryStackRoutes.CategoryEntity}
         component={CategoriesEntity}
         options={{ title: "Entity" }}
       />
@@ -87,18 +93,14 @@ function RootNavigator() {
     <Stack.Navigator>
       {AuthNavigation()}
       <Stack.Screen
-        name="Root"
+        name={RootStackRoutes.Root}
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Category"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
+
       {CategoryNavigation()}
       <Stack.Screen
-        name="NotFound"
+        name={RootStackRoutes.NotFound}
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
@@ -106,27 +108,29 @@ function RootNavigator() {
   );
 }
 
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
+const BottomTab = createBottomTabNavigator<RootScreenTabs>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Categories"
+      initialRouteName={RootScreenTabsList.Categories}
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name="Categories"
+        name={RootScreenTabsList.Categories}
         component={Categories}
-        options={({ navigation }: RootTabScreenProps<"Categories">) => ({
+        options={({
+          navigation,
+        }: RootTabScreenProps<RootScreenTabsList.Categories>) => ({
           title: "Categories",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate("Root")}
+              onPress={() => navigation.navigate(RootScreenTabsList.Categories)}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}
@@ -142,7 +146,7 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name={RootScreenTabsList.TabTwo}
         component={TabTwoScreen}
         options={{
           title: "Tab Two",
