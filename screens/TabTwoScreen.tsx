@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Button, StyleSheet } from "react-native";
-import { RootStackScreenProps } from "types";
+import { RootStackScreenProps } from "../infrastructure/router/interfaces";
 
 import { Text, View } from "../components/Themed";
+import { RootStackRoutes } from "../infrastructure/router/enums";
 
 export default function TabTwoScreen({
   navigation,
-}: RootStackScreenProps<"Root">) {
+}: RootStackScreenProps<RootStackRoutes.Root>) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Two</Text>
@@ -17,7 +18,7 @@ export default function TabTwoScreen({
       />
       <Button
         title="Not Found"
-        onPress={() => navigation.replace("NotFound")}
+        onPress={() => navigation.replace(RootStackRoutes.NotFound)}
       />
     </View>
   );
