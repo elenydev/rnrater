@@ -3,8 +3,14 @@ import { Button, StyleSheet, TextInput, ScrollView } from "react-native";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Text, View } from "../../components/Themed";
-import { GlobalScreenProps } from "../../types";
+import { GlobalScreenProps } from "../../infrastructure/router/interfaces";
 import { EMAIL_REGEX } from "../../constants/Util";
+import {
+  AuthStackRoutes,
+  RootStackRoutes,
+} from "../../infrastructure/router/enums";
+import * as ImagePicker from "expo-image-picker";
+import { FontAwesome } from "@expo/vector-icons";
 
 interface State {
   firstName?: string;
@@ -12,6 +18,7 @@ interface State {
   nickname?: string;
   email?: string;
   password?: string;
+  avatar?: string;
 }
 
 const defaultValues: State = {
@@ -20,9 +27,12 @@ const defaultValues: State = {
   nickname: undefined,
   email: undefined,
   password: undefined,
+  avatar: undefined,
 };
 
-const SignUpScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
+const SignUpScreen = ({
+  navigation,
+}: GlobalScreenProps<AuthStackRoutes.SignIn>) => {
   const [formError, setFormError] = useState<string | undefined>(undefined);
   const {
     handleSubmit,
@@ -34,9 +44,24 @@ const SignUpScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
   });
 
   const handleSignUp = useCallback(() => {
-    navigation.navigate("Root");
+    navigation.navigate(RootStackRoutes.Root);
     reset();
   }, []);
+
+  const handleAvatarPick = async () => {
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permission.granted) {
+      const imagePickResult = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 1,
+      });
+
+      if (!imagePickResult.cancelled) {
+        console.log(imagePickResult);
+      }
+    }
+  };
 
   useEffect(() => {
     const formErrors = errors ? Object.keys(errors) : undefined;
@@ -155,6 +180,26 @@ const SignUpScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
             }}
           />
 
+          <Controller
+            name="avatar"
+            control={control}
+            render={({ field }) => (
+              <FontAwesome.Button
+                {...field}
+                name="photo"
+                size={10}
+                iconStyle={styles.avatarPicker}
+                onPress={handleAvatarPick}
+              />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: "Avatar is required",
+              },
+            }}
+          />
+
           <View>{formError && <Text>{formError}</Text>}</View>
 
           <View style={styles.buttonsContainer}>
@@ -171,7 +216,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   formContainer: {
     width: "60%",
@@ -179,7 +224,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 15,
     shadowColor: "#000",
-    elevation: 2
+    elevation: 2,
   },
   buttonsContainer: {
     width: "100%",
@@ -202,6 +247,10 @@ const styles = StyleSheet.create({
   },
   validationText: {
     color: "#ff0000",
+  },
+  avatarPicker: {
+    marginRight: 0,
+    justifyContent: "center",
   },
 });
 
