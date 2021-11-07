@@ -10,6 +10,7 @@ import {
   RootStackRoutes,
 } from "../../infrastructure/router/enums";
 import * as ImagePicker from "expo-image-picker";
+import { FontAwesome } from "@expo/vector-icons";
 
 interface State {
   firstName?: string;
@@ -183,7 +184,13 @@ const SignUpScreen = ({
             name="avatar"
             control={control}
             render={({ field }) => (
-              <Button title="Avatar" onPress={handleAvatarPick} {...field} />
+              <FontAwesome.Button
+                {...field}
+                name="photo"
+                size={10}
+                iconStyle={styles.avatarPicker}
+                onPress={handleAvatarPick}
+              />
             )}
             rules={{
               required: {
@@ -240,6 +247,10 @@ const styles = StyleSheet.create({
   },
   validationText: {
     color: "#ff0000",
+  },
+  avatarPicker: {
+    marginRight: 0,
+    justifyContent: "center",
   },
 });
 
