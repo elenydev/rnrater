@@ -9,8 +9,9 @@ import {
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Text, View } from "../../components/Themed";
-import { GlobalScreenProps } from "../../types";
+import { GlobalScreenProps } from "../../infrastructure/router/interfaces";
 import { EMAIL_REGEX } from "../../constants/Util";
+import { AuthStackRoutes, RootStackRoutes } from "infrastructure/router/enums";
 
 interface State {
   email?: string;
@@ -22,7 +23,9 @@ const defaultValues: State = {
   password: undefined,
 };
 
-const SignInScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
+const SignInScreen = ({
+  navigation,
+}: GlobalScreenProps<AuthStackRoutes.SignIn>) => {
   const [formError, setFormError] = useState<string | undefined>(undefined);
   const {
     handleSubmit,
@@ -34,12 +37,12 @@ const SignInScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
   });
 
   const handleLogin = useCallback(() => {
-    navigation.navigate("Root");
+    navigation.navigate(RootStackRoutes.Root);
     reset();
   }, []);
 
   const handleRedirect = useCallback(() => {
-    navigation.navigate("SignUp");
+    navigation.navigate(AuthStackRoutes.SignUp);
   }, []);
 
   useEffect(() => {
@@ -53,62 +56,64 @@ const SignInScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
   }, [errors.email, errors.password]);
 
   return (
-      <View style={styles.container}>
-        <View style={styles.formContainer}>
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  value={field.value}
-                  onChangeText={(value) => field.onChange(value)}
-                  style={styles.input}
-                  placeholder="E-mail"
-                  keyboardType="email-address"
-                />
-              )}
-              rules={{
-                required: {
-                  value: true,
-                  message: "Email is required",
-                },
-                pattern: {
-                  value: EMAIL_REGEX,
-                  message: "Please provide correct e-mail",
-                },
-              }}
+    <View style={styles.container}>
+      <View style={styles.formContainer}>
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              value={field.value}
+              onChangeText={(value) => field.onChange(value)}
+              style={styles.input}
+              placeholder="E-mail"
+              keyboardType="email-address"
             />
+          )}
+          rules={{
+            required: {
+              value: true,
+              message: "Email is required",
+            },
+            pattern: {
+              value: EMAIL_REGEX,
+              message: "Please provide correct e-mail",
+            },
+          }}
+        />
 
-            <Controller
-              name="password"
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  value={field.value}
-                  onChangeText={(value) => field.onChange(value)}
-                  style={styles.input}
-                  placeholder="Password"
-                  secureTextEntry
-                />
-              )}
-              rules={{
-                required: {
-                  value: true,
-                  message: "Password is required",
-                },
-              }}
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              value={field.value}
+              onChangeText={(value) => field.onChange(value)}
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry
             />
+          )}
+          rules={{
+            required: {
+              value: true,
+              message: "Password is required",
+            },
+          }}
+        />
 
-            <View>{formError && <Text style={styles.validationText}>{formError}</Text>}</View>
+        <View>
+          {formError && <Text style={styles.validationText}>{formError}</Text>}
+        </View>
 
-            <View style={styles.buttonsContainer}>
-              <Button title="Sing In" onPress={handleSubmit(handleLogin)} />
-              <Button title="Sing Up" onPress={handleRedirect} />
-            </View>
+        <View style={styles.buttonsContainer}>
+          <Button title="Sing In" onPress={handleSubmit(handleLogin)} />
+          <Button title="Sing Up" onPress={handleRedirect} />
         </View>
       </View>
+    </View>
   );
 };
 
