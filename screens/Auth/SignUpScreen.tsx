@@ -3,8 +3,9 @@ import { Button, StyleSheet, TextInput, ScrollView } from "react-native";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Text, View } from "../../components/Themed";
-import { GlobalScreenProps } from "../../types";
+import { GlobalScreenProps } from "../../infrastructure/router/interfaces";
 import { EMAIL_REGEX } from "../../constants/Util";
+import { AuthStackRoutes, RootStackRoutes } from "infrastructure/router/enums";
 
 interface State {
   firstName?: string;
@@ -22,7 +23,7 @@ const defaultValues: State = {
   password: undefined,
 };
 
-const SignUpScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
+const SignUpScreen = ({ navigation }: GlobalScreenProps<AuthStackRoutes.SignIn>) => {
   const [formError, setFormError] = useState<string | undefined>(undefined);
   const {
     handleSubmit,
@@ -34,7 +35,7 @@ const SignUpScreen = ({ navigation }: GlobalScreenProps<"SignIn">) => {
   });
 
   const handleSignUp = useCallback(() => {
-    navigation.navigate("Root");
+    navigation.navigate(RootStackRoutes.Root);
     reset();
   }, []);
 
