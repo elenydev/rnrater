@@ -1,6 +1,5 @@
 import {
   Button,
-  ScrollView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -11,7 +10,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Text, View } from "../../components/Themed";
 import { GlobalScreenProps } from "../../infrastructure/router/interfaces";
 import { EMAIL_REGEX } from "../../constants/Util";
-import { AuthStackRoutes, RootStackRoutes } from "infrastructure/router/enums";
+import { AuthStackRoutes, RootStackRoutes } from "../../infrastructure/router/enums";
 
 interface State {
   email?: string;

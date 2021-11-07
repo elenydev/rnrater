@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     marginBottom: 20,
     width: "80%",
-    position: "relative",
   },
   image: {
     height: "100%",

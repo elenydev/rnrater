@@ -1,6 +1,14 @@
-import { Button, StyleSheet, TextInput, ScrollView } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Text, View } from "../../components/Themed";
 import { GlobalScreenProps } from "../../infrastructure/router/interfaces";
@@ -33,7 +41,8 @@ const defaultValues: State = {
 const SignUpScreen = ({
   navigation,
 }: GlobalScreenProps<AuthStackRoutes.SignIn>) => {
-  const [formError, setFormError] = useState<string | undefined>(undefined);
+  const [imagePreview, setImagePreview] = useState<string | undefined>();
+  const [formError, setFormError] = useState<string | undefined>();
   const {
     handleSubmit,
     reset,
@@ -48,7 +57,7 @@ const SignUpScreen = ({
     reset();
   }, []);
 
-  const handleAvatarPick = async () => {
+  const handleAvatarPick = useCallback(async () => {
     const permission = await ImagePicker.requestCameraPermissionsAsync();
 
     if (permission.granted) {
@@ -58,10 +67,11 @@ const SignUpScreen = ({
       });
 
       if (!imagePickResult.cancelled) {
-        console.log(imagePickResult);
+        console.log(imagePickResult.uri);
+        setImagePreview(imagePickResult.uri);
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
     const formErrors = errors ? Object.keys(errors) : undefined;
@@ -199,6 +209,15 @@ const SignUpScreen = ({
               },
             }}
           />
+          {imagePreview && (
+            <View style={styles.imageBox}>
+              <Image
+                source={{ uri: imagePreview }}
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+                resizeMode="cover"
+              />
+            </View>
+          )}
 
           <View>{formError && <Text>{formError}</Text>}</View>
 
@@ -251,6 +270,12 @@ const styles = StyleSheet.create({
   avatarPicker: {
     marginRight: 0,
     justifyContent: "center",
+  },
+  imageBox: {
+    // width: 100,
+    // height: 100,
+    marginTop: 20,
+    borderRadius: 50
   },
 });
 
