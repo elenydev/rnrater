@@ -1,12 +1,12 @@
-import { Text, View } from "../../Themed";
+import { Text, View } from "../../../../Themed";
 import React, { useLayoutEffect } from "react";
 import { useRoute } from "@react-navigation/native";
-import { CategoryStackRoutesProps } from "../../../infrastructure/router/interfaces";
-import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
+import { CategoryStackRoutesProps } from "../../../../../infrastructure/router/interfaces";
+import { CategoryStackRoutes } from "../../../../../infrastructure/router/enums";
 import { FlatList, StyleSheet } from "react-native";
-import CategoryEntity from "./CategoryEntity/Entity";
+import CategoryEntity from "./CategoryEntity/CategoryEntity";
 import { useNavigation } from "@react-navigation/native";
-import { CategoryStackScreenRoutes } from "../../../infrastructure/router/interfaces";
+import { CategoryStackScreenRoutes } from "../../../../../infrastructure/router/interfaces";
 
 const dummyEntity = [
   {

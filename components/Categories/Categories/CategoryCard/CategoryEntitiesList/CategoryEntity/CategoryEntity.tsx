@@ -1,4 +1,4 @@
-import { Text, View } from "../../../Themed";
+import { Text, View } from "../../../../../Themed";
 import React, { FC } from "react";
 import { Image, StyleSheet, TouchableHighlight } from "react-native";
 
@@ -15,7 +15,7 @@ const CategoryEntity: FC<ComponentProps> = (props: ComponentProps) => {
     <TouchableHighlight style={styles.item}>
       <View style={styles.card}>
         <Image
-          source={require("../../../../assets/images/gtr.jpg")}
+          source={require("../../../../../../assets/images/gtr.jpg")}
           resizeMode="stretch"
           resizeMethod="resize"
           style={styles.image}
