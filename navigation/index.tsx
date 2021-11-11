@@ -75,7 +75,6 @@ function CategoryNavigation() {
       <CategoryRoutes.Screen
         name={CategoryStackRoutes.CategoryEntities}
         component={CategoriesEntitiesList}
-        options={{ title: "Entities" }}
       />
       <CategoryRoutes.Screen
         name={CategoryStackRoutes.CategoryEntity}

@@ -7,19 +7,19 @@ import CategoryCard from "../../components/Category/CategoryCard/CategoryCard";
 const dummyCat: Category[] = [
   {
     name: "Movies",
-    id: "1",
+    id: "Movies",
   },
   {
     name: "Music",
-    id: "2",
+    id: "Music",
   },
   {
     name: "Cars",
-    id: "3",
+    id: "Cars",
   },
   {
     name: "Memes",
-    id: "4",
+    id: "Memes",
   },
 ];
 
