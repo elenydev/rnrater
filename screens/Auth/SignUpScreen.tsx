@@ -1,7 +1,7 @@
-import { Button, StyleSheet, TextInput, ScrollView } from "react-native";
+import { Button, StyleSheet, TextInput, ScrollView, Image } from "react-native";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import React, { useCallback, useEffect, useState } from "react";
+import { useForm, Controller, FieldError } from "react-hook-form";
 import { Text, View } from "../../components/Themed";
 import { GlobalScreenProps } from "../../infrastructure/router/interfaces";
 import { EMAIL_REGEX } from "../../constants/Util";
@@ -11,14 +11,13 @@ import {
 } from "../../infrastructure/router/enums";
 import * as ImagePicker from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
-
 interface State {
   firstName?: string;
   lastName?: string;
   nickname?: string;
   email?: string;
   password?: string;
-  avatar?: string;
+  avatarUrl?: string;
 }
 
 const defaultValues: State = {
@@ -27,18 +26,20 @@ const defaultValues: State = {
   nickname: undefined,
   email: undefined,
   password: undefined,
-  avatar: undefined,
+  avatarUrl: undefined,
 };
 
 const SignUpScreen = ({
   navigation,
 }: GlobalScreenProps<AuthStackRoutes.SignIn>) => {
-  const [formError, setFormError] = useState<string | undefined>(undefined);
+  const [imagePreview, setImagePreview] = useState<string | undefined>();
+  const [formError, setFormError] = useState<string | undefined>();
   const {
     handleSubmit,
     reset,
     control,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues,
   });
@@ -48,7 +49,7 @@ const SignUpScreen = ({
     reset();
   }, []);
 
-  const handleAvatarPick = async () => {
+  const handleAvatarPick = useCallback(async () => {
     const permission = await ImagePicker.requestCameraPermissionsAsync();
 
     if (permission.granted) {
@@ -58,20 +59,26 @@ const SignUpScreen = ({
       });
 
       if (!imagePickResult.cancelled) {
-        console.log(imagePickResult);
+        const fileName = imagePickResult.uri.split("ImagePicker/")[1];
+        setValue("avatarUrl", fileName);
+        setImagePreview(imagePickResult.uri);
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
     const formErrors = errors ? Object.keys(errors) : undefined;
     const firstErrorKey = formErrors?.length ? formErrors[0] : undefined;
-    setFormError(
-      firstErrorKey
-        ? errors[firstErrorKey as keyof typeof errors]?.message
-        : undefined
-    );
-  }, [errors.email, errors.password]);
+    const error = errors[firstErrorKey as keyof typeof errors] as FieldError;
+    setFormError(firstErrorKey ? error?.message : undefined);
+  }, [
+    errors.avatarUrl,
+    errors.email,
+    errors.firstName,
+    errors.lastName,
+    errors.nickname,
+    errors.password,
+  ]);
 
   return (
     <ScrollView contentContainerStyle={{ flex: 1 }}>
@@ -181,7 +188,7 @@ const SignUpScreen = ({
           />
 
           <Controller
-            name="avatar"
+            name="avatarUrl"
             control={control}
             render={({ field }) => (
               <FontAwesome.Button
@@ -199,11 +206,24 @@ const SignUpScreen = ({
               },
             }}
           />
+          {imagePreview && (
+            <View style={styles.imageBox}>
+              <Image
+                source={{ uri: imagePreview }}
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+                resizeMode="cover"
+              />
+            </View>
+          )}
 
-          <View>{formError && <Text>{formError}</Text>}</View>
+          <View>
+            {formError && (
+              <Text style={styles.validationText}>{formError}</Text>
+            )}
+          </View>
 
           <View style={styles.buttonsContainer}>
-            <Button title="Sing Up" onPress={handleSignUp} />
+            <Button title="Sing Up" onPress={handleSubmit(handleSignUp)} />
           </View>
         </View>
       </View>
@@ -247,10 +267,15 @@ const styles = StyleSheet.create({
   },
   validationText: {
     color: "#ff0000",
+    marginTop: 14,
   },
   avatarPicker: {
     marginRight: 0,
     justifyContent: "center",
+  },
+  imageBox: {
+    marginTop: 20,
+    borderRadius: 50,
   },
 });
 

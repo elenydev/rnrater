@@ -1,10 +1,10 @@
-import { Category } from "../../../infrastructure/components/interfaces/Category";
+import { Category } from "../../../../infrastructure/components/interfaces/Category";
 import React, { FC, useCallback } from "react";
-import { View, Text } from "../../../components/Themed";
+import { View, Text } from "../../../../components/Themed";
 import { ImageBackground, StyleSheet, TouchableHighlight } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { CategoryStackScreenRoutes } from "../../../infrastructure/router/interfaces";
-import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
+import { CategoryStackScreenRoutes } from "../../../../infrastructure/router/interfaces";
+import { CategoryStackRoutes } from "../../../../infrastructure/router/enums";
 
 interface ComponentProps {
   category: Category;
@@ -24,7 +24,7 @@ const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
       <TouchableHighlight style={styles.item} onPress={onCardPress}>
         <ImageBackground
           style={styles.image}
-          source={require("../../../assets/images/icon.png")}
+          source={require("../../../../assets/images/icon.png")}
           resizeMode="stretch"
         >
           <View style={styles.contentWrapper}>
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     marginBottom: 20,
     width: "80%",
-    position: "relative",
   },
   image: {
     height: "100%",

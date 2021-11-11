@@ -1,4 +1,4 @@
-import { RootStackRoutes } from 'infrastructure/router/enums';
+import { RootStackRoutes } from '../infrastructure/router/enums';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from '../components/Themed';

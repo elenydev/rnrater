@@ -13,8 +13,8 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import Categories from "../screens/Categories/Categories";
-import CategoriesEntitiesList from "../screens/Categories/EntitiesList/EntitiesList";
-import CategoriesEntity from "../screens/Categories/EntitiesList/Entity/Entity";
+import CategoryEntitiesList from "../screens/Categories/CategoryEntitiesList/CategoryEntitiesList";
+import CategoryEntity from "../screens/Categories/CategoryEntitiesList/CategoryEntity/CategoryEntity";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
 import SignInScreen from "../screens/Auth/SignInScreen";
@@ -74,12 +74,11 @@ function CategoryNavigation() {
     <CategoryRoutes.Group>
       <CategoryRoutes.Screen
         name={CategoryStackRoutes.CategoryEntities}
-        component={CategoriesEntitiesList}
-        options={{ title: "Entities" }}
+        component={CategoryEntitiesList}
       />
       <CategoryRoutes.Screen
         name={CategoryStackRoutes.CategoryEntity}
-        component={CategoriesEntity}
+        component={CategoryEntity}
         options={{ title: "Entity" }}
       />
     </CategoryRoutes.Group>
