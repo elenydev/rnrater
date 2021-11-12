@@ -14,7 +14,7 @@ import { FontAwesome } from "@expo/vector-icons";
 interface State {
   firstName?: string;
   lastName?: string;
-  nickname?: string;
+  nickName?: string;
   email?: string;
   password?: string;
   avatarUrl?: string;
@@ -23,7 +23,7 @@ interface State {
 const defaultValues: State = {
   firstName: undefined,
   lastName: undefined,
-  nickname: undefined,
+  nickName: undefined,
   email: undefined,
   password: undefined,
   avatarUrl: undefined,
@@ -76,7 +76,7 @@ const SignUpScreen = ({
     errors.email,
     errors.firstName,
     errors.lastName,
-    errors.nickname,
+    errors.nickName,
     errors.password,
   ]);
 
@@ -123,7 +123,7 @@ const SignUpScreen = ({
             }}
           />
           <Controller
-            name="nickname"
+            name="nickName"
             control={control}
             render={({ field }) => (
               <TextInput
