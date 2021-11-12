@@ -1,16 +1,24 @@
-import { map } from "lodash";
-import { useEffect, useState, useMemo } from "react";
+import {  useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 
-export const useCustomForm = (defaultValues: FieldValues) => {
+interface HookProps {
+  defaultValues: FieldValues
+}
+
+export const useCustomForm = ({defaultValues}: HookProps) => {
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
-  const { handleSubmit, reset, control, formState, setValue } = useForm({
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+    setValue,
+  } = useForm({
     defaultValues,
   });
 
   useEffect(() => {
-    const { errors } = formState;
     const formErrors = errors ? Object.keys(errors) : undefined;
     const firstErrorKey = formErrors?.length ? formErrors[0] : undefined;
     setFormError(
@@ -18,14 +26,13 @@ export const useCustomForm = (defaultValues: FieldValues) => {
         ? errors[firstErrorKey as keyof typeof errors]?.message
         : undefined
     );
-  }, [...Object.keys(defaultValues).map((key) => formState.errors[key])]);
+  }, [...Object.keys(defaultValues).map((key) => errors[key]), errors]);
 
   return {
     handleSubmit,
     reset,
     control,
     formError,
-    formState,
     setValue,
   };
 };

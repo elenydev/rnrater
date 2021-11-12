@@ -20,8 +20,9 @@ const SignIn = () => {
     RootStackScreenRoutes | AuthStackScreenRoutes
   >();
 
-  const { reset, control, formError, handleSubmit } =
-    useCustomForm(defaultValues);
+  const { reset, control, formError, handleSubmit } = useCustomForm({
+    defaultValues,
+  });
 
   const handleLogin = useCallback(() => {
     (navigation as RootStackScreenRoutes).navigate(RootStackRoutes.Root);

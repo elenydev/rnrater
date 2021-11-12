@@ -1,9 +1,9 @@
 import * as ImagePicker from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
 import { Button, StyleSheet, TextInput, ScrollView, Image } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Text, View } from "../../components/Themed";
-import { useCustomForm } from "hooks/useCustomForm";
+import { useCustomForm } from "../../hooks/useCustomForm";
 import { Controller } from "react-hook-form";
 import { defaultValues, validationRules } from "./formConfig";
 import { useNavigation } from "@react-navigation/native";
