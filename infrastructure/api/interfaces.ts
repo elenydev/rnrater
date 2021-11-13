@@ -8,3 +8,4 @@ export interface BaseRequestResponse {
 export interface ApiError {
   message: string;
 }
+

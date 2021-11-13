@@ -1,19 +1,15 @@
 import { getErrorResponse } from "../../utils/getErrorResponse";
 import { AuthKeys, ResponseStatus } from "../../infrastructure/api/enums";
 import { BaseRequestResponse } from "../../infrastructure/api/interfaces";
-import {
-  PostItemActionResult,
-  PostItemsActionResult,
-} from "../interfaces/post";
 import { getAuthValue } from "../../services/auth";
 
-export const post = async <ReturnItemType>(
+export const post = async (
   path: string,
   body: Object,
   requireAuth = false,
   includeFile = false,
   queryParams: { [key: string]: unknown } = {}
-): Promise<PostItemActionResult<ReturnItemType> | BaseRequestResponse> => {
+): Promise<BaseRequestResponse> => {
   try {
     const token = getAuthValue(AuthKeys.Token);
     const params = Object.keys(queryParams).reduce(
@@ -41,30 +37,18 @@ export const post = async <ReturnItemType>(
       body: (includeFile ? body : JSON.stringify(body)) as BodyInit_,
     });
     const response = await request.json();
-    return Promise.resolve(
-      databaseResponse<ReturnItemType>(request.ok, response, false)
-    );
+    return Promise.resolve(databaseResponse(request.ok, response));
   } catch (error) {
     return Promise.reject(getErrorResponse(error.message));
   }
 };
 
-export const databaseResponse = <ReturnItemType>(
+export const databaseResponse = (
   isSuccesfullResponse: boolean,
-  response:
-    | PostItemActionResult<ReturnItemType>
-    | PostItemsActionResult<ReturnItemType>,
-  multipleResults = false
-):
-  | PostItemActionResult<ReturnItemType>
-  | PostItemsActionResult<ReturnItemType>
-  | BaseRequestResponse => {
-  const baseResult = multipleResults
-    ? { results: (response as PostItemsActionResult<ReturnItemType>).results }
-    : { result: (response as PostItemActionResult<ReturnItemType>).result };
+  response: BaseRequestResponse
+): BaseRequestResponse => {
   if (isSuccesfullResponse) {
     return {
-      ...baseResult,
       responseStatus: ResponseStatus.Success,
       message: response.message,
     };
