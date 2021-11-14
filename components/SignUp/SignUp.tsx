@@ -5,21 +5,31 @@ import React, { useCallback, useState } from "react";
 import { Text, View } from "../../components/Themed";
 import { useCustomForm } from "../../hooks/useCustomForm";
 import { Controller } from "react-hook-form";
-import { defaultValues, validationRules } from "./formConfig";
+import { defaultValues, validationRules, FormState } from "./formConfig";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackScreenRoutes } from "../../infrastructure/router/interfaces";
 import { RootStackRoutes } from "../../infrastructure/router/enums";
+import { createUser } from "../../api/auth/createUser";
+import { serializeImage } from "../../utils/serializeImage";
+import { CreateUserParams } from "../../api/auth/interfaces";
+import { CheckBox } from "react-native-elements";
 
 export const SignUp = () => {
   const navigation = useNavigation<RootStackScreenRoutes>();
   const [imagePreview, setImagePreview] = useState<string | undefined>();
-  const { handleSubmit, reset, control, formError, setValue } = useCustomForm({
-    defaultValues,
-  });
+  const { handleSubmit, reset, control, formError, setValue, clearErrors } =
+    useCustomForm({
+      defaultValues,
+    });
 
-  const handleSignUp = useCallback(() => {
-    navigation.navigate(RootStackRoutes.Root);
-    reset();
+  const handleSignUp = useCallback(async (credentials: CreateUserParams) => {
+    try {
+      createUser(credentials);
+      navigation.navigate(RootStackRoutes.Root);
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   const handleAvatarPick = useCallback(async () => {
@@ -31,10 +41,11 @@ export const SignUp = () => {
         quality: 1,
       });
 
-      if (!imagePickResult.cancelled) {
-        const fileName = imagePickResult.uri.split("ImagePicker/")[1];
-        setValue("avatarUrl", fileName);
-        setImagePreview(imagePickResult.uri);
+      const serializedImage = serializeImage(imagePickResult);
+      if (serializedImage) {
+        setValue("avatar", serializedImage.fileName);
+        clearErrors("avatar");
+        setImagePreview(serializedImage.uri);
       }
     }
   }, []);
@@ -118,7 +129,25 @@ export const SignUp = () => {
           />
 
           <Controller
-            name="avatarUrl"
+            name="policy"
+            control={control}
+            render={({ field }) => (
+              <View style={styles.policyBox}>
+                <Text>Accept Our Policy</Text>
+                <CheckBox
+                  checked={field.value}
+                  onPress={() => (
+                    setValue("policy", !field.value),
+                    field.onChange(!field.value)
+                  )}
+                />
+              </View>
+            )}
+            rules={validationRules.policy}
+          />
+
+          <Controller
+            name="avatar"
             control={control}
             render={({ field }) => (
               <FontAwesome.Button
@@ -203,5 +232,10 @@ const styles = StyleSheet.create({
   imageBox: {
     marginTop: 20,
     borderRadius: 50,
+  },
+  policyBox: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 5,
   },
 });

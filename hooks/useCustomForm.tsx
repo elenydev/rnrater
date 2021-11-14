@@ -1,11 +1,11 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 
 interface HookProps {
-  defaultValues: FieldValues
+  defaultValues: FieldValues;
 }
 
-export const useCustomForm = ({defaultValues}: HookProps) => {
+export const useCustomForm = ({ defaultValues }: HookProps) => {
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
   const {
@@ -14,6 +14,8 @@ export const useCustomForm = ({defaultValues}: HookProps) => {
     control,
     formState: { errors },
     setValue,
+    getValues,
+    clearErrors,
   } = useForm({
     defaultValues,
   });
@@ -34,5 +36,7 @@ export const useCustomForm = ({defaultValues}: HookProps) => {
     control,
     formError,
     setValue,
+    getValues,
+    clearErrors,
   };
 };

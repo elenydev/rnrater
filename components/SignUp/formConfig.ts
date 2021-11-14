@@ -1,3 +1,4 @@
+import { SerializedImage } from "../../utils/serializeImage";
 import { EMAIL_REGEX } from "../../constants/Util";
 
 export interface FormState {
@@ -6,7 +7,8 @@ export interface FormState {
   nickName?: string;
   email?: string;
   password?: string;
-  avatarUrl?: string;
+  avatar?: SerializedImage;
+  policy?: boolean;
 }
 
 export const defaultValues: FormState = {
@@ -15,7 +17,8 @@ export const defaultValues: FormState = {
   nickName: undefined,
   email: undefined,
   password: undefined,
-  avatarUrl: undefined,
+  avatar: undefined,
+  policy: undefined
 };
 
 export const validationRules ={
@@ -51,6 +54,12 @@ export const validationRules ={
         required: {
           value: true,
           message: "Password is required",
+        },
+      },
+      policy: {
+        required: {
+          value: true,
+          message: "Accept Our Policy",
         },
       },
       avatar: {
