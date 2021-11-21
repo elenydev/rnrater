@@ -23,8 +23,10 @@ export type RootStackParamList = {
   [RootStackRoutes.NotFound]: undefined;
 };
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, Screen>;
+export type AuthStackScreenRoutes = NativeStackNavigationProp<AuthScreensList>;
+
+export type RootStackScreenRoutes =
+  NativeStackNavigationProp<RootStackParamList>;
 
 export type CategoryStackScreenRoutes = NativeStackNavigationProp<
   {
