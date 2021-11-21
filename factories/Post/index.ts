@@ -2,6 +2,7 @@ import { getErrorResponse } from "../../utils/getErrorResponse";
 import { AuthKeys, ResponseStatus } from "../../infrastructure/api/enums";
 import { BaseRequestResponse } from "../../infrastructure/api/interfaces";
 import { getAuthValue } from "../../services/auth";
+import { Alert } from "react-native";
 
 export const post = async (
   path: string,
@@ -37,7 +38,7 @@ export const post = async (
       body: (includeFile ? body : JSON.stringify(body)) as BodyInit_,
     });
     const response = await request.json();
-    return Promise.resolve(databaseResponse(request.ok, response));
+    return databaseResponse(request.ok, response);
   } catch (error) {
     return Promise.reject(getErrorResponse(error.message));
   }
@@ -46,12 +47,12 @@ export const post = async (
 export const databaseResponse = (
   isSuccesfullResponse: boolean,
   response: BaseRequestResponse
-): BaseRequestResponse => {
+): Promise<BaseRequestResponse> => {
   if (isSuccesfullResponse) {
-    return {
+    return Promise.resolve({
       responseStatus: ResponseStatus.Success,
       message: response.message,
-    };
+    });
   }
-  return getErrorResponse(response.message);
+  return Promise.reject(getErrorResponse(response.message));
 };

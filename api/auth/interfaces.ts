@@ -7,5 +7,5 @@ export interface CreateUserParams {
   email: string;
   password: string;
   avatar: SerializedImage;
-  // policy: boolean;
+  policy: boolean;
 }

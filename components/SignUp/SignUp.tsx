@@ -1,4 +1,4 @@
-import * as ImagePicker from "expo-image-picker";
+import * as ImagePickerExpo from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
 import { Button, StyleSheet, TextInput, ScrollView, Image } from "react-native";
 import React, { useCallback, useState } from "react";
@@ -13,6 +13,7 @@ import { createUser } from "../../api/auth/createUser";
 import { serializeImage } from "../../utils/serializeImage";
 import { CreateUserParams } from "../../api/auth/interfaces";
 import { CheckBox } from "react-native-elements";
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 export const SignUp = () => {
   const navigation = useNavigation<RootStackScreenRoutes>();
@@ -24,28 +25,31 @@ export const SignUp = () => {
 
   const handleSignUp = useCallback(async (credentials: CreateUserParams) => {
     try {
-      createUser(credentials);
+      await createUser(credentials);
       navigation.navigate(RootStackRoutes.Root);
       reset();
+      setImagePreview(undefined);
     } catch (error) {
       console.log(error);
     }
   }, []);
 
   const handleAvatarPick = useCallback(async () => {
-    const permission = await ImagePicker.requestCameraPermissionsAsync();
+    const permission = await ImagePickerExpo.requestCameraPermissionsAsync();
 
     if (permission.granted) {
-      const imagePickResult = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 1,
+      const imagePickResult = await ImagePickerExpo.launchImageLibraryAsync({
+        mediaTypes: ImagePickerExpo.MediaTypeOptions.Images,
+        base64: true
       });
 
-      const serializedImage = serializeImage(imagePickResult);
-      if (serializedImage) {
-        setValue("avatar", serializedImage.fileName);
-        clearErrors("avatar");
-        setImagePreview(serializedImage.uri);
+      if (imagePickResult) {
+        const serializedImage = serializeImage(imagePickResult);
+        if (serializedImage) {
+          setValue("avatar", serializedImage);
+          clearErrors("avatar");
+          setImagePreview(serializedImage.uri);
+        }
       }
     }
   }, []);
