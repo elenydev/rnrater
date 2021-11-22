@@ -3,7 +3,7 @@ import { post } from "../../factories/Post";
 import { CreateUserParams } from "./interfaces";
 import { BaseRequestResponse } from "../../infrastructure/api/interfaces";
 
-export const createUser = async (
+export const postCreateUser = async (
   user: CreateUserParams
 ): Promise<BaseRequestResponse> => {
   const { firstName, lastName, email, password, avatar, nickName, policy } =

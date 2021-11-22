@@ -9,3 +9,8 @@ export interface CreateUserParams {
   avatar: SerializedImage;
   policy: boolean;
 }
+
+export interface AuthenticateUserParams {
+  email: string;
+  password: string;
+}
