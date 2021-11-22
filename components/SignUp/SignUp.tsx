@@ -13,7 +13,6 @@ import { postCreateUser } from "../../api/auth/postCreateUser";
 import { serializeImage } from "../../utils/serializeImage";
 import { CreateUserParams } from "../../api/auth/interfaces";
 import { CheckBox } from "react-native-elements";
-import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 export const SignUp = () => {
   const navigation = useNavigation<RootStackScreenRoutes>();

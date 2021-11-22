@@ -55,6 +55,10 @@ export const validationRules ={
           value: true,
           message: "Password is required",
         },
+        minLength: {
+          value: 8,
+          message: "Password has to include min. 8 characters"
+        }
       },
       policy: {
         required: {
