@@ -1,6 +1,6 @@
 import { Button, StyleSheet, TextInput } from "react-native";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback } from "react";
 import { Controller } from "react-hook-form";
 import { Text, View } from "../../components/Themed";
 import {
@@ -16,6 +16,7 @@ import { useCustomForm } from "../../hooks/useCustomForm";
 import { defaultValues, validationRules } from "./formConfig";
 import { postAuthenticateUser } from "../../api/auth/postAuthenticateUser";
 import { AuthenticateUserParams } from "../../api/auth/interfaces";
+import { successToast, errorToast } from "../../services/toast";
 
 const SignIn = () => {
   const navigation = useNavigation<
@@ -29,11 +30,12 @@ const SignIn = () => {
   const handleLogin = useCallback(
     async (credentials: AuthenticateUserParams) => {
       try {
-        await postAuthenticateUser(credentials);
-        (navigation as RootStackScreenRoutes).navigate(RootStackRoutes.Root);
+        const result = await postAuthenticateUser(credentials);
+        successToast(result.message);
         reset();
+        (navigation as RootStackScreenRoutes).navigate(RootStackRoutes.Root);
       } catch (error) {
-        console.log(error);
+        errorToast(error.message);
       }
     },
     []

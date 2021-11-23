@@ -13,6 +13,7 @@ import { postCreateUser } from "../../api/auth/postCreateUser";
 import { serializeImage } from "../../utils/serializeImage";
 import { CreateUserParams } from "../../api/auth/interfaces";
 import { CheckBox } from "react-native-elements";
+import { successToast, errorToast } from "../../services/toast";
 
 export const SignUp = () => {
   const navigation = useNavigation<RootStackScreenRoutes>();
@@ -24,12 +25,13 @@ export const SignUp = () => {
 
   const handleSignUp = useCallback(async (credentials: CreateUserParams) => {
     try {
-      await postCreateUser(credentials);
-      navigation.navigate(RootStackRoutes.Root);
+      const result = await postCreateUser(credentials);
       reset();
       setImagePreview(undefined);
+      navigation.navigate(RootStackRoutes.Root);
+      successToast(result.message);
     } catch (error) {
-      console.log(error);
+      errorToast(error.message);
     }
   }, []);
 
