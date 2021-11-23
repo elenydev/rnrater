@@ -1,6 +1,6 @@
 import { Button, StyleSheet, TextInput } from "react-native";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback } from "react";
 import { Controller } from "react-hook-form";
 import { Text, View } from "../../components/Themed";
 import {
@@ -14,6 +14,9 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useCustomForm } from "../../hooks/useCustomForm";
 import { defaultValues, validationRules } from "./formConfig";
+import { postAuthenticateUser } from "../../api/auth/postAuthenticateUser";
+import { AuthenticateUserParams } from "../../api/auth/interfaces";
+import { successToast, errorToast } from "../../services/toast";
 
 const SignIn = () => {
   const navigation = useNavigation<
@@ -24,10 +27,19 @@ const SignIn = () => {
     defaultValues,
   });
 
-  const handleLogin = useCallback(() => {
-    (navigation as RootStackScreenRoutes).navigate(RootStackRoutes.Root);
-    reset();
-  }, []);
+  const handleLogin = useCallback(
+    async (credentials: AuthenticateUserParams) => {
+      try {
+        const result = await postAuthenticateUser(credentials);
+        successToast(result.message);
+        reset();
+        (navigation as RootStackScreenRoutes).navigate(RootStackRoutes.Root);
+      } catch (error) {
+        errorToast(error.message);
+      }
+    },
+    []
+  );
 
   const handleRedirect = useCallback(() => {
     (navigation as AuthStackScreenRoutes).navigate(AuthStackRoutes.SignUp);

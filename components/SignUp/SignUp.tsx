@@ -9,11 +9,11 @@ import { defaultValues, validationRules, FormState } from "./formConfig";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackScreenRoutes } from "../../infrastructure/router/interfaces";
 import { RootStackRoutes } from "../../infrastructure/router/enums";
-import { createUser } from "../../api/auth/createUser";
+import { postCreateUser } from "../../api/auth/postCreateUser";
 import { serializeImage } from "../../utils/serializeImage";
 import { CreateUserParams } from "../../api/auth/interfaces";
 import { CheckBox } from "react-native-elements";
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { successToast, errorToast } from "../../services/toast";
 
 export const SignUp = () => {
   const navigation = useNavigation<RootStackScreenRoutes>();
@@ -25,12 +25,13 @@ export const SignUp = () => {
 
   const handleSignUp = useCallback(async (credentials: CreateUserParams) => {
     try {
-      await createUser(credentials);
-      navigation.navigate(RootStackRoutes.Root);
+      const result = await postCreateUser(credentials);
       reset();
       setImagePreview(undefined);
+      navigation.navigate(RootStackRoutes.Root);
+      successToast(result.message);
     } catch (error) {
-      console.log(error);
+      errorToast(error.message);
     }
   }, []);
 
@@ -40,7 +41,6 @@ export const SignUp = () => {
     if (permission.granted) {
       const imagePickResult = await ImagePickerExpo.launchImageLibraryAsync({
         mediaTypes: ImagePickerExpo.MediaTypeOptions.Images,
-        base64: true
       });
 
       if (imagePickResult) {
