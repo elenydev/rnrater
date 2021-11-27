@@ -8,17 +8,13 @@ interface HookProps {
 export const useCustomForm = ({ defaultValues }: HookProps) => {
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
-  const {
-    handleSubmit,
-    reset,
-    control,
-    formState: { errors },
-    setValue,
-    getValues,
-    clearErrors,
-  } = useForm({
+  const formInstance = useForm({
     defaultValues,
   });
+
+  const {
+    formState: { errors },
+  } = formInstance;
 
   useEffect(() => {
     const formErrors = errors ? Object.keys(errors) : undefined;
@@ -30,13 +26,5 @@ export const useCustomForm = ({ defaultValues }: HookProps) => {
     );
   }, [...Object.keys(defaultValues).map((key) => errors[key]), errors]);
 
-  return {
-    handleSubmit,
-    reset,
-    control,
-    formError,
-    setValue,
-    getValues,
-    clearErrors,
-  };
+  return { formInstance, formError };
 };
