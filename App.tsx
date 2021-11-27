@@ -6,7 +6,7 @@ import { RootSiblingParent } from "react-native-root-siblings";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "./store/configureStore";
 
 export default function App() {

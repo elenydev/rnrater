@@ -32,6 +32,10 @@ import {
   RootStackRoutes,
   RootScreenTabs as RootScreenTabsList,
 } from "../infrastructure/router/enums";
+import { useNavigation } from "@react-navigation/native";
+import { setHistoryManager } from "../managers/HistoryManager/actions";
+import HistoryManager from "../managers/HistoryManager/HistoryManager";
+import { useDispatch } from "react-redux";
 
 export default function Navigation({
   colorScheme,
@@ -88,6 +92,10 @@ function CategoryNavigation() {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  dispatch(setHistoryManager(new HistoryManager(navigation)));
   return (
     <Stack.Navigator>
       {AuthNavigation()}
