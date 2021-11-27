@@ -1,8 +1,4 @@
 import { createAction } from "@reduxjs/toolkit";
-import {
-  GetCurrentUser,
-  UserCredentials,
-} from "infrastructure/interfaces/User/user";
 import { createActionWithPayload } from "../../../utils/redux/actions";
 import { CreateUserParams } from "../../../api/auth/interfaces";
 import { User } from "../../../infrastructure/models/User";
@@ -38,12 +34,4 @@ export const createUserSuccess = createAction(
 export const createUserFailure = createAction(
   UserStoreActions.CreateUserFailure
 );
-export const getCurrentUserTrigger = createActionWithPayload<GetCurrentUser>(
-  UserStoreActions.GetCurrentUserTrigger
-);
-export const getCurrentUserSuccess = createActionWithPayload<User>(
-  UserStoreActions.GetCurrentUserSuccess
-);
-export const getCurrentUserFailure = createAction(
-  UserStoreActions.GetCurrentUserFailure
-);
+

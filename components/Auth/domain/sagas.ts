@@ -27,19 +27,20 @@ function* authenticateUser(action: Action<AuthenticateUserParams>) {
   try {
     const response: PostItemActionResult<PostAuthenticateUserResult> =
       yield postAuthenticateUser(user);
+
     if (response.responseStatus === ResponseStatus.Success) {
       yield put(UserStoreActions.authenticateUserSuccess(response.result.user));
       setSecureItem(SecureKeys.Token, response.result?.accessToken);
       setSecureItem(SecureKeys.Email, response.result.user.email);
       setSecureItem(SecureKeys.UserId, response.result.user.userId);
       formManager.clearCurrentForm(FormInstanceName.AuthorizeUser);
-      successToast(response.message);
+      return successToast(response.message);
       // return Router.replace(ROUTES.USER.HOME);
     }
     errorToast(response.message);
-  } catch (errorMessage) {
+  } catch (error) {
     yield put(UserStoreActions.authenticateUserFailure());
-    errorToast(errorMessage);
+    errorToast(error.message);
   }
 }
 
@@ -49,15 +50,16 @@ function* createUser(action: Action<CreateUserParams>) {
   try {
     const response: BaseRequestResponse = yield postCreateUser(user);
     if (response.responseStatus === ResponseStatus.Success) {
-      successToast(response.message);
       formManager.clearCurrentForm(FormInstanceName.CreateUser);
       yield put(UserStoreActions.createUserSuccess);
+      return successToast(response.message);
+
       // return Router.replace(ROUTES.AUTH.SIGN_IN);
     }
     errorToast(response.message);
-  } catch (errorMessage) {
+  } catch (error) {
     yield put(UserStoreActions.createUserFailure());
-    errorToast(errorMessage);
+    errorToast(error.message);
   }
 }
 

@@ -8,40 +8,31 @@ import { Controller } from "react-hook-form";
 import { defaultValues, validationRules, FormState } from "./formConfig";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackScreenRoutes } from "../../../infrastructure/router/interfaces";
-import { RootStackRoutes } from "../../../infrastructure/router/enums";
-import { postCreateUser } from "../../../api/auth/postCreateUser";
 import { serializeImage } from "../../../utils/serializeImage";
 import { CreateUserParams } from "../../../api/auth/interfaces";
 import { CheckBox } from "react-native-elements";
-import { successToast, errorToast } from "../../../services/toast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getFormManager } from "../../../managers/FormManager/selectors";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
+import { createUserTrigger } from "../domain/actions";
 
 export const SignUp = () => {
   const navigation = useNavigation<RootStackScreenRoutes>();
+  const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState<string | undefined>();
   const formManager = useSelector(getFormManager);
   const { formInstance, formError } = useCustomForm({
     defaultValues,
   });
-  const { reset, setValue, clearErrors, control, handleSubmit } = formInstance;
+  const { setValue, clearErrors, control, handleSubmit } = formInstance;
 
   formManager.setFormInstance({
     formName: FormInstanceName.CreateUser,
     formInstance,
   });
 
-  const handleSignUp = useCallback(async (credentials: CreateUserParams) => {
-    try {
-      const result = await postCreateUser(credentials);
-      reset();
-      setImagePreview(undefined);
-      navigation.navigate(RootStackRoutes.Root);
-      successToast(result.message);
-    } catch (error) {
-      errorToast(error.message);
-    }
+  const handleSignUp = useCallback((credentials: CreateUserParams) => {
+    dispatch(createUserTrigger(credentials));
   }, []);
 
   const handleAvatarPick = useCallback(async () => {
