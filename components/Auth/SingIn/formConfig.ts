@@ -1,4 +1,4 @@
-import { EMAIL_REGEX } from "../../constants/Util";
+import { EMAIL_REGEX } from "../../../constants/Util";
 
 export interface FormState {
   email?: string;

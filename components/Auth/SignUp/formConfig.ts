@@ -1,5 +1,5 @@
-import { SerializedImage } from "../../utils/serializeImage";
-import { EMAIL_REGEX } from "../../constants/Util";
+import { SerializedImage } from "../../../utils/serializeImage";
+import { EMAIL_REGEX } from "../../../constants/Util";
 
 export interface FormState {
   firstName?: string;

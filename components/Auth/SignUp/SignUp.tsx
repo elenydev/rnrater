@@ -2,26 +2,35 @@ import * as ImagePickerExpo from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
 import { Button, StyleSheet, TextInput, ScrollView, Image } from "react-native";
 import React, { useCallback, useState } from "react";
-import { Text, View } from "../../components/Themed";
-import { useCustomForm } from "../../hooks/useCustomForm";
+import { Text, View } from "../../Themed";
+import { useCustomForm } from "../../../hooks/useCustomForm";
 import { Controller } from "react-hook-form";
 import { defaultValues, validationRules, FormState } from "./formConfig";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackScreenRoutes } from "../../infrastructure/router/interfaces";
-import { RootStackRoutes } from "../../infrastructure/router/enums";
-import { postCreateUser } from "../../api/auth/postCreateUser";
-import { serializeImage } from "../../utils/serializeImage";
-import { CreateUserParams } from "../../api/auth/interfaces";
+import { RootStackScreenRoutes } from "../../../infrastructure/router/interfaces";
+import { RootStackRoutes } from "../../../infrastructure/router/enums";
+import { postCreateUser } from "../../../api/auth/postCreateUser";
+import { serializeImage } from "../../../utils/serializeImage";
+import { CreateUserParams } from "../../../api/auth/interfaces";
 import { CheckBox } from "react-native-elements";
-import { successToast, errorToast } from "../../services/toast";
+import { successToast, errorToast } from "../../../services/toast";
+import { useSelector } from "react-redux";
+import { getFormManager } from "../../../managers/FormManager/selectors";
+import { FormInstanceName } from "../../../managers/FormManager/enums";
 
 export const SignUp = () => {
   const navigation = useNavigation<RootStackScreenRoutes>();
   const [imagePreview, setImagePreview] = useState<string | undefined>();
-  const { handleSubmit, reset, control, formError, setValue, clearErrors } =
-    useCustomForm({
-      defaultValues,
-    });
+  const formManager = useSelector(getFormManager);
+  const { formInstance, formError } = useCustomForm({
+    defaultValues,
+  });
+  const { reset, setValue, clearErrors, control, handleSubmit } = formInstance;
+
+  formManager.setFormInstance({
+    formName: FormInstanceName.CreateUser,
+    formInstance,
+  });
 
   const handleSignUp = useCallback(async (credentials: CreateUserParams) => {
     try {

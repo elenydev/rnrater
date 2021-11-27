@@ -3,14 +3,15 @@ import { AuthKeys, ResponseStatus } from "../../infrastructure/api/enums";
 import { BaseRequestResponse } from "../../infrastructure/api/interfaces";
 import { getAuthValue } from "../../services/auth";
 import { Alert } from "react-native";
+import { PostItemActionResult } from "../interfaces/post";
 
-export const post = async (
+export const post = async <ReturnItemType extends {}>(
   path: string,
   body: Object,
   requireAuth = false,
   includeFile = false,
   queryParams: { [key: string]: unknown } = {}
-): Promise<BaseRequestResponse> => {
+): Promise<PostItemActionResult<ReturnItemType> | BaseRequestResponse> => {
   try {
     const token = getAuthValue(AuthKeys.Token);
     const params = Object.keys(queryParams).reduce(
@@ -38,21 +39,35 @@ export const post = async (
       body: (includeFile ? body : JSON.stringify(body)) as BodyInit_,
     });
     const response = await request.json();
-    return databaseResponse(request.ok, response);
+    return databaseResponse<ReturnItemType>(request.ok, response);
   } catch (error) {
     return Promise.reject(getErrorResponse(error.message));
   }
 };
 
-export const databaseResponse = (
+export const databaseResponse = <ReturnItemType>(
   isSuccesfullResponse: boolean,
-  response: BaseRequestResponse
-): Promise<BaseRequestResponse> => {
+  response: PostItemActionResult<ReturnItemType> | BaseRequestResponse
+): Promise<PostItemActionResult<ReturnItemType> | BaseRequestResponse> => {
   if (isSuccesfullResponse) {
+    if (isResultTypeIncluded(response)) {
+      return Promise.resolve({
+        responseStatus: ResponseStatus.Success,
+        message: response.message,
+        result: response.result,
+      });
+    }
+
     return Promise.resolve({
       responseStatus: ResponseStatus.Success,
       message: response.message,
     });
   }
   return Promise.reject(getErrorResponse(response.message));
+};
+
+const isResultTypeIncluded = <ReturnItemType>(
+  response: PostItemActionResult<ReturnItemType> | BaseRequestResponse
+): response is PostItemActionResult<ReturnItemType> => {
+  return !!(response as PostItemActionResult<ReturnItemType>).result;
 };

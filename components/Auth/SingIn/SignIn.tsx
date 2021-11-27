@@ -2,21 +2,21 @@ import { Button, StyleSheet, TextInput } from "react-native";
 
 import React, { useCallback } from "react";
 import { Controller } from "react-hook-form";
-import { Text, View } from "../../components/Themed";
+import { Text, View } from "../../Themed";
 import {
   AuthStackScreenRoutes,
   RootStackScreenRoutes,
-} from "../../infrastructure/router/interfaces";
+} from "../../../infrastructure/router/interfaces";
 import {
   AuthStackRoutes,
   RootStackRoutes,
-} from "../../infrastructure/router/enums";
+} from "../../../infrastructure/router/enums";
 import { useNavigation } from "@react-navigation/native";
-import { useCustomForm } from "../../hooks/useCustomForm";
+import { useCustomForm } from "../../../hooks/useCustomForm";
 import { defaultValues, validationRules } from "./formConfig";
-import { postAuthenticateUser } from "../../api/auth/postAuthenticateUser";
-import { AuthenticateUserParams } from "../../api/auth/interfaces";
-import { successToast, errorToast } from "../../services/toast";
+import { postAuthenticateUser } from "../../../api/auth/postAuthenticateUser";
+import { AuthenticateUserParams } from "../../../api/auth/interfaces";
+import { successToast, errorToast } from "../../../services/toast";
 
 const SignIn = () => {
   const navigation = useNavigation<
