@@ -3,12 +3,18 @@ import {
   CompositeScreenProps,
   NavigatorScreenParams,
   RouteProp,
+  useNavigation,
 } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { AuthStackRoutes, CategoryStackRoutes, RootScreenTabs as RootScreenTabsList, RootStackRoutes } from "../enums";
+import {
+  AuthStackRoutes,
+  CategoryStackRoutes,
+  RootScreenTabs as RootScreenTabsList,
+  RootStackRoutes,
+} from "../enums";
 
 declare global {
   namespace ReactNavigation {
@@ -16,10 +22,23 @@ declare global {
   }
 }
 
+interface GlobalHistoryNavigateScreenParams {
+  screen: keyof AuthScreensList | keyof CategoryScreensList | keyof RootScreenTabs;
+}
+
+export interface GlobalHistory {
+  navigate: (
+    rootScreen: RootStackRoutes,
+    { screen }: GlobalHistoryNavigateScreenParams
+  ) => void;
+}
+
 export type RootStackParamList = {
   [RootStackRoutes.Auth]: NavigatorScreenParams<AuthScreensList> | undefined;
   [RootStackRoutes.Root]: NavigatorScreenParams<RootScreenTabs> | undefined;
-  [RootStackRoutes.Category]: NavigatorScreenParams<CategoryScreensList> | undefined;
+  [RootStackRoutes.Category]:
+    | NavigatorScreenParams<CategoryScreensList>
+    | undefined;
   [RootStackRoutes.NotFound]: undefined;
 };
 
@@ -40,18 +59,19 @@ export type CategoryStackScreenRoutes = NativeStackNavigationProp<
   keyof CategoryScreensList
 >;
 
-export type CategoryStackRoutesProps<RouteName extends keyof CategoryScreensList> =
-  RouteProp<
-    {
-      [CategoryStackRoutes.CategoryEntities]: {
-        categoryId: string;
-      };
-      [CategoryStackRoutes.CategoryEntity]: {
-        categoryEntityId: string;
-      };
-    },
-    RouteName
-  >;
+export type CategoryStackRoutesProps<
+  RouteName extends keyof CategoryScreensList
+> = RouteProp<
+  {
+    [CategoryStackRoutes.CategoryEntities]: {
+      categoryId: string;
+    };
+    [CategoryStackRoutes.CategoryEntity]: {
+      categoryEntityId: string;
+    };
+  },
+  RouteName
+>;
 
 export type AuthScreensList = {
   [AuthStackRoutes.SignUp]: undefined;

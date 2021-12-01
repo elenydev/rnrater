@@ -23,7 +23,8 @@ import {
   RootTabScreenProps,
   AuthScreensList,
   CategoryScreensList,
-  RootScreenTabs
+  RootScreenTabs,
+  GlobalHistory,
 } from "../infrastructure/router/interfaces";
 import LinkingConfiguration from "./LinkingConfiguration";
 import {
@@ -95,7 +96,11 @@ function RootNavigator() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  dispatch(setHistoryManager(new HistoryManager(navigation)));
+  dispatch(
+    setHistoryManager(
+      new HistoryManager(navigation as unknown as GlobalHistory)
+    )
+  );
   return (
     <Stack.Navigator>
       {AuthNavigation()}

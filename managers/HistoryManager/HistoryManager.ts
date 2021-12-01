@@ -1,7 +1,9 @@
-export default class HistoryManager {
-  history: any;
+import { GlobalHistory } from "../../infrastructure/router/interfaces";
 
-  constructor(navigationHistory: any) {
+export default class HistoryManager {
+  history: GlobalHistory
+
+  constructor(navigationHistory: GlobalHistory) {
     this.history = navigationHistory;
   }
 }

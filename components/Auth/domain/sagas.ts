@@ -21,13 +21,14 @@ import { BaseRequestResponse } from "../../../infrastructure/api/interfaces";
 import { SecureKeys } from "../../../infrastructure/secure/enums";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
 
-import HistoryManager from "../../../managers/HistoryManager/HistoryManager";
 import { getHistory } from "../../../managers/HistoryManager/selectors";
+import { GlobalHistory } from "infrastructure/router/interfaces";
+import { RootScreenTabs, RootStackRoutes } from "infrastructure/router/enums";
 
 function* authenticateUser(action: Action<AuthenticateUserParams>) {
   const user = action.payload;
   const formManager: FormManager = yield select(getFormManager);
-  const history: HistoryManager = yield select(getHistory);
+  const history: GlobalHistory = yield select(getHistory);
   try {
     const response: PostItemActionResult<PostAuthenticateUserResult> =
       yield postAuthenticateUser(user);
@@ -38,8 +39,8 @@ function* authenticateUser(action: Action<AuthenticateUserParams>) {
       setSecureItem(SecureKeys.Email, response.result.user.email);
       setSecureItem(SecureKeys.UserId, response.result.user.userId);
       formManager.clearCurrentForm(FormInstanceName.AuthorizeUser);
-      history.navigate('Root', {
-        screen: 'Categories'
+      history.navigate(RootStackRoutes.Root, {
+        screen: RootScreenTabs.Categories,
       });
       return successToast(response.message);
     }
