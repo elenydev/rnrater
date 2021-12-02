@@ -9,37 +9,35 @@ import {
 } from "../../../infrastructure/router/interfaces";
 import {
   AuthStackRoutes,
-  RootStackRoutes,
 } from "../../../infrastructure/router/enums";
 import { useNavigation } from "@react-navigation/native";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import { defaultValues, validationRules } from "./formConfig";
-import { postAuthenticateUser } from "../../../api/auth/postAuthenticateUser";
 import { AuthenticateUserParams } from "../../../api/auth/interfaces";
-import { successToast, errorToast } from "../../../services/toast";
+import { useDispatch, useSelector } from "react-redux";
+import { getFormManager } from "../../../managers/FormManager/selectors";
+import { FormInstanceName } from "../../../managers/FormManager/enums";
+import { authenticateUserTrigger } from "../domain/actions";
 
 const SignIn = () => {
   const navigation = useNavigation<
     RootStackScreenRoutes | AuthStackScreenRoutes
   >();
-
-  const { reset, control, formError, handleSubmit } = useCustomForm({
+  const dispatch = useDispatch();
+  const formManager = useSelector(getFormManager);
+  const { formInstance, formError } = useCustomForm({
     defaultValues,
   });
+  const { control, handleSubmit } = formInstance;
 
-  const handleLogin = useCallback(
-    async (credentials: AuthenticateUserParams) => {
-      try {
-        const result = await postAuthenticateUser(credentials);
-        successToast(result.message);
-        reset();
-        (navigation as RootStackScreenRoutes).navigate(RootStackRoutes.Root);
-      } catch (error) {
-        errorToast(error.message);
-      }
-    },
-    []
-  );
+  formManager.setFormInstance({
+    formName: FormInstanceName.AuthorizeUser,
+    formInstance,
+  });
+
+  const handleLogin = useCallback((credentials: AuthenticateUserParams) => {
+    dispatch(authenticateUserTrigger(credentials));
+  }, []);
 
   const handleRedirect = useCallback(() => {
     (navigation as AuthStackScreenRoutes).navigate(AuthStackRoutes.SignUp);

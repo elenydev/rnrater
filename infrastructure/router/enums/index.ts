@@ -1,21 +1,21 @@
 export enum RootStackRoutes {
-  Auth = "Auth",
-  Root = "Root",
-  Category = "Category",
-  NotFound = "NotFound",
+  Auth = "auth",
+  Root = "root",
+  Category = "category",
+  NotFound = "notFound",
 }
 
 export enum CategoryStackRoutes {
-  CategoryEntities = "CategoryEntities",
-  CategoryEntity = "CategoryEntity",
+  CategoryEntities = "categoryEntities",
+  CategoryEntity = "categoryEntity",
 }
 
 export enum RootScreenTabs {
-  Categories = "Categories",
-  TabTwo = "TabTwo",
+  Categories = "categories",
+  TabTwo = "tabTwo",
 }
 
 export enum AuthStackRoutes {
-  SignUp = "SignUp",
-  SignIn = "SignIn",
+  SignUp = "signUp",
+  SignIn = "signIn",
 }

@@ -21,43 +21,54 @@ import { BaseRequestResponse } from "../../../infrastructure/api/interfaces";
 import { SecureKeys } from "../../../infrastructure/secure/enums";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
 
+import { getHistory } from "../../../managers/HistoryManager/selectors";
+import { GlobalHistory } from "../../../infrastructure/router/interfaces";
+import {
+  AuthStackRoutes,
+  RootScreenTabs,
+} from "../../../infrastructure/router/enums";
+
 function* authenticateUser(action: Action<AuthenticateUserParams>) {
   const user = action.payload;
   const formManager: FormManager = yield select(getFormManager);
+  const history: GlobalHistory = yield select(getHistory);
   try {
     const response: PostItemActionResult<PostAuthenticateUserResult> =
       yield postAuthenticateUser(user);
+
     if (response.responseStatus === ResponseStatus.Success) {
       yield put(UserStoreActions.authenticateUserSuccess(response.result.user));
       setSecureItem(SecureKeys.Token, response.result?.accessToken);
       setSecureItem(SecureKeys.Email, response.result.user.email);
       setSecureItem(SecureKeys.UserId, response.result.user.userId);
       formManager.clearCurrentForm(FormInstanceName.AuthorizeUser);
-      successToast(response.message);
-      // return Router.replace(ROUTES.USER.HOME);
+      history.navigate(RootScreenTabs.Categories)
+      return successToast(response.message);
     }
     errorToast(response.message);
-  } catch (errorMessage) {
+  } catch (error) {
     yield put(UserStoreActions.authenticateUserFailure());
-    errorToast(errorMessage);
+    errorToast(error.message);
   }
 }
 
 function* createUser(action: Action<CreateUserParams>) {
   const user = action.payload;
   const formManager: FormManager = yield select(getFormManager);
+  const history: GlobalHistory = yield select(getHistory);
   try {
     const response: BaseRequestResponse = yield postCreateUser(user);
     if (response.responseStatus === ResponseStatus.Success) {
-      successToast(response.message);
       formManager.clearCurrentForm(FormInstanceName.CreateUser);
-      yield put(UserStoreActions.createUserSuccess);
-      // return Router.replace(ROUTES.AUTH.SIGN_IN);
+      yield put(UserStoreActions.createUserSuccess());
+      history.navigate(AuthStackRoutes.SignIn);
+
+      return successToast(response.message);
     }
     errorToast(response.message);
-  } catch (errorMessage) {
+  } catch (error) {
     yield put(UserStoreActions.createUserFailure());
-    errorToast(errorMessage);
+    errorToast(error.message);
   }
 }
 

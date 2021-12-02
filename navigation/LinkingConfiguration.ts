@@ -7,49 +7,49 @@ const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl("/")],
   config: {
     screens: {
-      Auth: {
+      auth: {
         screens: {
-          SignUp: {
+          signUp: {
             screens: {
-              SignUpScreen: "signUp",
+              signUp: "signUp",
             },
           },
-          SignIn: {
+          signIn: {
             screens: {
-              SignInScreen: "signIn",
+              signInScreen: "signIn",
             },
           },
         },
       },
-      Root: {
+      root: {
         screens: {
-          Categories: {
+          categories: {
             screens: {
-              Categories: "Categories",
+              categories: "categories",
             },
           },
-          TabTwo: {
+          tabTwo: {
             screens: {
-              TabTwoScreen: "two",
+              tabTwoScreen: "two",
             },
           },
         },
       },
-      Category: {
+      category: {
         screens: {
-          CategoryEntities: {
+          categoryEntities: {
             screens: {
-              AllEntites: "Category Entities",
+              allEntites: "Category Entities",
             },
           },
-          CategoryEntity: {
+          categoryEntity: {
             screens: {
-              Entity: "Entity",
+              entity: "Entity",
             },
           },
         },
       },
-      NotFound: "*",
+      notFound: "*",
     },
   },
 };
