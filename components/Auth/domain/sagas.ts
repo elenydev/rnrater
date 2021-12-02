@@ -22,8 +22,11 @@ import { SecureKeys } from "../../../infrastructure/secure/enums";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
 
 import { getHistory } from "../../../managers/HistoryManager/selectors";
-import { GlobalHistory } from "infrastructure/router/interfaces";
-import { RootScreenTabs, RootStackRoutes } from "infrastructure/router/enums";
+import { GlobalHistory } from "../../../infrastructure/router/interfaces";
+import {
+  AuthStackRoutes,
+  RootScreenTabs,
+} from "../../../infrastructure/router/enums";
 
 function* authenticateUser(action: Action<AuthenticateUserParams>) {
   const user = action.payload;
@@ -39,9 +42,7 @@ function* authenticateUser(action: Action<AuthenticateUserParams>) {
       setSecureItem(SecureKeys.Email, response.result.user.email);
       setSecureItem(SecureKeys.UserId, response.result.user.userId);
       formManager.clearCurrentForm(FormInstanceName.AuthorizeUser);
-      history.navigate(RootStackRoutes.Root, {
-        screen: RootScreenTabs.Categories,
-      });
+      history.navigate(RootScreenTabs.Categories)
       return successToast(response.message);
     }
     errorToast(response.message);
@@ -54,14 +55,15 @@ function* authenticateUser(action: Action<AuthenticateUserParams>) {
 function* createUser(action: Action<CreateUserParams>) {
   const user = action.payload;
   const formManager: FormManager = yield select(getFormManager);
+  const history: GlobalHistory = yield select(getHistory);
   try {
     const response: BaseRequestResponse = yield postCreateUser(user);
     if (response.responseStatus === ResponseStatus.Success) {
       formManager.clearCurrentForm(FormInstanceName.CreateUser);
-      yield put(UserStoreActions.createUserSuccess);
-      return successToast(response.message);
+      yield put(UserStoreActions.createUserSuccess());
+      history.navigate(AuthStackRoutes.SignIn);
 
-      // return Router.replace(ROUTES.AUTH.SIGN_IN);
+      return successToast(response.message);
     }
     errorToast(response.message);
   } catch (error) {

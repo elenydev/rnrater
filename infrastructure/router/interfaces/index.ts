@@ -22,15 +22,14 @@ declare global {
   }
 }
 
-interface GlobalHistoryNavigateScreenParams {
-  screen: keyof AuthScreensList | keyof CategoryScreensList | keyof RootScreenTabs;
-}
+type GlobalHistoryScreen =
+  | AuthStackRoutes
+  | RootScreenTabs
+  | RootScreenTabsList
+  | CategoryStackRoutes;
 
 export interface GlobalHistory {
-  navigate: (
-    rootScreen: RootStackRoutes,
-    { screen }: GlobalHistoryNavigateScreenParams
-  ) => void;
+  navigate: <Params>(screen: GlobalHistoryScreen, params?: Params) => void;
 }
 
 export type RootStackParamList = {

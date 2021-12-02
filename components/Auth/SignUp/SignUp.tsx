@@ -7,7 +7,6 @@ import { useCustomForm } from "../../../hooks/useCustomForm";
 import { Controller } from "react-hook-form";
 import { defaultValues, validationRules, FormState } from "./formConfig";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackScreenRoutes } from "../../../infrastructure/router/interfaces";
 import { serializeImage } from "../../../utils/serializeImage";
 import { CreateUserParams } from "../../../api/auth/interfaces";
 import { CheckBox } from "react-native-elements";
@@ -15,9 +14,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFormManager } from "../../../managers/FormManager/selectors";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
 import { createUserTrigger } from "../domain/actions";
+import { AuthStackRoutes, RootStackRoutes } from "../../../infrastructure/router/enums";
+import { AuthStackScreenRoutes } from "../../../infrastructure/router/interfaces";
 
 export const SignUp = () => {
-  const navigation = useNavigation<RootStackScreenRoutes>();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState<string | undefined>();
   const formManager = useSelector(getFormManager);
@@ -31,7 +32,9 @@ export const SignUp = () => {
     formInstance,
   });
 
+
   const handleSignUp = useCallback((credentials: CreateUserParams) => {
+
     dispatch(createUserTrigger(credentials));
   }, []);
 
