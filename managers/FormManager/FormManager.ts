@@ -13,5 +13,6 @@ export default class FormManager {
       ({ formName }) => formName === currentFormName
     );
     currentForm?.formInstance.reset();
+    currentForm?.additionalActions && currentForm.additionalActions();
   }
 }

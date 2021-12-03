@@ -14,11 +14,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFormManager } from "../../../managers/FormManager/selectors";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
 import { createUserTrigger } from "../domain/actions";
-import { AuthStackRoutes, RootStackRoutes } from "../../../infrastructure/router/enums";
+import {
+  AuthStackRoutes,
+  RootStackRoutes,
+} from "../../../infrastructure/router/enums";
 import { AuthStackScreenRoutes } from "../../../infrastructure/router/interfaces";
 
 export const SignUp = () => {
-  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState<string | undefined>();
   const formManager = useSelector(getFormManager);
@@ -30,11 +32,10 @@ export const SignUp = () => {
   formManager.setFormInstance({
     formName: FormInstanceName.CreateUser,
     formInstance,
+    additionalActions: () => setImagePreview(undefined),
   });
 
-
   const handleSignUp = useCallback((credentials: CreateUserParams) => {
-
     dispatch(createUserTrigger(credentials));
   }, []);
 
