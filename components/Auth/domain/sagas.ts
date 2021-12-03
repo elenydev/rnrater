@@ -21,17 +21,19 @@ import { BaseRequestResponse } from "../../../infrastructure/api/interfaces";
 import { SecureKeys } from "../../../infrastructure/secure/enums";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
 
-import { getHistory } from "../../../managers/HistoryManager/selectors";
+import { getHistoryManager } from "../../../managers/HistoryManager/selectors";
 import { GlobalHistory } from "../../../infrastructure/router/interfaces";
 import {
   AuthStackRoutes,
   RootScreenTabs,
+  RootStackRoutes,
 } from "../../../infrastructure/router/enums";
+import HistoryManager from "../../../managers/HistoryManager/HistoryManager";
 
 function* authenticateUser(action: Action<AuthenticateUserParams>) {
   const user = action.payload;
   const formManager: FormManager = yield select(getFormManager);
-  const history: GlobalHistory = yield select(getHistory);
+  const historyManager: HistoryManager = yield select(getHistoryManager);
   try {
     const response: PostItemActionResult<PostAuthenticateUserResult> =
       yield postAuthenticateUser(user);
@@ -42,7 +44,7 @@ function* authenticateUser(action: Action<AuthenticateUserParams>) {
       setSecureItem(SecureKeys.Email, response.result.user.email);
       setSecureItem(SecureKeys.UserId, response.result.user.userId);
       formManager.clearCurrentForm(FormInstanceName.AuthorizeUser);
-      history.navigate(RootScreenTabs.Categories)
+      historyManager.navigateNestedRoute(RootStackRoutes.Root, RootScreenTabs.Categories);
       return successToast(response.message);
     }
     errorToast(response.message);
@@ -55,13 +57,13 @@ function* authenticateUser(action: Action<AuthenticateUserParams>) {
 function* createUser(action: Action<CreateUserParams>) {
   const user = action.payload;
   const formManager: FormManager = yield select(getFormManager);
-  const history: GlobalHistory = yield select(getHistory);
+  const historyManager: HistoryManager = yield select(getHistoryManager);
   try {
     const response: BaseRequestResponse = yield postCreateUser(user);
     if (response.responseStatus === ResponseStatus.Success) {
       formManager.clearCurrentForm(FormInstanceName.CreateUser);
       yield put(UserStoreActions.createUserSuccess());
-      history.navigate(AuthStackRoutes.SignIn);
+      historyManager.navigate(AuthStackRoutes.SignIn);
 
       return successToast(response.message);
     }
