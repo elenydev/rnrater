@@ -1,6 +1,7 @@
 import { UserStore } from "./interfaces";
 import { createSliceWithSaga } from "redux-toolkit-with-saga";
 import * as actions from "./actions";
+import { User } from "infrastructure/models/User";
 
 const initialState: UserStore = {
   user: undefined,
@@ -21,7 +22,24 @@ const userStore = createSliceWithSaga({
       })
       .addCase(actions.authenticateUserFailure, (state: UserStore) => {
         state.isLoading = false;
+      });
+
+    builder
+      .addCase(actions.getUserAvatarTrigger, (state: UserStore) => {
+        state.isLoading = true;
       })
+      .addCase(actions.getUserAvatarSuccess, (state: UserStore, action) => {
+        state.user = {
+          ...(state.user as User),
+          avatarUrl: action.payload as unknown as string,
+        };
+        state.isLoading = false;
+      })
+      .addCase(actions.getUserAvatarFailure, (state: UserStore) => {
+        state.isLoading = false;
+      });
+
+    builder
       .addCase(actions.createUserTrigger, (state: UserStore) => {
         state.isLoading = true;
       })
@@ -30,7 +48,7 @@ const userStore = createSliceWithSaga({
       })
       .addCase(actions.createUserSuccess, (state: UserStore) => {
         state.isLoading = false;
-      })
+      });
   },
   reducers: {},
 });

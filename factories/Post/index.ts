@@ -2,7 +2,6 @@ import { getErrorResponse } from "../../utils/getErrorResponse";
 import { AuthKeys, ResponseStatus } from "../../infrastructure/api/enums";
 import { BaseRequestResponse } from "../../infrastructure/api/interfaces";
 import { getAuthValue } from "../../services/auth";
-import { Alert } from "react-native";
 import { PostItemActionResult } from "../interfaces/post";
 
 export const post = async <ReturnItemType extends {}>(

@@ -9,7 +9,12 @@ import {
   postAuthenticateUser,
   PostAuthenticateUserResult,
 } from "../../../api/auth/postAuthenticateUser";
+import {
+  getUserAvatar as getUserAvatarCall,
+  GetUserAvatarActionResult,
+} from "../../../api/user/get/userAvatar";
 import { AuthenticateUserParams } from "../../../api/auth/interfaces";
+import { GetUserAvatarParams } from "../../../api/user/get/intefaces";
 import { postCreateUser } from "../../../api/auth/postCreateUser";
 import { CreateUserParams } from "../../../api/auth/interfaces";
 
@@ -22,7 +27,6 @@ import { SecureKeys } from "../../../infrastructure/secure/enums";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
 
 import { getHistoryManager } from "../../../managers/HistoryManager/selectors";
-import { GlobalHistory } from "../../../infrastructure/router/interfaces";
 import {
   AuthStackRoutes,
   RootScreenTabs,
@@ -44,7 +48,16 @@ function* authenticateUser(action: Action<AuthenticateUserParams>) {
       setSecureItem(SecureKeys.Email, response.result.user.email);
       setSecureItem(SecureKeys.UserId, response.result.user.userId);
       formManager.clearCurrentForm(FormInstanceName.AuthorizeUser);
-      historyManager.navigateNestedRoute(RootStackRoutes.Root, RootScreenTabs.Categories);
+      yield put(
+        UserStoreActions.getUserAvatarTrigger({
+          userId: response.result.user.userId,
+        })
+      );
+
+      historyManager.navigateNestedRoute(
+        RootStackRoutes.Root,
+        RootScreenTabs.Categories
+      );
       return successToast(response.message);
     }
     errorToast(response.message);
@@ -74,6 +87,18 @@ function* createUser(action: Action<CreateUserParams>) {
   }
 }
 
+function* getUserAvatar(action: Action<GetUserAvatarParams>) {
+  const userId = action.payload;
+  try {
+    const response: GetUserAvatarActionResult = yield getUserAvatarCall(userId);
+    if (response.responseStatus === ResponseStatus.Success) {
+    }
+  } catch (error) {
+    yield put(UserStoreActions.getUserAvatarFailure());
+    errorToast(error.message);
+  }
+}
+
 export default function* userSagas(): Generator<
   ForkEffect<never>,
   void,
@@ -81,4 +106,5 @@ export default function* userSagas(): Generator<
 > {
   yield takeLatest(UserStoreActions.authenticateUserTrigger, authenticateUser);
   yield takeLatest(UserStoreActions.createUserTrigger, createUser);
+  yield takeLatest(UserStoreActions.getUserAvatarTrigger, getUserAvatar);
 }
