@@ -6,6 +6,7 @@ import { FormInstanceName } from "./enums";
 export interface FormManagerInstance {
   formName: FormInstanceName;
   formInstance: UseFormReturn;
+  additionalActions?: () => void;
 }
 
 export interface FormsStore {

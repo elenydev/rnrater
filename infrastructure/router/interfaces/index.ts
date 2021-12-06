@@ -22,14 +22,22 @@ declare global {
   }
 }
 
-type GlobalHistoryScreen =
+export type GlobalHistoryScreen =
   | AuthStackRoutes
   | RootScreenTabs
   | RootScreenTabsList
   | CategoryStackRoutes;
 
 export interface GlobalHistory {
-  navigate: <Params>(screen: GlobalHistoryScreen, params?: Params) => void;
+  navigate: <Params extends Object>(
+    screen: GlobalHistoryScreen | RootStackRoutes,
+    params?: Params
+  ) => void;
+  navigateNestedRoute: <Params extends Object>(
+    rootScreen: RootStackRoutes,
+    screen: GlobalHistoryScreen,
+    params?: Params
+  ) => void;
 }
 
 export type RootStackParamList = {

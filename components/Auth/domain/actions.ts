@@ -1,13 +1,17 @@
 import { createAction } from "@reduxjs/toolkit";
 import { createActionWithPayload } from "../../../utils/redux/actions";
-import { CreateUserParams } from "../../../api/auth/interfaces";
+import { CreateUserParams} from "../../../api/auth/interfaces";
 import { User } from "../../../infrastructure/models/User";
 import { AuthenticateUserParams } from "../../../api/auth/interfaces";
+import { GetUserAvatarParams } from "../../../api/user/get/intefaces";
 
 export enum UserStoreActions {
   AuthenticateUserTrigger = "userStore/authenticateUserTrigger",
   AuthenticateUserSuccess = "userStore/authenticateUserSuccess",
   AuthenticateUserFailure = "userStore/authenticateUserFailure",
+  GetUserAvatarTrigger = "userStore/getUserAvatarTrigger",
+  GetUserAvatarSuccess = "userStore/getUserAvatarSuccess",
+  GetUserAvatarFailure = "userStore/getUserAvatarFailure",
   CreateUserTrigger = "userStore/createUserTrigger",
   CreateUserSuccess = "userStore/createUserSuccess",
   CreateUserFailure = "userStore/createUserFailure",
@@ -25,6 +29,19 @@ export const authenticateUserSuccess = createActionWithPayload<User>(
 export const authenticateUserFailure = createAction(
   UserStoreActions.AuthenticateUserFailure
 );
+
+export const getUserAvatarTrigger = createActionWithPayload<GetUserAvatarParams>(
+  UserStoreActions.GetUserAvatarTrigger
+)
+
+export const getUserAvatarFailure = createAction(
+  UserStoreActions.GetUserAvatarFailure
+)
+
+export const getUserAvatarSuccess = createActionWithPayload<Blob>(
+  UserStoreActions.GetUserAvatarSuccess
+)
+
 export const createUserTrigger = createActionWithPayload<CreateUserParams>(
   UserStoreActions.CreateUserTrigger
 );

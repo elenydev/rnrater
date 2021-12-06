@@ -5,4 +5,7 @@ export const API_URL = {
     CREATE_USER: `${DATABASE_URL}/user/post/createUser`,
     AUTHENTICATE_USER: `${DATABASE_URL}/user/post/authenticateUser`,
   },
+  USER: {
+    GET_USER_AVATAR: `${DATABASE_URL}/user/get/userAvatar`
+  }
 };
