@@ -6,7 +6,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  avatar: string;
+  avatar: Blob;
   evaluatedPosts: Post[];
   comments: Comment[];
 }

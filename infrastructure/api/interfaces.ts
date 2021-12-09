@@ -1,6 +1,6 @@
 import { ResponseStatus } from "./enums";
 
-export interface BaseRequestResponse {
+export interface BaseRequestResponse extends Partial<Response> {
   responseStatus: ResponseStatus;
   message: string;
 }
