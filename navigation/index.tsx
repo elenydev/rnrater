@@ -38,6 +38,7 @@ import { setHistoryManager } from "../managers/HistoryManager/actions";
 import HistoryManager from "../managers/HistoryManager/HistoryManager";
 import { useDispatch } from "react-redux";
 
+
 export default function Navigation({
   colorScheme,
 }: {
@@ -161,8 +162,10 @@ function BottomTabNavigator() {
         name={RootScreenTabsList.TabTwo}
         component={TabTwoScreen}
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="user-circle" color={color} />
+          ),
           headerLeft: () => <Pressable></Pressable>,
         }}
       />

@@ -31,7 +31,7 @@ const userStore = createSliceWithSaga({
       .addCase(actions.getUserAvatarSuccess, (state: UserStore, action) => {
         state.user = {
           ...(state.user as User),
-          avatarUrl: action.payload as unknown as string,
+          avatar: action.payload as unknown as string,
         };
         state.isLoading = false;
       })

@@ -78,7 +78,7 @@ export const getItem = async <ListItemType>(
   }
 };
 
-export const databaseResponse = <ListItemType>(
+export const databaseResponse = async <ListItemType>(
   isSuccesfullResponse: boolean,
   response:
     | GetListActionResult<ListItemType>
@@ -94,9 +94,10 @@ export const databaseResponse = <ListItemType>(
     ? { results: (response as GetListActionResult<ListItemType>).results }
     : { result: (response as GetItemActionResult<ListItemType>).result };
   if (isSuccesfullResponse) {
+    const file = returnFile && response.blob && await response.blob();
     return Promise.resolve({
       ...baseResult,
-      ...(returnFile && { result: response }),
+      ...(returnFile && { result: file }),
       responseStatus: ResponseStatus.Success,
       message: response.message,
     });
