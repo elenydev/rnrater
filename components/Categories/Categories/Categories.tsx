@@ -1,8 +1,13 @@
 import { Category } from "../../../infrastructure/components/interfaces/Category";
 import * as React from "react";
+
 import { FlatList } from "react-native";
 
+import { useSelector } from "react-redux";
+import { getUserStoreLoading } from "../../../components/Auth/domain/selectors";
+
 import CategoryCard from "../../Categories/Categories/CategoryCard/CategoryCard";
+import Loader from "../../../components/Loader";
 
 const dummyCat: Category[] = [
   {
@@ -24,7 +29,10 @@ const dummyCat: Category[] = [
 ];
 
 export default function Categories() {
-  return (
+  const isLoading = useSelector(getUserStoreLoading);
+  return isLoading ? (
+    <Loader />
+  ) : (
     <FlatList
       data={dummyCat}
       keyExtractor={(item) => item.name}

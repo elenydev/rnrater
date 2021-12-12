@@ -5,8 +5,7 @@ import React, { useCallback, useState } from "react";
 import { Text, View } from "../../Themed";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import { Controller } from "react-hook-form";
-import { defaultValues, validationRules, FormState } from "./formConfig";
-import { useNavigation } from "@react-navigation/native";
+import { defaultValues, validationRules } from "./formConfig";
 import { serializeImage } from "../../../utils/serializeImage";
 import { CreateUserParams } from "../../../api/auth/interfaces";
 import { CheckBox } from "react-native-elements";
@@ -14,11 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFormManager } from "../../../managers/FormManager/selectors";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
 import { createUserTrigger } from "../domain/actions";
-import {
-  AuthStackRoutes,
-  RootStackRoutes,
-} from "../../../infrastructure/router/enums";
-import { AuthStackScreenRoutes } from "../../../infrastructure/router/interfaces";
 
 export const SignUp = () => {
   const dispatch = useDispatch();

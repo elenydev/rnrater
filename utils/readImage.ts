@@ -1,11 +1,15 @@
-export const readImage = (image: Blob): ArrayBuffer | string => {
-  const fileReader = new FileReader();
-  const imageData: (ArrayBuffer | string)[] = [];
+import { SetStateAction } from "react";
 
-  fileReader.readAsDataURL(image);
+export const readImage = (
+  image: Blob,
+  callback: (
+    imageContent: ArrayBuffer | SetStateAction<ArrayBuffer | undefined>
+  ) => void
+): void => {
+  const fileReader = new FileReader();
 
   fileReader.onloadend = () => {
-    imageData.push(fileReader.result);
+    callback(fileReader.result as ArrayBuffer);
   };
-  return imageData[0];
+  return fileReader.readAsDataURL(image);
 };
