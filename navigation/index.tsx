@@ -15,7 +15,6 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import Categories from "../screens/Categories/Categories";
 import CategoryEntitiesList from "../screens/Categories/CategoryEntitiesList/CategoryEntitiesList";
 import CategoryEntity from "../screens/Categories/CategoryEntitiesList/CategoryEntity/CategoryEntity";
-import TabTwoScreen from "../screens/TabTwoScreen";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
 import SignInScreen from "../screens/Auth/SignInScreen";
 import {
@@ -37,6 +36,7 @@ import { useNavigation } from "@react-navigation/native";
 import { setHistoryManager } from "../managers/HistoryManager/actions";
 import HistoryManager from "../managers/HistoryManager/HistoryManager";
 import { useDispatch } from "react-redux";
+import Profile from "../components/Profile/Profile";
 
 
 export default function Navigation({
@@ -160,7 +160,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name={RootScreenTabsList.TabTwo}
-        component={TabTwoScreen}
+        component={Profile}
         options={{
           title: "Profile",
           tabBarIcon: ({ color }) => (
