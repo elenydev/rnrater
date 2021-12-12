@@ -1,9 +1,10 @@
-import { Text, View } from "../../components/Themed";
+import { View } from "../../components/Themed";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, ScrollView, Image, ActivityIndicator } from "react-native";
+import { StyleSheet, ScrollView, Image } from "react-native";
 import { useSelector } from "react-redux";
 import { getCurrentUser } from "../../components/Auth/domain/selectors";
 import { readImage } from "../../utils/readImage";
+import Loader from "../../components/Loader";
 
 const Profile = () => {
   const [userAvatar, setUserAvatar] = useState<ArrayBuffer>();
@@ -28,9 +29,7 @@ const Profile = () => {
           </View>
         </View>
       ) : (
-        <View style={styles.activityIndicatorBox}>
-          <ActivityIndicator size="large" color='#0000ff"' />
-        </View>
+        <Loader />
       )}
     </ScrollView>
   );
@@ -47,11 +46,5 @@ const styles = StyleSheet.create({
   },
   imageBox: {
     borderRadius: 50,
-  },
-  activityIndicatorBox: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
   },
 });
