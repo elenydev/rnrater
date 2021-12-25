@@ -53,134 +53,132 @@ export const SignUp = () => {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={{ flex: 1 }}>
-      <View style={styles.container}>
-        <View style={styles.formContainer}>
-          <Controller
-            name="firstName"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                value={field.value}
-                onChangeText={(value) => field.onChange(value)}
-                style={styles.input}
-                placeholder="First Name"
-              />
-            )}
-            rules={validationRules.firstName}
-          />
-          <Controller
-            name="lastName"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                value={field.value}
-                onChangeText={(value) => field.onChange(value)}
-                style={styles.input}
-                placeholder="Last Name"
-              />
-            )}
-            rules={validationRules.lastName}
-          />
-          <Controller
-            name="nickName"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                value={field.value}
-                onChangeText={(value) => field.onChange(value)}
-                style={styles.input}
-                placeholder="Nickname"
-              />
-            )}
-            rules={validationRules.nickName}
-          />
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                value={field.value}
-                onChangeText={(value) => field.onChange(value)}
-                style={styles.input}
-                placeholder="E-mail"
-                keyboardType="email-address"
-              />
-            )}
-            rules={validationRules.email}
-          />
+    <ScrollView
+      contentContainerStyle={{ ...styles.container }}
+      keyboardShouldPersistTaps="never"
+    >
+      <View style={styles.formContainer}>
+        <Controller
+          name="firstName"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              value={field.value}
+              onChangeText={(value) => field.onChange(value)}
+              style={styles.input}
+              placeholder="First Name"
+            />
+          )}
+          rules={validationRules.firstName}
+        />
+        <Controller
+          name="lastName"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              value={field.value}
+              onChangeText={(value) => field.onChange(value)}
+              style={styles.input}
+              placeholder="Last Name"
+            />
+          )}
+          rules={validationRules.lastName}
+        />
+        <Controller
+          name="nickName"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              value={field.value}
+              onChangeText={(value) => field.onChange(value)}
+              style={styles.input}
+              placeholder="Nickname"
+            />
+          )}
+          rules={validationRules.nickName}
+        />
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              value={field.value}
+              onChangeText={(value) => field.onChange(value)}
+              style={styles.input}
+              placeholder="E-mail"
+              keyboardType="email-address"
+            />
+          )}
+          rules={validationRules.email}
+        />
 
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                value={field.value}
-                onChangeText={(value) => field.onChange(value)}
-                style={styles.input}
-                placeholder="Password"
-                secureTextEntry
-              />
-            )}
-            rules={validationRules.password}
-          />
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              value={field.value}
+              onChangeText={(value) => field.onChange(value)}
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry
+            />
+          )}
+          rules={validationRules.password}
+        />
 
-          <Controller
-            name="policy"
-            control={control}
-            render={({ field }) => (
-              <View style={styles.policyBox}>
-                <Text>Accept Our Policy</Text>
-                <CheckBox
-                  checked={field.value}
-                  onPress={() => (
-                    setValue("policy", !field.value),
-                    field.onChange(!field.value)
-                  )}
-                />
-              </View>
-            )}
-            rules={validationRules.policy}
-          />
-
-          <Controller
-            name="avatar"
-            control={control}
-            render={({ field }) => (
-              <FontAwesome.Button
-                {...field}
-                name="photo"
-                size={10}
-                iconStyle={styles.avatarPicker}
-                onPress={handleAvatarPick}
-              />
-            )}
-            rules={validationRules.avatar}
-          />
-          {imagePreview && (
-            <View style={styles.imageBox}>
-              <Image
-                source={{ uri: imagePreview }}
-                style={{ width: 100, height: 100, borderRadius: 50 }}
-                resizeMode="cover"
+        <Controller
+          name="policy"
+          control={control}
+          render={({ field }) => (
+            <View style={styles.policyBox}>
+              <Text>Accept Our Policy</Text>
+              <CheckBox
+                checked={field.value}
+                onPress={() => (
+                  setValue("policy", !field.value), field.onChange(!field.value)
+                )}
               />
             </View>
           )}
+          rules={validationRules.policy}
+        />
 
-          <View>
-            {formError && (
-              <Text style={styles.validationText}>{formError}</Text>
-            )}
+        <Controller
+          name="avatar"
+          control={control}
+          render={({ field }) => (
+            <FontAwesome.Button
+              {...field}
+              name="photo"
+              size={10}
+              iconStyle={styles.avatarPicker}
+              onPress={handleAvatarPick}
+            />
+          )}
+          rules={validationRules.avatar}
+        />
+        {imagePreview && (
+          <View style={styles.imageBox}>
+            <Image
+              source={{ uri: imagePreview }}
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+              resizeMode="cover"
+            />
           </View>
+        )}
 
-          <View style={styles.buttonsContainer}>
-            <Button title="Sing Up" onPress={handleSubmit(handleSignUp)} />
-          </View>
+        <View>
+          {formError && <Text style={styles.validationText}>{formError}</Text>}
+        </View>
+
+        <View style={styles.buttonsContainer}>
+          <Button title="Sing Up" onPress={handleSubmit(handleSignUp)} />
         </View>
       </View>
     </ScrollView>
@@ -191,10 +189,11 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
   },
   formContainer: {
     width: "60%",

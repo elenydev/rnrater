@@ -17,7 +17,7 @@ const Profile = () => {
   }, [user?.avatar]);
 
   return (
-    <ScrollView contentContainerStyle={{ flex: 1 }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       {userAvatar ? (
         <View style={styles.container}>
           <View style={styles.imageBox}>
