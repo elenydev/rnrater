@@ -37,6 +37,7 @@ import { setHistoryManager } from "../managers/HistoryManager/actions";
 import HistoryManager from "../managers/HistoryManager/HistoryManager";
 import { useDispatch } from "react-redux";
 import Profile from "../components/Profile/Profile";
+import { socket } from "../services/sockets";
 
 
 export default function Navigation({
@@ -44,6 +45,8 @@ export default function Navigation({
 }: {
   colorScheme: ColorSchemeName;
 }) {
+  socket.on("logged", () => console.log("Test im logged"));
+
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
