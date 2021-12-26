@@ -46,7 +46,8 @@
     "react-redux": "^7.2.6",
     "redux-actions": "^2.6.5",
     "redux-saga": "^1.1.3",
-    "redux-toolkit-with-saga": "^1.3.1"
+    "redux-toolkit-with-saga": "^1.3.1",
+    "socket.io-client": "^4.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

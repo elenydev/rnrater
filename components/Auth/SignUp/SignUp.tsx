@@ -14,6 +14,7 @@ import { getFormManager } from "../../../managers/FormManager/selectors";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
 import { createUserTrigger } from "../domain/actions";
 
+
 export const SignUp = () => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState<string | undefined>();
