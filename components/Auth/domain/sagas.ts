@@ -92,9 +92,10 @@ function* getUserAvatar(action: Action<GetUserAvatarParams>) {
   try {
     const response: GetUserAvatarActionResult = yield getUserAvatarCall(userId);
     if (response.responseStatus === ResponseStatus.Success) {
-      yield put(UserStoreActions.getUserAvatarSuccess(response.result!))
+      yield put(UserStoreActions.getUserAvatarSuccess(response.result!));
+      return;
     }
-    errorToast(response.message)
+    errorToast(response.message);
   } catch (error) {
     yield put(UserStoreActions.getUserAvatarFailure());
     errorToast(error.message);
