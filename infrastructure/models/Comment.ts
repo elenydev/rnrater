@@ -1,9 +1,9 @@
 import { User } from "./User";
-import { Post } from './Post';
+import { CategoryPost } from './CategoryPost';
 
 export interface Comment {
   id: string;
   createdAt: Date;
   author: User;
-  post: Post;
+  post: CategoryPost;
 }
