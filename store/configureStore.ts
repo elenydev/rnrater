@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userStore from "../components/Auth/domain/reducers";
 import createSagaMiddleware from "redux-saga";
-import userSagas from "../components/Auth/domain/sagas";
 import formsStore from "../managers/FormManager/reducers";
 import historyStore from '../managers/HistoryManager/reducers'
+import categoriesStore from '../components/Categories/domain/reducers';
+import rootSaga from './rootSaga'
 
 let sagaMiddleware = createSagaMiddleware();
 
@@ -11,11 +12,12 @@ const store = configureStore({
   reducer: {
     userStore,
     formsStore,
-    historyStore
+    historyStore,
+    categoriesStore
   },
   middleware: [sagaMiddleware],
 });
 
-sagaMiddleware.run(userSagas);
+sagaMiddleware.run(rootSaga);
 
 export default store;

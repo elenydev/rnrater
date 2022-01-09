@@ -10,7 +10,7 @@ export const getList = async <ListItemType>(
   queryParams: { [key: string]: unknown } = {},
   pagination = {
     pageNumber: 1,
-    pageSize: 20,
+    pageSize: 10,
   }
 ): Promise<GetListActionResult<ListItemType> | BaseRequestResponse> => {
   try {
