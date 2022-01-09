@@ -19,11 +19,14 @@ const categoriesStore = createSliceWithSaga({
       .addCase(actions.getCategoriesListTrigger, (state: CategoriesStore) => {
         state.isLoading = true;
       })
-      .addCase(actions.getCategoriesListSuccess, (state: CategoriesStore, action) => {
-        state.list = action.payload.results!;
-        state.paging = action.payload.paging!;
-        state.isLoading = false;
-      })
+      .addCase(
+        actions.getCategoriesListSuccess,
+        (state: CategoriesStore, action) => {
+          state.list = action.payload.results!;
+          state.paging = action.payload.paging!;
+          state.isLoading = false;
+        }
+      )
       .addCase(actions.getCategoriesListFailure, (state: CategoriesStore) => {
         state.isLoading = false;
       });
