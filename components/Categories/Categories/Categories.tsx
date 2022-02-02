@@ -3,11 +3,9 @@ import * as React from "react";
 
 import { FlatList } from "react-native";
 
-import { useSelector } from "react-redux";
-import { getUserStoreLoading } from "../../../components/Auth/domain/selectors";
-
 import CategoryCard from "../../Categories/Categories/CategoryCard/CategoryCard";
 import Loader from "../../../components/Loader";
+import { useCategories } from "../hooks/useCategories";
 
 const dummyCat: Category[] = [
   {
@@ -29,7 +27,12 @@ const dummyCat: Category[] = [
 ];
 
 export default function Categories() {
-  const isLoading = useSelector(getUserStoreLoading);
+  const { isLoading, loadCategories } = useCategories();
+
+  React.useEffect(() => {
+    loadCategories();
+  }, []);
+
   return isLoading ? (
     <Loader />
   ) : (

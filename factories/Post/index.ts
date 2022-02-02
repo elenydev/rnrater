@@ -12,7 +12,7 @@ export const post = async <ReturnItemType extends {}>(
   queryParams: { [key: string]: unknown } = {}
 ): Promise<PostItemActionResult<ReturnItemType> | BaseRequestResponse> => {
   try {
-    const token = getAuthValue(AuthKeys.Token);
+    const token = await getAuthValue(AuthKeys.Token);
     const params = Object.keys(queryParams).reduce(
       (allParams: string[], currentParam) => {
         allParams.push(`${currentParam}=${queryParams[currentParam]}`);

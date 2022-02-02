@@ -25,6 +25,7 @@ function* getCategoriesListCall() {
     }
     errorToast(response.message);
   } catch (error) {
+    console.log(error)
     yield put(CategoriesStoreActions.getCategoriesListFailure());
     errorToast(error.message);
   }
