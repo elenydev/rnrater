@@ -2,7 +2,7 @@ import { Category } from "./Category";
 import { Comment } from "./Comment";
 import { User } from "./User";
 
-export interface Post {
+export interface  CategoryPost {
     id: string;
     imageUrl: string;
     rates: number[];

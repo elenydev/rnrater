@@ -1,7 +1,8 @@
-import { Post } from "./Post";
+import { CategoryPost } from "./CategoryPost";
 
 export interface Category {
   id: string;
   name: string;
-  posts: Post[];
+  categoryImageUrl: string;
+  categoryPosts: CategoryPost[];
 }

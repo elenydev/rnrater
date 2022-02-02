@@ -1,5 +1,5 @@
 import { Comment } from "./Comment";
-import { Post } from "./Post";
+import { CategoryPost } from "./CategoryPost";
 
 export interface User {
   userId: string;
@@ -7,6 +7,6 @@ export interface User {
   lastName: string;
   email: string;
   avatar: Blob;
-  evaluatedPosts: Post[];
+  evaluatedPosts: CategoryPost[];
   comments: Comment[];
 }

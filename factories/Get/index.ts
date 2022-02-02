@@ -14,7 +14,7 @@ export const getList = async <ListItemType>(
   }
 ): Promise<GetListActionResult<ListItemType> | BaseRequestResponse> => {
   try {
-    const token = getAuthValue(AuthKeys.Token);
+    const token = await getAuthValue(AuthKeys.Token);
     const params = Object.keys(queryParams).reduce(
       (allParams: string[], currentParam) => {
         allParams.push(`${currentParam}=${queryParams[currentParam]}`);
@@ -47,7 +47,7 @@ export const getItem = async <ListItemType>(
   returnFile = false
 ): Promise<GetItemActionResult<ListItemType> | BaseRequestResponse> => {
   try {
-    const token = getAuthValue(AuthKeys.Token);
+    const token = await getAuthValue(AuthKeys.Token);
     const params = Object.keys(queryParams).reduce(
       (allParams: string[], currentParam) => {
         allParams.push(`${currentParam}=${queryParams[currentParam]}`);

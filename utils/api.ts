@@ -9,6 +9,6 @@ export const API_URL = {
     GET_USER_AVATAR: `${DATABASE_URL}/user/get/userAvatar`
   },
   CATEGORIES: {
-    GET_LIST: `${DATABASE_URL}/category/get/getList`
+    GET_LIST: `${DATABASE_URL}/categories/get/getList`
   }
 };
