@@ -1,9 +1,9 @@
-import { API_URL } from "../../utils/api";
-import { post } from "../../factories/Post";
+import { API_URL } from "../../../utils/api";
+import { post } from "../../../factories/Post";
 import { CreateUserParams } from "./interfaces";
-import { BaseRequestResponse } from "../../infrastructure/api/interfaces";
+import { BaseRequestResponse } from "../../../infrastructure/api/interfaces";
 
-export const postCreateUser = async (
+export const createUser = async (
   user: CreateUserParams
 ): Promise<BaseRequestResponse> => {
   const { firstName, lastName, email, password, avatar, nickName, policy } =

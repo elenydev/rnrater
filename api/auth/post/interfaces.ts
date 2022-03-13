@@ -1,4 +1,4 @@
-import { SerializedImage } from "../../utils/serializeImage";
+import { SerializedImage } from "../../../utils/serializeImage";
 
 export interface CreateUserParams {
   firstName: string;

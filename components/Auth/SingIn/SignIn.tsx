@@ -13,7 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import { defaultValues, validationRules } from "./formConfig";
-import { AuthenticateUserParams } from "../../../api/auth/interfaces";
+import { AuthenticateUserParams } from "../../../api/auth/post/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { getFormManager } from "../../../managers/FormManager/selectors";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
