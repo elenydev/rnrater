@@ -53,6 +53,18 @@ const Form = () => {
 
   return (
     <View style={styles.formContainer}>
+    
+
+      {imagePreview && (
+        <View style={styles.imageBox}>
+          <Image
+            source={{ uri: imagePreview }}
+            style={{ width: 200, height: 200 }}
+            resizeMode="cover"
+          />
+        </View>
+      )}
+      
       <Controller
         name="categoryImage"
         control={control}
@@ -67,16 +79,6 @@ const Form = () => {
         )}
         rules={validationRules.categoryImage}
       />
-
-      {imagePreview && (
-        <View style={styles.imageBox}>
-          <Image
-            source={{ uri: imagePreview }}
-            style={{ width: 200, height: 200 }}
-            resizeMode="cover"
-          />
-        </View>
-      )}
 
       <Controller
         name="name"
@@ -111,9 +113,9 @@ export default Form;
 
 const styles = StyleSheet.create({
   formContainer: {
-    padding: 10,
+    padding: 20,
     alignItems: "center",
-    width: "60%",
+    width: "80%",
     paddingHorizontal: 15,
     shadowColor: "#000",
     elevation: 2,
@@ -125,6 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: "#333",
+    marginVertical: 30
   },
   validationContainer: {
     padding: 10,
