@@ -38,8 +38,7 @@ import HistoryManager from "../managers/HistoryManager/HistoryManager";
 import { useDispatch } from "react-redux";
 import Profile from "../components/Profile/Profile";
 import { socket } from "../services/sockets";
-import CategoryCreate from "../components/Categories/CategoryCreate/CategoryCreate";
-
+import CategoryCreate from "../screens/Categories/CategoryCreate/CategoryCreate";
 
 export default function Navigation({
   colorScheme,
@@ -94,6 +93,7 @@ function CategoryNavigation() {
       <CategoryRoutes.Screen
         name={CategoryStackRoutes.categoryCreate}
         component={CategoryCreate}
+        options={{ title: "Create Category" }}
       />
     </CategoryRoutes.Group>
   );

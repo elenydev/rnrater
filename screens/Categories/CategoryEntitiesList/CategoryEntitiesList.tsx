@@ -1,10 +1,8 @@
-import React from 'react'
-import EntitiesListComponent from '../../../components/Categories/Categories/CategoryCard/CategoryEntitiesList/CategoryEntitiesList';
+import React from "react";
+import EntitiesListComponent from "../../../components/Categories/Categories/CategoryCard/CategoryEntitiesList/CategoryEntitiesList";
 
 const CategoriesEntitiesList = () => {
-    return (
-        <EntitiesListComponent />
-    )
-}
+  return <EntitiesListComponent />;
+};
 
-export default CategoriesEntitiesList
+export default CategoriesEntitiesList;
