@@ -8,6 +8,9 @@ import Loader from "../../../components/Loader";
 import { useCategories } from "../hooks/useCategories";
 import { View } from "../../../components/Themed";
 import { Button } from "react-native-elements";
+import { useNavigation } from "@react-navigation/native";
+import { CategoryStackScreenRoutes } from "../../../infrastructure/router/interfaces";
+import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
 
 const dummyCat: Category[] = [
   {
@@ -30,10 +33,16 @@ const dummyCat: Category[] = [
 
 export default function Categories() {
   const { isLoading, loadCategories } = useCategories();
+  const navigation = useNavigation<CategoryStackScreenRoutes>();
 
   React.useEffect(() => {
     loadCategories();
   }, []);
+
+  const goToAddCategory = React.useCallback(( ) => {
+    navigation.navigate(CategoryStackRoutes.categoryCreate)
+  }, [])
+
 
   return isLoading ? (
     <Loader />
@@ -45,7 +54,7 @@ export default function Categories() {
         renderItem={(itemData) => <CategoryCard category={itemData.item} />}
         ListFooterComponent={
           <View style={styles.buttonBox}>
-            <Button title={"Add Category"} style={styles.button} />
+            <Button title={"Add Category"} style={styles.button} onPress={goToAddCategory}/>
           </View>
         }
       />

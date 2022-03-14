@@ -38,6 +38,7 @@ import HistoryManager from "../managers/HistoryManager/HistoryManager";
 import { useDispatch } from "react-redux";
 import Profile from "../components/Profile/Profile";
 import { socket } from "../services/sockets";
+import CategoryCreate from "../components/Categories/CategoryCreate/CategoryCreate";
 
 
 export default function Navigation({
@@ -89,6 +90,10 @@ function CategoryNavigation() {
         name={CategoryStackRoutes.CategoryEntity}
         component={CategoryEntity}
         options={{ title: "Entity" }}
+      />
+      <CategoryRoutes.Screen
+        name={CategoryStackRoutes.categoryCreate}
+        component={CategoryCreate}
       />
     </CategoryRoutes.Group>
   );

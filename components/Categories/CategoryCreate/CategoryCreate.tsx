@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import Form from "./Form/Form";
 
-const CreateCategory = () => {
+const CategoryCreate = () => {
   return (
     <ScrollView
       contentContainerStyle={{ ...styles.container }}
@@ -13,7 +13,7 @@ const CreateCategory = () => {
   );
 };
 
-export default CreateCategory;
+export default CategoryCreate;
 
 const styles = StyleSheet.create({
   container: {
