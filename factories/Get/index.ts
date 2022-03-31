@@ -91,10 +91,20 @@ export const databaseResponse = async <ListItemType>(
   | BaseRequestResponse
 > => {
   const baseResult = multipleResults
-    ? { results: (response as GetListActionResult<ListItemType>).results }
+    ? {
+        results: (response as GetListActionResult<ListItemType>).results,
+        paging: {
+          totalCount: (response as GetListActionResult<ListItemType>).paging
+            ?.totalCount,
+          pageSize: (response as GetListActionResult<ListItemType>).paging
+            ?.pageSize,
+          pageNumber: (response as GetListActionResult<ListItemType>).paging
+            ?.pageNumber,
+        },
+      }
     : { result: (response as GetItemActionResult<ListItemType>).result };
   if (isSuccesfullResponse) {
-    const file = returnFile && response.blob && await response.blob();
+    const file = returnFile && response.blob && (await response.blob());
     return Promise.resolve({
       ...baseResult,
       ...(returnFile && { result: file }),
