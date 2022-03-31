@@ -21,9 +21,7 @@ function* getCategoriesListCall() {
 
     if (response.responseStatus === ResponseStatus.Success) {
       yield put(CategoriesStoreActions.getCategoriesListSuccess(response));
-      return successToast(response.message);
     }
-    errorToast(response.message);
   } catch (error) {
     yield put(CategoriesStoreActions.getCategoriesListFailure());
     errorToast(error.message);

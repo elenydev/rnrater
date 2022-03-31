@@ -39,10 +39,9 @@ export default function Categories() {
     loadCategories();
   }, []);
 
-  const goToAddCategory = React.useCallback(( ) => {
-    navigation.navigate(CategoryStackRoutes.categoryCreate)
-  }, [])
-
+  const goToAddCategory = React.useCallback(() => {
+    navigation.navigate(CategoryStackRoutes.categoryCreate);
+  }, []);
 
   return isLoading ? (
     <Loader />
@@ -54,7 +53,11 @@ export default function Categories() {
         renderItem={(itemData) => <CategoryCard category={itemData.item} />}
         ListFooterComponent={
           <View style={styles.buttonBox}>
-            <Button title={"Add Category"} style={styles.button} onPress={goToAddCategory}/>
+            <Button
+              title={"Add Category"}
+              style={styles.button}
+              onPress={goToAddCategory}
+            />
           </View>
         }
       />
