@@ -1,9 +1,9 @@
-import { API_URL } from "../../utils/api";
-import { post } from "../../factories/Post";
+import { API_URL } from "../../../utils/api";
+import { post } from "../../../factories/Post";
 import { AuthenticateUserParams } from "./interfaces";
-import { PostItemActionResult } from "../../factories/interfaces/post";
-import { User } from "../../infrastructure/models/User";
-import { BaseRequestResponse } from "../../infrastructure/api/interfaces";
+import { PostItemActionResult } from "../../../factories/interfaces/post";
+import { User } from "../../../infrastructure/models/User";
+import { BaseRequestResponse } from "../../../infrastructure/api/interfaces";
 
 export interface PostAuthenticateUserResult {
   user: User,

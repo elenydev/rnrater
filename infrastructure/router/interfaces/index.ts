@@ -62,12 +62,13 @@ export type CategoryStackScreenRoutes = NativeStackNavigationProp<
     [CategoryStackRoutes.CategoryEntity]: {
       categoryEntityId: string;
     };
+    [CategoryStackRoutes.categoryCreate]: undefined;
   },
   keyof CategoryScreensList
 >;
 
 export type CategoryStackRoutesProps<
-  RouteName extends keyof CategoryScreensList
+  RouteName extends keyof Partial<CategoryScreensList>
 > = RouteProp<
   {
     [CategoryStackRoutes.CategoryEntities]: {
@@ -76,6 +77,7 @@ export type CategoryStackRoutesProps<
     [CategoryStackRoutes.CategoryEntity]: {
       categoryEntityId: string;
     };
+    [CategoryStackRoutes.categoryCreate]: undefined;
   },
   RouteName
 >;
@@ -88,6 +90,7 @@ export type AuthScreensList = {
 export type CategoryScreensList = {
   [CategoryStackRoutes.CategoryEntities]: undefined;
   [CategoryStackRoutes.CategoryEntity]: undefined;
+  [CategoryStackRoutes.categoryCreate]: undefined;
 };
 
 export type RootScreenTabs = {

@@ -8,15 +8,15 @@ import { successToast, errorToast } from "../../../services/toast";
 import {
   postAuthenticateUser,
   PostAuthenticateUserResult,
-} from "../../../api/auth/postAuthenticateUser";
+} from "../../../api/auth/post/authenticateUser";
 import {
   getUserAvatar as getUserAvatarCall,
   GetUserAvatarActionResult,
 } from "../../../api/user/get/userAvatar";
-import { AuthenticateUserParams } from "../../../api/auth/interfaces";
+import { AuthenticateUserParams } from "../../../api/auth/post/interfaces";
 import { GetUserAvatarParams } from "../../../api/user/get/intefaces";
-import { postCreateUser } from "../../../api/auth/postCreateUser";
-import { CreateUserParams } from "../../../api/auth/interfaces";
+import { createUser as createUserCall } from "../../../api/auth/post/createUser";
+import { CreateUserParams } from "../../../api/auth/post/interfaces";
 
 import { Action } from "redux-actions";
 import * as UserStoreActions from "./actions";
@@ -72,7 +72,7 @@ function* createUser(action: Action<CreateUserParams>) {
   const formManager: FormManager = yield select(getFormManager);
   const historyManager: HistoryManager = yield select(getHistoryManager);
   try {
-    const response: BaseRequestResponse = yield postCreateUser(user);
+    const response: BaseRequestResponse = yield createUserCall(user);
     if (response.responseStatus === ResponseStatus.Success) {
       formManager.clearCurrentForm(FormInstanceName.CreateUser);
       yield put(UserStoreActions.createUserSuccess());

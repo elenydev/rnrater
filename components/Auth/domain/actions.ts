@@ -1,8 +1,8 @@
 import { createAction } from "@reduxjs/toolkit";
 import { createActionWithPayload } from "../../../utils/redux/actions";
-import { CreateUserParams} from "../../../api/auth/interfaces";
+import { CreateUserParams} from "../../../api/auth/post/interfaces";
 import { User } from "../../../infrastructure/models/User";
-import { AuthenticateUserParams } from "../../../api/auth/interfaces";
+import { AuthenticateUserParams } from "../../../api/auth/post/interfaces";
 import { GetUserAvatarParams } from "../../../api/user/get/intefaces";
 
 export enum UserStoreActions {

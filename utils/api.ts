@@ -1,4 +1,4 @@
-export const DATABASE_URL = "http://192.168.0.21:8080";
+export const DATABASE_URL = "http://192.168.0.23:8080";
 
 export const API_URL = {
   AUTH: {
@@ -9,6 +9,7 @@ export const API_URL = {
     GET_USER_AVATAR: `${DATABASE_URL}/user/get/userAvatar`
   },
   CATEGORIES: {
-    GET_LIST: `${DATABASE_URL}/categories/get/getList`
+    GET_LIST: `${DATABASE_URL}/categories/get/getList`,
+    CREATE_CATEGORY: `${DATABASE_URL}/categories/post/createCategory`
   }
 };

@@ -7,7 +7,7 @@ import { useCustomForm } from "../../../hooks/useCustomForm";
 import { Controller } from "react-hook-form";
 import { defaultValues, validationRules } from "./formConfig";
 import { serializeImage } from "../../../utils/serializeImage";
-import { CreateUserParams } from "../../../api/auth/interfaces";
+import { CreateUserParams } from "../../../api/auth/post/interfaces";
 import { CheckBox } from "react-native-elements";
 import { useDispatch, useSelector } from "react-redux";
 import { getFormManager } from "../../../managers/FormManager/selectors";

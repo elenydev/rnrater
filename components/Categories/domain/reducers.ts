@@ -29,6 +29,18 @@ const categoriesStore = createSliceWithSaga({
       )
       .addCase(actions.getCategoriesListFailure, (state: CategoriesStore) => {
         state.isLoading = false;
+      })
+
+      .addCase(actions.createCategoryTrigger, (state: CategoriesStore) => {
+        state.isLoading = true;
+      })
+
+      .addCase(actions.createCategorySuccess, (state: CategoriesStore) => {
+        state.isLoading = false;
+      })
+
+      .addCase(actions.createCategoryFailure, (state: CategoriesStore) => {
+        state.isLoading = false;
       });
   },
   reducers: {},
