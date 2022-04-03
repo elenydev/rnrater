@@ -16,6 +16,7 @@ const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
   const onCardPress = useCallback(() => {
     navigation.navigate(CategoryStackRoutes.CategoryEntities, {
       categoryId: props.category.id,
+      categoryName: props.category.name
     });
   }, [navigation, props.category.id]);
 

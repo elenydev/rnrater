@@ -28,33 +28,39 @@ export default function Categories() {
     <Loader />
   ) : (
     <>
-      <FlatList
-        data={categoriesList}
-        keyExtractor={(item) => item.id}
-        renderItem={(itemData) => <CategoryCard category={itemData.item} />}
-        ListFooterComponent={
-          <View style={styles.buttonBox}>
-            <Button
-              title={"Add Category"}
-              style={styles.button}
-              onPress={goToAddCategory}
-            />
-          </View>
-        }
-        ListEmptyComponent={
-          <View style={styles.emptyList}>
-            <Text>List of categories is empty</Text>
-          </View>
-        }
-        contentContainerStyle={{
-          flexGrow: 1
-        }}
-      />
+      <View style={styles.listWrapper}>
+        <FlatList
+          data={categoriesList}
+          keyExtractor={(item) => item.id}
+          renderItem={(itemData) => <CategoryCard category={itemData.item} />}
+          ListFooterComponent={
+            <View style={styles.buttonBox}>
+              <Button
+                title={"Add Category"}
+                style={styles.button}
+                onPress={goToAddCategory}
+              />
+            </View>
+          }
+          ListEmptyComponent={
+            <View style={styles.emptyList}>
+              <Text>List of categories is empty</Text>
+            </View>
+          }
+          contentContainerStyle={{
+            flexGrow: 1,
+            display: "flex",
+          }}
+        />
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  listWrapper: {
+    flex: 1,
+  },
   buttonBox: {
     display: "flex",
     justifyContent: "center",
@@ -66,10 +72,10 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   emptyList: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

@@ -21,7 +21,7 @@ export const getCategoryCoverImage = async (
   categoryId: string
 ): Promise<GetCategoryCoverImageResult> => {
   return await getItem<Blob>(
-    API_URL.USER.GET_USER_AVATAR,
+    API_URL.CATEGORIES.GET_CATEGORY_COVER_IMAGE,
     true,
     { categoryId },
     true
