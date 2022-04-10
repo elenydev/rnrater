@@ -23,7 +23,6 @@ const categoriesStore = createSliceWithSaga({
         actions.getCategoriesListSuccess,
         (state: CategoriesStore, action) => {
           state.paging = action.payload.paging!;
-          state.isLoading = false;
         }
       )
       .addCase(actions.getCategoriesListFailure, (state: CategoriesStore) => {
@@ -50,7 +49,7 @@ const categoriesStore = createSliceWithSaga({
       )
 
       .addCase(actions.getCategoriesCoverImagesTrigger, (state: CategoriesStore) => {
-        state.isLoading = false;
+        state.isLoading = true;
       })
 
       .addCase(

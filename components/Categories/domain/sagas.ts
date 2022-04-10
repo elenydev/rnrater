@@ -29,12 +29,12 @@ function* getCategoriesListCall() {
     );
 
     if (response.responseStatus === ResponseStatus.Success) {
+      yield put(CategoriesStoreActions.getCategoriesListSuccess(response));
       yield put(
         CategoriesStoreActions.getCategoriesCoverImagesTrigger({
           categories: response.results!,
         })
       );
-      yield put(CategoriesStoreActions.getCategoriesListSuccess(response));
     }
   } catch (error) {
     yield put(CategoriesStoreActions.getCategoriesListFailure());
