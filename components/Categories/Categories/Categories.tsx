@@ -51,6 +51,8 @@ export default function Categories() {
             flexGrow: 1,
             display: "flex",
           }}
+          refreshing={isLoading}
+          onRefresh={loadCategories}
         />
       </View>
     </>
