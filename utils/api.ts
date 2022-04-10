@@ -10,6 +10,7 @@ export const API_URL = {
   },
   CATEGORIES: {
     GET_LIST: `${DATABASE_URL}/categories/get/getList`,
-    CREATE_CATEGORY: `${DATABASE_URL}/categories/post/createCategory`
+    CREATE_CATEGORY: `${DATABASE_URL}/categories/post/createCategory`,
+    GET_CATEGORY_COVER_IMAGE: `${DATABASE_URL}/categories/get/getCategoryImage`
   }
 };

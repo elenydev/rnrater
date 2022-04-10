@@ -6,3 +6,7 @@ export interface Category {
   categoryImageUrl: string;
   categoryPosts: CategoryPost[];
 }
+
+export interface CategoryWithCover extends Category {
+  coverImage: Blob;
+}

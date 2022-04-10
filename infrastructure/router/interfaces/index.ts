@@ -58,6 +58,7 @@ export type CategoryStackScreenRoutes = NativeStackNavigationProp<
   {
     [CategoryStackRoutes.CategoryEntities]: {
       categoryId: string;
+      categoryName: string
     };
     [CategoryStackRoutes.CategoryEntity]: {
       categoryEntityId: string;
@@ -73,6 +74,7 @@ export type CategoryStackRoutesProps<
   {
     [CategoryStackRoutes.CategoryEntities]: {
       categoryId: string;
+      categoryName: string;
     };
     [CategoryStackRoutes.CategoryEntity]: {
       categoryEntityId: string;

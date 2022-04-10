@@ -45,7 +45,7 @@ const CategoryEntitiesList = () => {
   const navigation = useNavigation<CategoryStackScreenRoutes>();
 
   useLayoutEffect(() => {
-    navigation.setOptions({ title: params.categoryId });
+    navigation.setOptions({ title: params.categoryName });
   }, [navigation, params]);
 
   return (

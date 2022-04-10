@@ -1,37 +1,56 @@
-import { Category } from "../../../../infrastructure/components/interfaces/Category";
-import React, { FC, useCallback } from "react";
+import { CategoryWithCover } from "../../../../infrastructure/models/Category";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { View, Text } from "../../../../components/Themed";
 import { ImageBackground, StyleSheet, TouchableHighlight } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { CategoryStackScreenRoutes } from "../../../../infrastructure/router/interfaces";
 import { CategoryStackRoutes } from "../../../../infrastructure/router/enums";
+import { readImage } from "../../../../utils/readImage";
+import Loader from "../../../../components/Loader";
 
 interface ComponentProps {
-  category: Category;
+  category: CategoryWithCover;
 }
 
 const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
   const navigation = useNavigation<CategoryStackScreenRoutes>();
+  const [categoryImage, setCategoryImage] = useState<ArrayBuffer>();
 
   const onCardPress = useCallback(() => {
     navigation.navigate(CategoryStackRoutes.CategoryEntities, {
       categoryId: props.category.id,
+      categoryName: props.category.name,
     });
   }, [navigation, props.category.id]);
 
+  useEffect(() => {
+    if (props.category.coverImage) {
+      readImage(props.category.coverImage, setCategoryImage);
+    }
+  }, [props.category.coverImage]);
+
   return (
     <View style={styles.container}>
-      <TouchableHighlight style={styles.item} onPress={onCardPress}>
-        <ImageBackground
-          style={styles.image}
-          source={require("../../../../assets/images/icon.png")}
-          resizeMode="stretch"
-        >
-          <View style={styles.contentWrapper}>
-            <Text>{props.category.name}</Text>
-          </View>
-        </ImageBackground>
-      </TouchableHighlight>
+      {categoryImage ? (
+        <TouchableHighlight style={styles.item} onPress={onCardPress}>
+          <ImageBackground
+            style={styles.image}
+            imageStyle= {{
+              borderRadius: 10
+            }}
+            source={{ uri: categoryImage as unknown as string }}
+            resizeMode="stretch"
+          >
+            <View style={styles.contentWrapper}>
+              <Text
+                style={styles.text}
+              >{props.category.name}</Text>
+            </View>
+          </ImageBackground>
+        </TouchableHighlight>
+      ) : (
+        <Loader />
+      )}
     </View>
   );
 };
@@ -43,6 +62,7 @@ const styles = StyleSheet.create({
     height: 240,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10
   },
   item: {
     flex: 1,
@@ -65,6 +85,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  text: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    textShadowColor: 'white',
+    textShadowRadius: 10
+  }
 });
 
 export default CategoryCard;

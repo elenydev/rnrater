@@ -22,9 +22,7 @@ const categoriesStore = createSliceWithSaga({
       .addCase(
         actions.getCategoriesListSuccess,
         (state: CategoriesStore, action) => {
-          state.list = action.payload.results!;
           state.paging = action.payload.paging!;
-          state.isLoading = false;
         }
       )
       .addCase(actions.getCategoriesListFailure, (state: CategoriesStore) => {
@@ -41,7 +39,26 @@ const categoriesStore = createSliceWithSaga({
 
       .addCase(actions.createCategoryFailure, (state: CategoriesStore) => {
         state.isLoading = false;
-      });
+      })
+
+      .addCase(
+        actions.getCategoriesCoverImagesFailure,
+        (state: CategoriesStore) => {
+          state.isLoading = false;
+        }
+      )
+
+      .addCase(actions.getCategoriesCoverImagesTrigger, (state: CategoriesStore) => {
+        state.isLoading = true;
+      })
+
+      .addCase(
+        actions.getCategoriesCoverImagesSuccess,
+        (state: CategoriesStore, action) => {
+          state.list = action.payload;
+          state.isLoading = false;
+        }
+      );
   },
   reducers: {},
 });
