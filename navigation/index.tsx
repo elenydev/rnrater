@@ -14,7 +14,7 @@ import useColorScheme from "../hooks/useColorScheme";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import Categories from "../screens/Categories/Categories";
 import CategoryEntitiesList from "../screens/Categories/CategoryEntitiesList/CategoryEntitiesList";
-import CategoryEntity from "../screens/Categories/CategoryEntitiesList/CategoryEntity/CategoryEntity";
+import CategoryEntityItem from "../screens/Categories/CategoryEntitiesList/CategoryEntity/CategoryEntityItem/CategoryEntityItem";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
 import SignInScreen from "../screens/Auth/SignInScreen";
 import {
@@ -86,9 +86,8 @@ function CategoryNavigation() {
         component={CategoryEntitiesList}
       />
       <CategoryRoutes.Screen
-        name={CategoryStackRoutes.CategoryEntity}
-        component={CategoryEntity}
-        options={{ title: "Entity" }}
+        name={CategoryStackRoutes.CategoryEntityItem}
+        component={CategoryEntityItem}
       />
       <CategoryRoutes.Screen
         name={CategoryStackRoutes.categoryCreate}

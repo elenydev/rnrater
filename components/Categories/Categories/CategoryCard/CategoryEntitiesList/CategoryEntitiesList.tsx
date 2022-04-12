@@ -12,30 +12,37 @@ const dummyEntity = [
   {
     title: "Fancy cars",
     description: `Check this out, that's a nice car`,
+    id: '1'
   },
   {
     title: "Fancy carr",
     description: `Check this out, that's a nice car`,
+    id: '1'
   },
   {
     title: "Fancy cara",
     description: `Check this out, that's a nice car`,
+    id: '1',
   },
   {
     title: "Fancy carz",
     description: `Check this out, that's a nice car`,
+    id: '1',
   },
   {
     title: "Fancy cart",
     description: `Check this out, that's a nice car`,
+    id: '1',
   },
   {
     title: "Fancy cary",
     description: `Check this out, that's a nice car`,
+    id: '1',
   },
   {
     title: "Fancy caru",
     description: `Check this out, that's a nice car`,
+    id: '1',
   },
 ];
 
