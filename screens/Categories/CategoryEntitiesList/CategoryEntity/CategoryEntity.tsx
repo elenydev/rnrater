@@ -1,9 +1,9 @@
 import React from 'react'
 
-const CategoriesEntity = () => {
+const CategoryEntity = () => {
     return (
         <></>
     )
 }
 
-export default CategoriesEntity
+export default CategoryEntity
