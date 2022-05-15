@@ -13,5 +13,5 @@ export const createCategory = async (
     type: `image/${data.categoryImage.type}`,
   };
   formData.append("categoryImage", categoryImage);
-  return await post(API_URL.CATEGORIES.CREATE_CATEGORY, formData, true, true);
+  return await post(API_URL.CATEGORY.CREATE_CATEGORY, formData, true, true);
 };
