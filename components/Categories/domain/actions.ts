@@ -1,6 +1,8 @@
 import { createAction } from "@reduxjs/toolkit";
 import { CreateCategoryParams } from "../../../api/categories/post/interfaces";
-import { GetCategoriesListActionResult } from "../../../api/categories/get";
+import {
+  GetCategoriesListActionResult,
+} from "../../../api/categories/get";
 import { createActionWithPayload } from "../../../utils/redux/actions";
 import { GetCategoriesCoverImagesParams } from "./interfaces";
 import { CategoryWithCover } from "infrastructure/models/Category";
@@ -15,6 +17,9 @@ export enum CategoriesStoreActions {
   GetCategoriesCoverImagesTrigger = "categoriesStore/getCategoriesCoverImagesTrigger",
   GetCategoriesCoverImagesSuccess = "categoriesStore/getCategoriesCoverImagesSuccess",
   GetCategoriesCoverImagesFailure = "categoriesStore/getCategoriesCoverImagesFailure",
+  GetCategoryItemsTrigger = "categoriesStore/getCategoryItemsTrigger",
+  GetCategoryItemSuccess = "categoriesStore/getCategoryItemSuccess",
+  GetCategoryItemFailure = "categoriesStore/getCategoryItemFailure",
 }
 
 export const getCategoriesListTrigger = createAction(
@@ -52,3 +57,4 @@ export const getCategoriesCoverImagesFailure = createAction(
 export const getCategoriesCoverImagesSuccess = createActionWithPayload<
   CategoryWithCover[]
 >(CategoriesStoreActions.GetCategoriesCoverImagesSuccess);
+

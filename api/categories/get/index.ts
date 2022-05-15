@@ -12,7 +12,7 @@ export type GetCategoriesListActionResult = GetListActionResult<Category>;
 export const getCategoriesList = async (
   paging: Paging
 ): Promise<GetCategoriesListActionResult> => {
-  return await getList<Category>(API_URL.CATEGORIES.GET_LIST, true, {}, paging);
+  return await getList<Category>(API_URL.CATEGORY.GET_LIST, true, {}, paging);
 };
 
 export type GetCategoryCoverImageResult = GetItemActionResult<Blob>;
@@ -21,7 +21,7 @@ export const getCategoryCoverImage = async (
   categoryId: string
 ): Promise<GetCategoryCoverImageResult> => {
   return await getItem<Blob>(
-    API_URL.CATEGORIES.GET_CATEGORY_COVER_IMAGE,
+    API_URL.CATEGORY.GET_CATEGORY_COVER_IMAGE,
     true,
     { categoryId },
     true
