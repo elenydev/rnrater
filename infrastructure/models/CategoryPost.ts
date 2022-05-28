@@ -2,12 +2,16 @@ import { Category } from "./Category";
 import { Comment } from "./Comment";
 import { User } from "./User";
 
-export interface  CategoryPost {
-    id: string;
-    imageUrl: string;
-    rates: number[];
-    averageRates: number;
-    comments: Comment[];
-    evaluators: User[];
-    category: Category;
-  }
+export interface CategoryPost {
+  id: string;
+  imageUrl: string;
+  rates: number[];
+  averageRates: number;
+  comments: Comment[];
+  evaluators: User[];
+  category: Category;
+}
+
+export interface CategoryPostWithImage extends CategoryPost {
+  image: Blob
+}

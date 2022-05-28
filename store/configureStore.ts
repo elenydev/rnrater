@@ -4,6 +4,7 @@ import createSagaMiddleware from "redux-saga";
 import formsStore from "../managers/FormManager/reducers";
 import historyStore from '../managers/HistoryManager/reducers'
 import categoriesStore from '../components/Categories/domain/reducers';
+import categoryPostsStore from '../components/CategoryPost/domain/reducers';
 import rootSaga from './rootSaga'
 
 let sagaMiddleware = createSagaMiddleware();
@@ -13,7 +14,8 @@ const store = configureStore({
     userStore,
     formsStore,
     historyStore,
-    categoriesStore
+    categoriesStore,
+    categoryPostsStore
   },
   middleware: [sagaMiddleware],
 });
