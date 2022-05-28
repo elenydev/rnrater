@@ -2,13 +2,13 @@ import { CategoryPost } from "../../../infrastructure/models/CategoryPost";
 import { getList } from "../../../factories/Get";
 import { API_URL } from "../../../utils/api";
 import {
-  GetCategoryItemsListActionResult,
-  GetCategoryPostItemsListParams,
+  GetCategoryPostListParams,
+  GetCategoryPostsListActionResult,
 } from "./interfaces";
 
 export const getCategoryPostItemsList = async (
-  params: GetCategoryPostItemsListParams
-): Promise<GetCategoryItemsListActionResult> => {
+  params: GetCategoryPostListParams
+): Promise<GetCategoryPostsListActionResult> => {
   const { paging, categoryId } = params;
 
   return await getList<CategoryPost>(
