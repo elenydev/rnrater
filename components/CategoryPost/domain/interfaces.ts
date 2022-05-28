@@ -1,4 +1,7 @@
-import { CategoryPostWithImage } from "infrastructure/models/CategoryPost";
+import {
+  CategoryPost,
+  CategoryPostWithImage,
+} from "../../../infrastructure/models/CategoryPost";
 import { Paging } from "../../../infrastructure/api/interfaces";
 
 export interface CategoryPostsStore {
@@ -9,4 +12,8 @@ export interface CategoryPostsStore {
 
 export interface GetCategoryPostsListParams {
   categoryId: string;
+}
+
+export interface GetCategoryPostsImagesParams {
+  categories: CategoryPost[];
 }

@@ -1,23 +1,42 @@
 import { createActionWithPayload } from "../../../utils/redux/actions";
 import { createAction } from "@reduxjs/toolkit";
 import { GetCategoryPostsListActionResult } from "../../../api/categoryPost/get/interfaces";
-import { GetCategoryPostsListParams } from "./interfaces";
+import {
+  GetCategoryPostsImagesParams,
+  GetCategoryPostsListParams,
+} from "./interfaces";
+import { CategoryPostWithImage } from "../../../infrastructure/models/CategoryPost";
 
 export enum CategoryPostStoreActions {
-  GetCategoryPostItemsTrigger = "categoriesStore/getCategoryPostsTrigger",
-  GetCategoryPostItemSuccess = "categoriesStore/getCategoryPostsSuccess",
-  GetCategoryPostItemFailure = "categoriesStore/getCategoryPostsFailure",
-
+  GetCategoryPostsTrigger = "categoryPostStore/getCategoryPostsTrigger",
+  GetCategoryPostsSuccess = "categoryPostStore/getCategoryPostsSuccess",
+  GetCategoryPostsFailure = "categoryPostStore/getCategoryPostsFailure",
+  GetCategoryPostsImagesTrigger = "categoryPostStore/getCategoryPostsImagesTrigger",
+  GetCategoryPostsImagesSuccess = "categoryPostStore/getCategoryPostsImagesSuccess",
+  GetCategoryPostsImagesFailure = "categoryPostStore/getCategoryPostsImagesFailure",
 }
 
 export const getCategoryPostsTrigger =
   createActionWithPayload<GetCategoryPostsListParams>(
-    CategoryPostStoreActions.GetCategoryPostItemsTrigger
+    CategoryPostStoreActions.GetCategoryPostsTrigger
   );
 export const getCategoryPostsFailure = createAction(
-  CategoryPostStoreActions.GetCategoryPostItemFailure
+  CategoryPostStoreActions.GetCategoryPostsFailure
 );
 export const getCategoryPostsSuccess =
   createActionWithPayload<GetCategoryPostsListActionResult>(
-    CategoryPostStoreActions.GetCategoryPostItemSuccess
+    CategoryPostStoreActions.GetCategoryPostsSuccess
   );
+
+export const getCategoryPostsImagesTrigger =
+  createActionWithPayload<GetCategoryPostsImagesParams>(
+    CategoryPostStoreActions.GetCategoryPostsImagesTrigger
+  );
+
+export const getCategoryPostsImagesFailure = createActionWithPayload(
+  CategoryPostStoreActions.GetCategoryPostsImagesFailure
+);
+
+export const getCategoryPostsImagesSuccess = createActionWithPayload<
+  CategoryPostWithImage[]
+>(CategoryPostStoreActions.GetCategoryPostsImagesSuccess);

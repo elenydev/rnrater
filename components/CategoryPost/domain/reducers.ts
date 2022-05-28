@@ -16,16 +16,16 @@ const categoryPostsStore = createSliceWithSaga({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(actions.getCategoryItemsTrigger, (state: CategoryPostsStore) => {
+      .addCase(actions.getCategoryPostsTrigger, (state: CategoryPostsStore) => {
         state.isLoading = true;
       })
       .addCase(
-        actions.getCategoryItemsSuccess,
+        actions.getCategoryPostsSuccess,
         (state: CategoryPostsStore, action) => {
           state.paging = action.payload.paging!;
         }
       )
-      .addCase(actions.getCategoryItemsFailure, (state: CategoryPostsStore) => {
+      .addCase(actions.getCategoryPostsFailure, (state: CategoryPostsStore) => {
         state.isLoading = false;
       })
   },
