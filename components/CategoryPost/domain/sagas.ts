@@ -15,7 +15,7 @@ import {
 import { Action } from "redux-actions";
 import { GetCategoryPostsListActionResult } from "../../../api/categoryPost/get/interfaces";
 import { ResponseStatus } from "../../../infrastructure/api/enums";
-import { CategoryPostWithImage } from "infrastructure/models/CategoryPost";
+import { CategoryPostWithImage } from "../../../infrastructure/models/CategoryPost";
 
 function* getCategoryPostsList(action: Action<GetCategoryPostsListParams>) {
   const paging: Paging = yield select(getCategoryPostsPaging);
