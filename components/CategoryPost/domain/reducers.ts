@@ -28,6 +28,28 @@ const categoryPostsStore = createSliceWithSaga({
       .addCase(actions.getCategoryPostsFailure, (state: CategoryPostsStore) => {
         state.isLoading = false;
       })
+
+      .addCase(
+        actions.getCategoryPostsImagesTrigger,
+        (state: CategoryPostsStore) => {
+          state.isLoading = true;
+        }
+      )
+
+      .addCase(
+        actions.getCategoryPostsImagesSuccess,
+        (state: CategoryPostsStore, action) => {
+          state.isLoading = false;
+          state.list = action.payload;
+        }
+      )
+
+      .addCase(
+        actions.getCategoryPostsImagesFailure,
+        (state: CategoryPostsStore) => {
+          state.isLoading = false;
+        }
+      );
   },
   reducers: {},
 });
