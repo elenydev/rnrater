@@ -4,19 +4,20 @@ import { GetCategoryPostsListActionResult } from "../../../api/categoryPost/get/
 import { GetCategoryPostsListParams } from "./interfaces";
 
 export enum CategoryPostStoreActions {
-  GetCategoryPostItemsTrigger = "categoriesStore/getCategoryItemsTrigger",
-  GetCategoryPostItemSuccess = "categoriesStore/getCategoryItemSuccess",
-  GetCategoryPostItemFailure = "categoriesStore/getCategoryItemFailure",
+  GetCategoryPostItemsTrigger = "categoriesStore/getCategoryPostsTrigger",
+  GetCategoryPostItemSuccess = "categoriesStore/getCategoryPostsSuccess",
+  GetCategoryPostItemFailure = "categoriesStore/getCategoryPostsFailure",
+
 }
 
-export const getCategoryItemsTrigger =
+export const getCategoryPostsTrigger =
   createActionWithPayload<GetCategoryPostsListParams>(
     CategoryPostStoreActions.GetCategoryPostItemsTrigger
   );
-export const getCategoryItemsFailure = createAction(
+export const getCategoryPostsFailure = createAction(
   CategoryPostStoreActions.GetCategoryPostItemFailure
 );
-export const getCategoryItemsSuccess =
+export const getCategoryPostsSuccess =
   createActionWithPayload<GetCategoryPostsListActionResult>(
     CategoryPostStoreActions.GetCategoryPostItemSuccess
   );

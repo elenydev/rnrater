@@ -7,6 +7,7 @@ import { getCategoryPostItemsList } from "../../../api/CategoryPost/get";
 import { GetCategoryPostsListParams } from "./interfaces";
 import { Action } from "redux-actions";
 import { GetCategoryPostsListActionResult } from "../../../api/categoryPost/get/interfaces";
+import { ResponseStatus } from "../../../infrastructure/api/enums";
 
 function* getCategoryPostsList(action: Action<GetCategoryPostsListParams>) {
   const paging: Paging = yield select(getCategoryPostsPaging);
@@ -18,8 +19,16 @@ function* getCategoryPostsList(action: Action<GetCategoryPostsListParams>) {
         paging,
         categoryId,
       });
+
+
+    if(response.responseStatus === ResponseStatus.Success) {
+      yield put(actions.getCategoryPostsSuccess(response));
+
+      yield put()
+
+    }
   } catch (error) {
-    yield put(actions.getCategoryItemsFailure());
+    yield put(actions.getCategoryPostsFailure());
     errorToast(error.message);
   }
 }
@@ -29,5 +38,5 @@ export default function* categoryPostsSagas(): Generator<
   void,
   unknown
 > {
-  yield takeLatest(actions.getCategoryItemsTrigger, getCategoryPostsList);
+  yield takeLatest(actions.getCategoryPostsTrigger, getCategoryPostsList);
 }
