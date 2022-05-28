@@ -33,7 +33,7 @@ export const getCategoryPostsImagesTrigger =
     CategoryPostStoreActions.GetCategoryPostsImagesTrigger
   );
 
-export const getCategoryPostsImagesFailure = createActionWithPayload(
+export const getCategoryPostsImagesFailure = createAction(
   CategoryPostStoreActions.GetCategoryPostsImagesFailure
 );
 

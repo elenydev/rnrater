@@ -15,5 +15,9 @@ export interface GetCategoryPostsListParams {
 }
 
 export interface GetCategoryPostsImagesParams {
-  categories: CategoryPost[];
+  categoryPosts: CategoryPost[];
+}
+
+export interface GetCategoryPostImageParams {
+  categoryPostId: string;
 }
