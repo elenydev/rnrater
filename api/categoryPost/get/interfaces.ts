@@ -4,7 +4,7 @@ import { CategoryPost } from "../../../infrastructure/models/CategoryPost";
 
 export interface GetCategoryPostListParams {
   categoryId: string;
-  paging: Paging
+  paging: Paging;
 }
 
 export type GetCategoryPostsListActionResult =
