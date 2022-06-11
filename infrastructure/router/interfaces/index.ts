@@ -65,7 +65,10 @@ export type CategoryStackScreenRoutes = NativeStackNavigationProp<
       categoryEntityTitle: string;
     };
     [CategoryStackRoutes.CategoryEntity]: undefined;
-    [CategoryStackRoutes.categoryCreate]: undefined;
+    [CategoryStackRoutes.CategoryCreate]: undefined;
+    [CategoryStackRoutes.CreateCategoryPost]: {
+      categoryId: string;
+    }
   },
   keyof CategoryScreensList
 >;
@@ -83,7 +86,10 @@ export type CategoryStackRoutesProps<
       categoryEntityTitle: string;
     };
     [CategoryStackRoutes.CategoryEntity]: undefined;
-    [CategoryStackRoutes.categoryCreate]: undefined;
+    [CategoryStackRoutes.CategoryCreate]: undefined;
+    [CategoryStackRoutes.CreateCategoryPost]: {
+      categoryId: string;
+    }
   },
   RouteName
 >;
@@ -97,7 +103,8 @@ export type CategoryScreensList = {
   [CategoryStackRoutes.CategoryEntities]: undefined;
   [CategoryStackRoutes.CategoryEntity]: undefined;
   [CategoryStackRoutes.CategoryEntityItem]: undefined
-  [CategoryStackRoutes.categoryCreate]: undefined;
+  [CategoryStackRoutes.CategoryCreate]: undefined;
+  [CategoryStackRoutes.CreateCategoryPost]: undefined;
 };
 
 export type RootScreenTabs = {

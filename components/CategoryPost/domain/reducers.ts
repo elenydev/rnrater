@@ -7,7 +7,7 @@ const initialState: CategoryPostsStore = {
     pageNumber: 1,
     pageSize: 10,
   },
-  isLoading: true,
+  isLoading: false,
   list: [],
 };
 

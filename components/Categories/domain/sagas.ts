@@ -20,6 +20,9 @@ import { createCategory } from "../../../api/categories/post";
 import { CreateCategoryParams } from "../../../api/categories/post/interfaces";
 import { GetCategoriesCoverImagesParams } from "./interfaces";
 import { CategoryWithCover } from "../../../infrastructure/models/Category";
+import FormManager from "../../../managers/FormManager/FormManager";
+import { FormInstanceName } from "../../../managers/FormManager/enums";
+import { getFormManager } from "../../../managers/FormManager/selectors";
 
 function* getCategoriesListCall() {
   const paging: Paging = yield select(getPaging);
@@ -45,9 +48,10 @@ function* getCategoriesListCall() {
 function* createCategoryCall(action: Action<CreateCategoryParams>) {
   try {
     const response: BaseRequestResponse = yield createCategory(action.payload);
-
+    const formManager: FormManager = yield select(getFormManager);
     if (response.responseStatus === ResponseStatus.Success) {
       yield put(CategoriesStoreActions.createCategorySuccess());
+      formManager.clearCurrentForm(FormInstanceName.CreateCategory);
       return successToast(response.message);
     }
 

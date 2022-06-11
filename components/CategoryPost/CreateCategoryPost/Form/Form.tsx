@@ -6,15 +6,23 @@ import { useCustomForm } from "../../../../hooks/useCustomForm";
 import { defaultValues, validationRules } from "./formConfig";
 import { Controller } from "react-hook-form";
 import { StyleSheet, Image, TextInput, Button } from "react-native";
-import { View, Text } from "../../../../components/Themed";
+import { View, Text } from "../../../Themed";
 import * as ImagePickerExpo from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
 import { serializeImage } from "../../../../utils/serializeImage";
-import { createCategoryTrigger } from "../../../../components/Categories/domain/actions";
-import { CreateCategoryParams } from "../../../../api/categories/post/interfaces";
+import { PostCategoryPostParams } from "../../../../api/categoryPost/post/interfaces";
+import { useCategoryItems } from "../../hooks/useCategoryItems";
+import { useRoute } from "@react-navigation/native";
+import { CategoryStackRoutes } from "../../../../infrastructure/router/enums";
+import { CategoryStackRoutesProps } from "../../../../infrastructure/router/interfaces";
 
 const Form = () => {
   const dispatch = useDispatch();
+  const { params } =
+    useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CreateCategoryPost>>();
+  const { createCategoryPost } = useCategoryItems({
+    categoryId: params.categoryId,
+  });
   const [imagePreview, setImagePreview] = useState<string | undefined>();
   const formManager = useSelector(getFormManager);
   const { formInstance, formError } = useCustomForm({
@@ -23,16 +31,19 @@ const Form = () => {
   const { setValue, clearErrors, control, handleSubmit } = formInstance;
 
   formManager.setFormInstance({
-    formName: FormInstanceName.CreateCategory,
+    formName: FormInstanceName.CreateCategoryPost,
     formInstance,
     additionalActions: () => setImagePreview(undefined),
   });
 
-  const handleCreateCategory = useCallback((data: CreateCategoryParams) => {
-    dispatch(createCategoryTrigger(data));
-  }, []);
+  const handleCreateCategoryPost = useCallback(
+    (data: Omit<PostCategoryPostParams, "categoryId">) => {
+      dispatch(createCategoryPost(data));
+    },
+    []
+  );
 
-  const handleCategoryImagePick = useCallback(async () => {
+  const handleCategoryPostImagePick = useCallback(async () => {
     const permission = await ImagePickerExpo.requestCameraPermissionsAsync();
 
     if (permission.granted) {
@@ -43,8 +54,8 @@ const Form = () => {
       if (imagePickResult) {
         const serializedImage = serializeImage(imagePickResult);
         if (serializedImage) {
-          setValue("categoryImage", serializedImage);
-          clearErrors("categoryImage");
+          setValue("categoryPostImage", serializedImage);
+          clearErrors("categoryPostImage");
           setImagePreview(serializedImage.uri);
         }
       }
@@ -53,8 +64,6 @@ const Form = () => {
 
   return (
     <View style={styles.formContainer}>
-    
-
       {imagePreview && (
         <View style={styles.imageBox}>
           <Image
@@ -64,9 +73,9 @@ const Form = () => {
           />
         </View>
       )}
-      
+
       <Controller
-        name="categoryImage"
+        name="categoryPostImage"
         control={control}
         render={({ field }) => (
           <FontAwesome.Button
@@ -74,14 +83,14 @@ const Form = () => {
             name="photo"
             size={10}
             iconStyle={styles.categoryImagePicker}
-            onPress={handleCategoryImagePick}
+            onPress={handleCategoryPostImagePick}
           />
         )}
-        rules={validationRules.categoryImage}
+        rules={validationRules.categoryPostImage}
       />
 
       <Controller
-        name="name"
+        name="title"
         control={control}
         render={({ field }) => (
           <TextInput
@@ -89,10 +98,10 @@ const Form = () => {
             value={field.value}
             onChangeText={(value) => field.onChange(value)}
             style={styles.input}
-            placeholder="Category Name"
+            placeholder="Category Post Title"
           />
         )}
-        rules={validationRules.name}
+        rules={validationRules.title}
       />
 
       <View>
@@ -101,8 +110,8 @@ const Form = () => {
 
       <View style={styles.buttonsContainer}>
         <Button
-          title="Create Category"
-          onPress={handleSubmit(handleCreateCategory)}
+          title="Create Category Post"
+          onPress={handleSubmit(handleCreateCategoryPost)}
         />
       </View>
     </View>
@@ -127,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: "#333",
-    marginVertical: 30
+    marginVertical: 30,
   },
   validationContainer: {
     padding: 10,

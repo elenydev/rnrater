@@ -9,7 +9,8 @@ export enum CategoryStackRoutes {
   CategoryEntities = "categoryEntities",
   CategoryEntity = "categoryEntity",
   CategoryEntityItem = 'categoryEntityItem',
-  categoryCreate = 'categoryCreate'
+  CategoryCreate = 'categoryCreate',
+  CreateCategoryPost = 'createCategoryPost'
 }
 
 export enum RootScreenTabs {

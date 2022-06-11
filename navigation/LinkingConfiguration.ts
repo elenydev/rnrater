@@ -47,6 +47,11 @@ const linking: LinkingOptions<RootStackParamList> = {
               entity: "Entity",
             },
           },
+          createCategoryPost: {
+            screens: {
+              createCategoryPost: 'Create Category Post'
+            }
+          }
         },
       },
       notFound: "*",
