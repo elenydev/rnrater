@@ -11,9 +11,18 @@ import * as ImagePickerExpo from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
 import { serializeImage } from "../../../utils/serializeImage";
 import { PostCategoryPostParams } from "../../../api/categoryPost/post/interfaces";
+import { useCategoryItems } from "../hooks/useCategoryItems";
+import { useRoute } from "@react-navigation/native";
+import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
+import { CategoryStackRoutesProps } from "../../../infrastructure/router/interfaces";
 
 const Form = () => {
   const dispatch = useDispatch();
+  const { params } =
+    useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryEntities>>();
+  const { createCategoryPost } = useCategoryItems({
+    categoryId: params.categoryId,
+  });
   const [imagePreview, setImagePreview] = useState<string | undefined>();
   const formManager = useSelector(getFormManager);
   const { formInstance, formError } = useCustomForm({
@@ -27,9 +36,12 @@ const Form = () => {
     additionalActions: () => setImagePreview(undefined),
   });
 
-  const handleCreateCategoryPost = useCallback((data: PostCategoryPostParams) => {
-    dispatch((data));
-  }, []);
+  const handleCreateCategoryPost = useCallback(
+    (data: Omit<PostCategoryPostParams, "categoryId">) => {
+      dispatch(createCategoryPost(data));
+    },
+    []
+  );
 
   const handleCategoryPostImagePick = useCallback(async () => {
     const permission = await ImagePickerExpo.requestCameraPermissionsAsync();
@@ -52,8 +64,6 @@ const Form = () => {
 
   return (
     <View style={styles.formContainer}>
-    
-
       {imagePreview && (
         <View style={styles.imageBox}>
           <Image
@@ -63,7 +73,7 @@ const Form = () => {
           />
         </View>
       )}
-      
+
       <Controller
         name="categoryPostImage"
         control={control}
@@ -126,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: "#333",
-    marginVertical: 30
+    marginVertical: 30,
   },
   validationContainer: {
     padding: 10,
