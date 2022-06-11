@@ -1,4 +1,3 @@
-import { Category } from "../../../infrastructure/components/interfaces/Category";
 import * as React from "react";
 
 import { FlatList, StyleSheet } from "react-native";
@@ -7,7 +6,7 @@ import CategoryCard from "../../Categories/Categories/CategoryCard/CategoryCard"
 import Loader from "../../../components/Loader";
 import { useCategories } from "../hooks/useCategories";
 import { Text, View } from "../../../components/Themed";
-import { Button, ListItem } from "react-native-elements";
+import { Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { CategoryStackScreenRoutes } from "../../../infrastructure/router/interfaces";
 import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
@@ -21,7 +20,7 @@ export default function Categories() {
   }, []);
 
   const goToAddCategory = React.useCallback(() => {
-    navigation.navigate(CategoryStackRoutes.categoryCreate);
+    navigation.navigate(CategoryStackRoutes.CategoryCreate);
   }, []);
 
   return isLoading ? (

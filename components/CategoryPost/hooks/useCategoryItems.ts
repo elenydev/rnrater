@@ -1,10 +1,11 @@
 import { PostCategoryPostParams } from "api/categoryPost/post/interfaces";
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getCategoryPostsTrigger,
   postCategoryPostTrigger,
 } from "../domain/actions";
+import { getCategoryPostsLoading } from "../domain/selectors";
 
 interface HookParams {
   categoryId: string;
@@ -12,6 +13,7 @@ interface HookParams {
 
 export const useCategoryItems = (params: HookParams) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(getCategoryPostsLoading);
 
   const loadCategoryItems = useCallback(() => {
     dispatch(getCategoryPostsTrigger({ categoryId: params.categoryId }));
@@ -31,6 +33,7 @@ export const useCategoryItems = (params: HookParams) => {
 
   return {
     loadCategoryItems,
-    createCategoryPost
+    createCategoryPost,
+    isLoading
   };
 };

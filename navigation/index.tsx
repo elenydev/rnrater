@@ -98,6 +98,7 @@ function CategoryNavigation() {
       <CategoryRoutes.Screen
         name={CategoryStackRoutes.CreateCategoryPost}
         component={CreateCategoryPost}
+        options={{ title: "Create Category Post" }}
       />
     </CategoryRoutes.Group>
   );
