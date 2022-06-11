@@ -1,8 +1,11 @@
-import { Paging } from "../../../infrastructure/api/interfaces";
+import {
+  BaseRequestResponse,
+  Paging,
+} from "../../../infrastructure/api/interfaces";
 import { ForkEffect, put, select, takeLatest } from "redux-saga/effects";
 import * as actions from "./actions";
 import { getCategoryPostsPaging } from "./selectors";
-import { errorToast } from "../../../services/toast";
+import { errorToast, successToast } from "../../../services/toast";
 import {
   GetCategoryPostImageResult,
   getCategoryPostItemsList,
@@ -16,6 +19,11 @@ import { Action } from "redux-actions";
 import { GetCategoryPostsListActionResult } from "../../../api/categoryPost/get/interfaces";
 import { ResponseStatus } from "../../../infrastructure/api/enums";
 import { CategoryPostWithImage } from "../../../infrastructure/models/CategoryPost";
+import { PostCategoryPostParams } from "api/categoryPost/post/interfaces";
+import { createCategoryPost } from "../../../api/categoryPost/post";
+import FormManager from "../../../managers/FormManager/FormManager";
+import { getFormManager } from "../../../managers/FormManager/selectors";
+import { FormInstanceName } from "../../../managers/FormManager/enums";
 
 function* getCategoryPostsList(action: Action<GetCategoryPostsListParams>) {
   const paging: Paging = yield select(getCategoryPostsPaging);
@@ -73,6 +81,25 @@ function* getCategoryPostsImagesCall(
   }
 }
 
+function* createCategoryPostCall(action: Action<PostCategoryPostParams>) {
+  try {
+    const response: BaseRequestResponse = yield createCategoryPost(
+      action.payload
+    );
+    const formManager: FormManager = yield select(getFormManager);
+    if (response.responseStatus === ResponseStatus.Success) {
+      yield put(actions.postCategoryPostSuccess);
+      formManager.clearCurrentForm(FormInstanceName.CreateCategory);
+      return successToast(response.message);
+    }
+
+    errorToast(response.message);
+  } catch (error) {
+    yield put(actions.postCategoryPostFailure());
+    errorToast(error);
+  }
+}
+
 export default function* categoryPostsSagas(): Generator<
   ForkEffect<never>,
   void,
@@ -83,4 +110,5 @@ export default function* categoryPostsSagas(): Generator<
     actions.getCategoryPostsImagesTrigger,
     getCategoryPostsImagesCall
   );
+  yield takeLatest(actions.postCategoryPostTrigger, createCategoryPostCall);
 }
