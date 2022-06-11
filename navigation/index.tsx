@@ -39,6 +39,7 @@ import { useDispatch } from "react-redux";
 import Profile from "../components/Profile/Profile";
 import { socket } from "../services/sockets";
 import CategoryCreate from "../screens/Categories/CategoryCreate/CategoryCreate";
+import CreateCategoryPost from "../screens/Categories/CreateCategoryPost/CreateCategoryPost";
 
 export default function Navigation({
   colorScheme,
@@ -90,9 +91,13 @@ function CategoryNavigation() {
         component={CategoryEntityItem}
       />
       <CategoryRoutes.Screen
-        name={CategoryStackRoutes.categoryCreate}
+        name={CategoryStackRoutes.CategoryCreate}
         component={CategoryCreate}
         options={{ title: "Create Category" }}
+      />
+      <CategoryRoutes.Screen
+        name={CategoryStackRoutes.CreateCategoryPost}
+        component={CreateCategoryPost}
       />
     </CategoryRoutes.Group>
   );

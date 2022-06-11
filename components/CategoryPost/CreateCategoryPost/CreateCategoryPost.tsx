@@ -19,7 +19,7 @@ import { CategoryStackRoutesProps } from "../../../infrastructure/router/interfa
 const Form = () => {
   const dispatch = useDispatch();
   const { params } =
-    useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryEntities>>();
+    useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CreateCategoryPost>>();
   const { createCategoryPost } = useCategoryItems({
     categoryId: params.categoryId,
   });
