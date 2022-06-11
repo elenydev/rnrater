@@ -7,7 +7,7 @@ import {
   GetCategoryPostImageResult,
   getCategoryPostItemsList,
   getCategoryPostsImages,
-} from "../../../api/CategoryPost/get";
+} from "../../../api/categoryPost/get";
 import {
   GetCategoryPostsImagesParams,
   GetCategoryPostsListParams,
