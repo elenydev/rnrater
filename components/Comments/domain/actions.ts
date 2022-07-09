@@ -4,8 +4,8 @@ import { CreateCommentParams } from "../../../api/comments/intefaces";
 
 export enum CommentStoreActions {
   PostCommentTrigger = "commentStore/postCommentTrigger",
-  PostCommentFailure = "commentStore/postCommentTrigger",
-  PostCommentSuccess = "commentStore/postCommentTrigger",
+  PostCommentFailure = "commentStore/postCommentFailure",
+  PostCommentSuccess = "commentStore/postCommentSuccess",
 }
 
 export const postCommentTrigger = createActionWithPayload<CreateCommentParams>(

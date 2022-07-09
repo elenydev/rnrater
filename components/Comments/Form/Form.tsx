@@ -4,24 +4,39 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Text, View } from "../../Themed";
 import { StyleSheet, TextInput } from "react-native";
 import { useCustomForm } from "../../../hooks/useCustomForm";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { getFormManager } from "../../../managers/FormManager/selectors";
 import { FormInstanceName } from "../../../managers/FormManager/enums";
 import { defaultValues, validationRules } from "./formConfig";
-import { CreateCommentParams } from "../../../api/comments/intefaces";
 import { postCommentTrigger } from "../domain/actions";
+import { CategoryStackRoutesProps } from "../../../infrastructure/router/interfaces";
+import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
+import { useRoute } from "@react-navigation/native";
+import { getCurrentUser } from "../../../components/Auth/domain/selectors";
 
 const Form = () => {
   const dispatch = useDispatch();
-  const formManager = useSelector(getFormManager);
+  const formManager = useSelector(getFormManager, shallowEqual);
+  const user = useSelector(getCurrentUser, shallowEqual);
   const { formInstance, formError } = useCustomForm({
     defaultValues,
   });
   const { setValue, control, handleSubmit } = formInstance;
+  const { params } =
+    useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryPost>>();
 
-  const handleAddComment = useCallback((data: CreateCommentParams) => {
-    dispatch(postCommentTrigger(data));
-  }, []);
+  const handleAddComment = useCallback(
+    (data: { comment: string }) => {
+      dispatch(
+        postCommentTrigger({
+          content: data.comment,
+          categoryPostId: params.categoryEntityId,
+          authorId: user?.userId!,
+        })
+      );
+    },
+    [params.categoryEntityId, user?.userId]
+  );
 
   formManager.setFormInstance({
     formName: FormInstanceName.CreateComment,
@@ -41,7 +56,8 @@ const Form = () => {
               value={field.value}
               onChangeText={(value) => field.onChange(value)}
               style={styles.input}
-              placeholder="First Name"
+              placeholder="Add comment"
+              multiline
             />
           )}
           rules={validationRules.comment}
@@ -51,7 +67,9 @@ const Form = () => {
           size={10}
           name="send"
           onPress={handleSubmit(handleAddComment)}
-        />
+        >
+          Add
+        </FontAwesome.Button>
       </View>
       <View>
         {formError && <Text style={styles.validationText}>{formError}</Text>}
@@ -64,20 +82,22 @@ export default Form;
 
 const styles = StyleSheet.create({
   formContainer: {
-    width: "80%",
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
-    padding: 10,
+    padding: 15,
     paddingHorizontal: 15,
     shadowColor: "#000",
     elevation: 2,
   },
   input: {
-    width: "90%",
+    flex: 1,
     fontSize: 16,
     padding: 5,
     marginBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: "#333",
+    marginRight: 15,
   },
   validationContainer: {
     padding: 10,

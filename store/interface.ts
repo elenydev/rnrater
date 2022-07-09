@@ -3,6 +3,7 @@ import { UserStore } from "../components/Auth/domain/interfaces";
 import { FormsStore } from "../managers/FormManager/interfaces";
 import { HistoryStore } from "../managers/HistoryManager/interfaces";
 import { CategoryPostsStore } from "../components/CategoryPost/domain/interfaces";
+import { CommentStore } from "../components/Comments/domain/intefaces";
 
 export interface Store {
   readonly userStore: UserStore;
@@ -10,4 +11,5 @@ export interface Store {
   readonly historyStore: HistoryStore;
   readonly categoriesStore: CategoriesStore;
   readonly categoryPostsStore: CategoryPostsStore;
+  readonly commentStore: CommentStore;
 }

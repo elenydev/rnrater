@@ -77,7 +77,7 @@ function* getCategoryPostsImagesCall(
     errorToast("Failed to load images for category posts");
   } catch (error) {
     yield put(actions.getCategoryPostsImagesFailure());
-    errorToast(error);
+    errorToast(error.message);
   }
 }
 
@@ -96,7 +96,7 @@ function* createCategoryPostCall(action: Action<PostCategoryPostParams>) {
     errorToast(response.message);
   } catch (error) {
     yield put(actions.postCategoryPostFailure());
-    errorToast(error);
+    errorToast(error.message);
   }
 }
 

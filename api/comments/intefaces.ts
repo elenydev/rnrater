@@ -1,3 +1,5 @@
 export interface CreateCommentParams {
-  comment: string;
+  authorId: string;
+  categoryPostId: string;
+  content: string;
 }

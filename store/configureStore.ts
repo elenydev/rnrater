@@ -6,6 +6,7 @@ import historyStore from '../managers/HistoryManager/reducers'
 import categoriesStore from '../components/Categories/domain/reducers';
 import categoryPostsStore from '../components/CategoryPost/domain/reducers';
 import rootSaga from './rootSaga'
+import commentStore from '../components/Comments/domain/reducers'
 
 let sagaMiddleware = createSagaMiddleware();
 
@@ -15,7 +16,8 @@ const store = configureStore({
     formsStore,
     historyStore,
     categoriesStore,
-    categoryPostsStore
+    categoryPostsStore,
+    commentStore
   },
   middleware: [sagaMiddleware],
 });

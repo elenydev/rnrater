@@ -4,6 +4,7 @@ import React from "react";
 import { CategoryStackRoutesProps } from "../../../infrastructure/router/interfaces";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
+import { Comments } from "../../../components/Comments/index";
 
 export const CategoryPost = () => {
   const { params } =
@@ -19,7 +20,9 @@ export const CategoryPost = () => {
     <ScrollView
       contentContainerStyle={{ ...styles.container }}
       keyboardShouldPersistTaps="never"
-    ></ScrollView>
+    >
+      <Comments />
+    </ScrollView>
   );
 };
 

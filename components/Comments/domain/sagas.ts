@@ -23,7 +23,7 @@ function* createCommentCall(action: Action<CreateCommentParams>) {
     errorToast(response.message);
   } catch (error) {
     yield put(actions.postCommentFailure());
-    errorToast(error);
+    errorToast(error.message);
   }
 }
 

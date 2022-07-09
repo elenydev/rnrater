@@ -29,14 +29,17 @@ export const post = async <ReturnItemType extends {}>(
       "Content-Type": "application/json",
     };
 
-    const request = await fetch(`${path}?${params.join("&")}`, {
-      method: "POST",
-      headers: {
-        ...contentTypeHeader,
-        ...authorizationHeader,
-      },
-      body: (includeFile ? body : JSON.stringify(body)) as BodyInit_,
-    });
+    const request = await fetch(
+      `${path}${params.length ? "?" + params.join("&") : ""}`,
+      {
+        method: "POST",
+        headers: {
+          ...contentTypeHeader,
+          ...authorizationHeader,
+        },
+        body: (includeFile ? body : JSON.stringify(body)) as BodyInit_,
+      }
+    );
     const response = await request.json();
     return databaseResponse<ReturnItemType>(request.ok, response);
   } catch (error) {
