@@ -14,7 +14,6 @@ import useColorScheme from "../hooks/useColorScheme";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import Categories from "../screens/Categories/Categories";
 import CategoryEntitiesList from "../screens/Categories/CategoryEntitiesList/CategoryEntitiesList";
-import CategoryEntityItem from "../screens/Categories/CategoryEntitiesList/CategoryEntity/CategoryEntityItem/CategoryEntityItem";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
 import SignInScreen from "../screens/Auth/SignInScreen";
 import {
@@ -40,6 +39,7 @@ import Profile from "../components/Profile/Profile";
 import { socket } from "../services/sockets";
 import CategoryCreate from "../screens/Categories/CategoryCreate/CategoryCreate";
 import CreateCategoryPost from "../screens/Categories/CreateCategoryPost/CreateCategoryPost";
+import CategoryPost from "../screens/Categories/CategoryPost/CategoryPost";
 
 export default function Navigation({
   colorScheme,
@@ -87,8 +87,8 @@ function CategoryNavigation() {
         component={CategoryEntitiesList}
       />
       <CategoryRoutes.Screen
-        name={CategoryStackRoutes.CategoryEntityItem}
-        component={CategoryEntityItem}
+        name={CategoryStackRoutes.CategoryPost}
+        component={CategoryPost}
       />
       <CategoryRoutes.Screen
         name={CategoryStackRoutes.CategoryCreate}

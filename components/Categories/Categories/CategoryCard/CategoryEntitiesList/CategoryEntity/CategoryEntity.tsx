@@ -16,8 +16,8 @@ interface ComponentProps {
 const CategoryEntity: FC<ComponentProps> = (props: ComponentProps) => {
   const navigation = useNavigation<CategoryStackScreenRoutes>();
 
-  const redirectToCategoryItem = useCallback(() => {
-    navigation.navigate(CategoryStackRoutes.CategoryEntityItem, {
+  const redirectToCategoryPost = useCallback(() => {
+    navigation.navigate(CategoryStackRoutes.CategoryPost, {
       categoryEntityId: props.entity.id,
       categoryEntityTitle: props.entity.title,
     });
@@ -25,7 +25,7 @@ const CategoryEntity: FC<ComponentProps> = (props: ComponentProps) => {
 
   return (
     <View style={styles.wrapper}>
-      <TouchableHighlight style={styles.item} onPress={redirectToCategoryItem}>
+      <TouchableHighlight style={styles.item} onPress={redirectToCategoryPost}>
         <View style={styles.card}>
           <Image
             source={require("../../../../../../assets/images/gtr.jpg")}

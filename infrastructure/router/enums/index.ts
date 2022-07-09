@@ -8,7 +8,7 @@ export enum RootStackRoutes {
 export enum CategoryStackRoutes {
   CategoryEntities = "categoryEntities",
   CategoryEntity = "categoryEntity",
-  CategoryEntityItem = 'categoryEntityItem',
+  CategoryPost = 'categoryPost',
   CategoryCreate = 'categoryCreate',
   CreateCategoryPost = 'createCategoryPost'
 }
