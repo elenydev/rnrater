@@ -25,6 +25,12 @@ const Form = () => {
   const { params } =
     useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryPost>>();
 
+  formManager.setFormInstance({
+    formName: FormInstanceName.CreateComment,
+    formInstance,
+    additionalActions: () => setValue("comment", undefined),
+  });
+
   const handleAddComment = useCallback(
     (data: { comment: string }) => {
       dispatch(
@@ -37,12 +43,6 @@ const Form = () => {
     },
     [params.categoryEntityId, user?.userId]
   );
-
-  formManager.setFormInstance({
-    formName: FormInstanceName.CreateComment,
-    formInstance,
-    additionalActions: () => setValue("comment", undefined),
-  });
 
   return (
     <>
