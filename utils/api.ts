@@ -17,7 +17,7 @@ export const API_URL = {
     GET_LIST: `${DATABASE_URL}/categoryPost/get/getList`,
     GET_BY_ID: `${DATABASE_URL}/categoryPost/get/getById`,
     CREATE_CATEGORY_POST: `${DATABASE_URL}/categoryPost/post/createCategoryPost`,
-    GET_CATEGORY_POST_IMAGE: `${DATABASE_URL}/categoryPost/get/getCategoryImage`,
+    GET_CATEGORY_POST_IMAGE: `${DATABASE_URL}/categoryPost/get/getCategoryPostImage`,
   },
   COMMENT: {
     POST_COMMENT: `${DATABASE_URL}/comment/post/createComment`

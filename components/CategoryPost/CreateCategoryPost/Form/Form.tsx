@@ -105,6 +105,21 @@ const Form = () => {
         rules={validationRules.title}
       />
 
+<Controller
+        name="description"
+        control={control}
+        render={({ field }) => (
+          <TextInput
+            {...field}
+            value={field.value}
+            onChangeText={(value) => field.onChange(value)}
+            style={styles.input}
+            placeholder="Category Post Description"
+          />
+        )}
+        rules={validationRules.title}
+      />
+
       <View>
         {formError && <Text style={styles.validationText}>{formError}</Text>}
       </View>

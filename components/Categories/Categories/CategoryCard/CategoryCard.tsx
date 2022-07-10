@@ -1,5 +1,5 @@
 import { CategoryWithCover } from "../../../../infrastructure/models/Category";
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useLayoutEffect, useState } from "react";
 import { View, Text } from "../../../../components/Themed";
 import { ImageBackground, StyleSheet, TouchableHighlight } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -23,7 +23,7 @@ const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
     });
   }, [navigation, props.category.id]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (props.category.coverImage) {
       readImage(props.category.coverImage, setCategoryImage);
     }

@@ -1,44 +1,55 @@
 import { Text, View } from "../../../../../Themed";
-import React, { FC, useCallback } from "react";
+import React, { FC, memo, useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { Image, StyleSheet, TouchableHighlight } from "react-native";
 import { CategoryStackScreenRoutes } from "../../../../../../infrastructure/router/interfaces";
 import { useNavigation } from "@react-navigation/native";
 import { CategoryStackRoutes } from "../../../../../../infrastructure/router/enums";
+import { useCategoryItems } from "../../../../../../components/CategoryPost/hooks/useCategoryItems";
+import { readImage } from "../../../../../../utils/readImage";
 
 interface ComponentProps {
-  entity: {
-    title: string;
-    description: string;
-    id: string;
-  };
+  id: string;
+  categoryId: string;
 }
 
 const CategoryEntity: FC<ComponentProps> = (props: ComponentProps) => {
   const navigation = useNavigation<CategoryStackScreenRoutes>();
+  const [categoryEntityImage, setCategoryEntityImage] = useState<ArrayBuffer>();
+  const { list } = useCategoryItems({ categoryId: props.categoryId });
+
+  const item = useMemo(() => {
+    return list.find(({ id }) => props.id === id)!;
+  }, [list, props.id]);
 
   const redirectToCategoryPost = useCallback(() => {
     navigation.navigate(CategoryStackRoutes.CategoryPost, {
-      categoryEntityId: props.entity.id,
-      categoryEntityTitle: props.entity.title,
+      categoryEntityId: item.id,
+      categoryEntityTitle: item.title,
     });
-  }, [props.entity.id]);
+  }, [item]);
+
+  useLayoutEffect(() => {
+    if(item.image) {
+      readImage(item.image, setCategoryEntityImage);
+    }
+  }, [item.image])
 
   return (
     <View style={styles.wrapper}>
       <TouchableHighlight style={styles.item} onPress={redirectToCategoryPost}>
         <View style={styles.card}>
           <Image
-            source={require("../../../../../../assets/images/gtr.jpg")}
+            source={{ uri: categoryEntityImage as unknown as string}}
             resizeMode="stretch"
             resizeMethod="resize"
             style={styles.image}
           />
           <View style={styles.typographyWrapper}>
             <Text style={styles.title} numberOfLines={1}>
-              {props.entity.title}
+              {item.title}
             </Text>
             <Text style={styles.description} numberOfLines={2}>
-              {props.entity.description}
+              {item.title}
             </Text>
           </View>
         </View>
@@ -47,7 +58,7 @@ const CategoryEntity: FC<ComponentProps> = (props: ComponentProps) => {
   );
 };
 
-export default CategoryEntity;
+export default memo(CategoryEntity);
 
 const styles = StyleSheet.create({
   wrapper: {
