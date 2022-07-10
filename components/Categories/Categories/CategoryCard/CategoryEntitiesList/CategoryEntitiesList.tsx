@@ -1,5 +1,5 @@
 import { Text, View } from "../../../../Themed";
-import React, { useCallback, useLayoutEffect } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { useRoute } from "@react-navigation/native";
 import { CategoryStackRoutesProps } from "../../../../../infrastructure/router/interfaces";
 import { CategoryStackRoutes } from "../../../../../infrastructure/router/enums";
@@ -8,49 +8,29 @@ import CategoryEntity from "./CategoryEntity/CategoryEntity";
 import { useNavigation } from "@react-navigation/native";
 import { CategoryStackScreenRoutes } from "../../../../../infrastructure/router/interfaces";
 import { Button } from "react-native-elements";
-
-const dummyEntity = [
-  {
-    title: "Fancy cars",
-    description: `Check this out, that's a nice car`,
-    id: "1",
-  },
-  {
-    title: "Fancy carr",
-    description: `Check this out, that's a nice car`,
-    id: "1",
-  },
-  {
-    title: "Fancy cara",
-    description: `Check this out, that's a nice car`,
-    id: "1",
-  },
-  {
-    title: "Fancy carz",
-    description: `Check this out, that's a nice car`,
-    id: "1",
-  },
-  {
-    title: "Fancy cart",
-    description: `Check this out, that's a nice car`,
-    id: "1",
-  },
-  {
-    title: "Fancy cary",
-    description: `Check this out, that's a nice car`,
-    id: "1",
-  },
-  {
-    title: "Fancy caru",
-    description: `Check this out, that's a nice car`,
-    id: "1",
-  },
-];
+import { useCategoryItems } from "../../../../../components/CategoryPost/hooks/useCategoryItems";
+import Loader from "../../../../../components/Loader";
 
 const CategoryEntitiesList = () => {
   const { params } =
     useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryEntities>>();
   const navigation = useNavigation<CategoryStackScreenRoutes>();
+  const { isLoading, loadCategoryItems, list } = useCategoryItems({
+    categoryId: params.categoryId,
+  });
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    if (isMounted) {
+      loadCategoryItems();
+    }
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, [params.categoryId]);
 
   useLayoutEffect(() => {
     navigation.setOptions({ title: params.categoryName });
@@ -64,29 +44,35 @@ const CategoryEntitiesList = () => {
 
   return (
     <View style={styles.entitiesWrapper}>
-      <FlatList
-        data={dummyEntity}
-        keyExtractor={(item) => item.title}
-        renderItem={(itemData) => <CategoryEntity entity={itemData.item} />}
-        ListEmptyComponent={
-          <View style={styles.emptyList}>
-            <Text>List of category posts is empty</Text>
-          </View>
-        }
-        contentContainerStyle={{
-          flexGrow: 1,
-          display: "flex",
-        }}
-        ListFooterComponent={
-          <View style={styles.buttonBox}>
-            <Button
-              title={"Add Category Post"}
-              style={styles.button}
-              onPress={goToAddCategoryPost}
-            />
-          </View>
-        }
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <FlatList
+          data={list}
+          keyExtractor={(item) => item.id}
+          renderItem={(itemData) => <CategoryEntity id={itemData.item.id} categoryId={params.categoryId} />}
+          ListEmptyComponent={
+            <View style={styles.emptyList}>
+              <Text>List of category posts is empty</Text>
+            </View>
+          }
+          contentContainerStyle={{
+            flexGrow: 1,
+            display: "flex",
+          }}
+          ListFooterComponent={
+            <View style={styles.buttonBox}>
+              <Button
+                title={"Add Category Post"}
+                style={styles.button}
+                onPress={goToAddCategoryPost}
+              />
+            </View>
+          }
+          refreshing={isLoading}
+          onRefresh={loadCategoryItems}
+        />
+      )}
     </View>
   );
 };
@@ -101,6 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 20
   },
   buttonBox: {
     display: "flex",

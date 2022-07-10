@@ -60,7 +60,7 @@ export type CategoryStackScreenRoutes = NativeStackNavigationProp<
       categoryId: string;
       categoryName: string
     };
-    [CategoryStackRoutes.CategoryEntityItem]: {
+    [CategoryStackRoutes.CategoryPost]: {
       categoryEntityId: string;
       categoryEntityTitle: string;
     };
@@ -81,7 +81,7 @@ export type CategoryStackRoutesProps<
       categoryId: string;
       categoryName: string;
     };
-    [CategoryStackRoutes.CategoryEntityItem]: {
+    [CategoryStackRoutes.CategoryPost]: {
       categoryEntityId: string,
       categoryEntityTitle: string;
     };
@@ -102,7 +102,7 @@ export type AuthScreensList = {
 export type CategoryScreensList = {
   [CategoryStackRoutes.CategoryEntities]: undefined;
   [CategoryStackRoutes.CategoryEntity]: undefined;
-  [CategoryStackRoutes.CategoryEntityItem]: undefined
+  [CategoryStackRoutes.CategoryPost]: undefined
   [CategoryStackRoutes.CategoryCreate]: undefined;
   [CategoryStackRoutes.CreateCategoryPost]: undefined;
 };

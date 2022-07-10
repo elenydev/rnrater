@@ -2,5 +2,6 @@ export enum FormInstanceName {
   AuthorizeUser = "AuthorizeUser",
   CreateUser = "CreateUser",
   CreateCategory = "CreateCategory",
-  CreateCategoryPost = 'CreateCategoryPost'
+  CreateCategoryPost = 'CreateCategoryPost',
+  CreateComment = 'CreateComment'
 }

@@ -14,13 +14,19 @@ export const validationRules = {
   title: {
     required: {
       value: true,
-      message: "Category name is required",
+      message: "Category post name is required",
+    },
+  },
+  description: {
+    required: {
+      value: true,
+      message: "Category post description is required",
     },
   },
   categoryPostImage: {
     required: {
       value: true,
-      message: "Category image is required",
+      message: "Category post image is required",
     },
   },
 };

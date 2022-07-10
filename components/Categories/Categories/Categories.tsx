@@ -14,9 +14,18 @@ import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
 export default function Categories() {
   const { isLoading, loadCategories, categoriesList } = useCategories();
   const navigation = useNavigation<CategoryStackScreenRoutes>();
+  const isMounted = React.useRef(false);
 
   React.useEffect(() => {
-    loadCategories();
+    isMounted.current = true;
+
+    if (isMounted) {
+      loadCategories();
+    }
+
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   const goToAddCategory = React.useCallback(() => {

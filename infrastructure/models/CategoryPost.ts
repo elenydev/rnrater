@@ -10,6 +10,7 @@ export interface CategoryPost {
   comments: Comment[];
   evaluators: User[];
   category: Category;
+  title: string;
 }
 
 export interface CategoryPostWithImage extends CategoryPost {
