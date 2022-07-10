@@ -1,6 +1,6 @@
 import { getFormManager } from "../../../../managers/FormManager/selectors";
 import React, { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { FormInstanceName } from "../../../../managers/FormManager/enums";
 import { useCustomForm } from "../../../../hooks/useCustomForm";
 import { defaultValues, validationRules } from "./formConfig";
@@ -17,9 +17,10 @@ import { CategoryStackRoutes } from "../../../../infrastructure/router/enums";
 import { CategoryStackRoutesProps } from "../../../../infrastructure/router/interfaces";
 
 const Form = () => {
-  const dispatch = useDispatch();
   const { params } =
-    useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CreateCategoryPost>>();
+    useRoute<
+      CategoryStackRoutesProps<CategoryStackRoutes.CreateCategoryPost>
+    >();
   const { createCategoryPost } = useCategoryItems({
     categoryId: params.categoryId,
   });
@@ -38,7 +39,7 @@ const Form = () => {
 
   const handleCreateCategoryPost = useCallback(
     (data: Omit<PostCategoryPostParams, "categoryId">) => {
-      dispatch(createCategoryPost(data));
+      createCategoryPost(data);
     },
     []
   );

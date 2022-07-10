@@ -88,7 +88,7 @@ function* createCategoryPostCall(action: Action<PostCategoryPostParams>) {
     );
     const formManager: FormManager = yield select(getFormManager);
     if (response.responseStatus === ResponseStatus.Success) {
-      yield put(actions.postCategoryPostSuccess);
+      yield put(actions.postCategoryPostSuccess());
       formManager.clearCurrentForm(FormInstanceName.CreateCategory);
       return successToast(response.message);
     }
