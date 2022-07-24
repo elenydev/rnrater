@@ -1,4 +1,3 @@
-import { StyleSheet, ScrollView } from "react-native";
 import React from "react";
 
 import { CategoryStackRoutesProps } from "../../../infrastructure/router/interfaces";
@@ -16,24 +15,7 @@ export const CategoryPost = () => {
     navigation.setOptions({ title: params.categoryEntityTitle });
   }, [params.categoryEntityTitle]);
 
-  return (
-    <ScrollView
-      contentContainerStyle={{ ...styles.container }}
-      keyboardShouldPersistTaps="never"
-    >
-      <Comments />
-    </ScrollView>
-  );
+  return <Comments />;
 };
 
 export default CategoryPost;
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-});

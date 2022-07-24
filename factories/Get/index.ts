@@ -11,7 +11,8 @@ export const getList = async <ListItemType>(
   pagination = {
     pageNumber: 1,
     pageSize: 10,
-  }
+  },
+  signal?: AbortController
 ): Promise<GetListActionResult<ListItemType> | BaseRequestResponse> => {
   try {
     const token = await getAuthValue(AuthKeys.Token);
@@ -32,6 +33,7 @@ export const getList = async <ListItemType>(
         "Content-Type": "application/json",
         ...authorizationHeader,
       },
+      signal: signal?.signal
     });
     const response = await request.json();
     return databaseResponse<ListItemType>(request.ok, response, true);

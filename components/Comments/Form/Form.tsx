@@ -85,9 +85,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    padding: 15,
-    paddingHorizontal: 15,
-    shadowColor: "#000",
+    padding: 10,
+    paddingVertical: 15,
+    marginTop: 10,
     elevation: 2,
   },
   input: {
