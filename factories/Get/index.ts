@@ -16,9 +16,14 @@ export const getList = async <ListItemType>(
 ): Promise<GetListActionResult<ListItemType> | BaseRequestResponse> => {
   try {
     const token = await getAuthValue(AuthKeys.Token);
-    const params = Object.keys(queryParams).reduce(
+    const mergedParams: { [key: string]: unknown } = {
+      ...queryParams,
+      pageSize: pagination.pageSize,
+      pageNumber: pagination.pageNumber,
+    };
+    const params = Object.keys(mergedParams).reduce(
       (allParams: string[], currentParam) => {
-        allParams.push(`${currentParam}=${queryParams[currentParam]}`);
+        allParams.push(`${currentParam}=${mergedParams[currentParam]}`);
         return allParams;
       },
       []
@@ -33,7 +38,7 @@ export const getList = async <ListItemType>(
         "Content-Type": "application/json",
         ...authorizationHeader,
       },
-      signal: signal?.signal
+      signal: signal?.signal,
     });
     const response = await request.json();
     return databaseResponse<ListItemType>(request.ok, response, true);

@@ -1,5 +1,5 @@
 import { Comment } from "../../../infrastructure/models/Comment";
-import { PagingInfo } from "../../../infrastructure/api/interfaces";
+import { Paging, PagingInfo } from "../../../infrastructure/api/interfaces";
 
 export interface CommentStore {
   paging: PagingInfo;
@@ -8,6 +8,6 @@ export interface CommentStore {
 }
 
 export interface GetCommentsListParams {
-  controller: AbortController,
+  controller: AbortController;
   categoryPostId: string;
 }

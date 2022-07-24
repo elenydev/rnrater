@@ -33,7 +33,6 @@ function* getCommentsCall(action: Action<GetCommentsListParams>) {
       yield put(actions.getCommentsListSuccess(response));
     }
   } catch (error) {
-    console.log(error.message);
     yield put(actions.getCommentsListFailure());
     errorToast(error.message);
   }

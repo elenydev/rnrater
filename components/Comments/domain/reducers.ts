@@ -28,9 +28,16 @@ const commentStore = createSliceWithSaga({
         (state: CommentStore, action) => {
           state.isLoading = false;
           state.paging = action.payload.paging!;
-          state.list = action.payload.results!;
+          state.list = [...state.list, ...action.payload.results!];
         }
-      );
+      )
+      .addCase(actions.updatePaging, (state: CommentStore, action) => {
+        state.paging = {
+          ...state.paging,
+          pageNumber: action.payload.pageNumber,
+          pageSize: action.payload.pageSize,
+        };
+      });
   },
   reducers: {},
 });

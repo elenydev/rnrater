@@ -7,6 +7,7 @@ import { useRoute } from "@react-navigation/native";
 import { CategoryStackRoutesProps } from "infrastructure/router/interfaces";
 import { CategoryStackRoutes } from "infrastructure/router/enums";
 import Comment from "./Comment/Comment";
+import { getInifiteScrollCallback } from "../../../helpers/getInfiniteScrollCallback";
 
 interface ComponentProps {
   footer: JSX.Element;
@@ -15,7 +16,7 @@ interface ComponentProps {
 const CommentsList = ({ footer }: ComponentProps) => {
   const { params } =
     useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryPost>>();
-  const { isLoading, list, loadComments } = useComments(
+  const { isLoading, list, loadComments, updatePaging, paging } = useComments(
     params.categoryEntityId
   );
 
@@ -43,7 +44,8 @@ const CommentsList = ({ footer }: ComponentProps) => {
           padding: 20,
         }}
         refreshing={isLoading}
-        onRefresh={loadComments}
+        onEndReached={() => getInifiteScrollCallback(updatePaging, paging)}
+        onEndReachedThreshold={0.1}
       />
       {footer}
     </View>
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     elevation: 2,
     margin: 7,
-    height: '60%'
+    height: "60%",
   },
   emptyList: {
     display: "flex",
