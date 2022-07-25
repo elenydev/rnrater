@@ -56,6 +56,36 @@ const categoryPostsStore = createSliceWithSaga({
         (state: CategoryPostsStore, action) => {
           state.currentCategoryPost = action.payload;
         }
+      )
+
+      .addCase(actions.getCategoryPostTrigger, (state: CategoryPostsStore) => {
+        state.isLoading = true;
+      })
+
+      .addCase(actions.getCategoryPostFailure, (state: CategoryPostsStore) => {
+        state.isLoading = false;
+      })
+
+      .addCase(
+        actions.getCategoryPostImageTrigger,
+        (state: CategoryPostsStore) => {
+          state.isLoading = true;
+        }
+      )
+
+      .addCase(
+        actions.getCategoryPostImageSuccess,
+        (state: CategoryPostsStore, action) => {
+          state.isLoading = true;
+          state.currentCategoryPost = action.payload;
+        }
+      )
+
+      .addCase(
+        actions.getCategoryPostImageFailure,
+        (state: CategoryPostsStore) => {
+          state.isLoading = false;
+        }
       );
   },
   reducers: {},

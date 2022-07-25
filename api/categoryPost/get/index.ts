@@ -2,7 +2,9 @@ import { CategoryPost } from "../../../infrastructure/models/CategoryPost";
 import { getItem, getList } from "../../../factories/Get";
 import { API_URL } from "../../../utils/api";
 import {
+  GetCategoryPostActionResult,
   GetCategoryPostListParams,
+  GetCategoryPostParams,
   GetCategoryPostsListActionResult,
 } from "./interfaces";
 import {
@@ -38,6 +40,16 @@ export const getCategoryPostImage = async (
     { categoryPostId },
     true
   );
+};
+
+export const getCategoryPostItem = async (
+  params: GetCategoryPostParams
+): Promise<GetCategoryPostActionResult> => {
+  const { categoryPostId } = params;
+
+  return await getItem<CategoryPost>(API_URL.CATEGORY_POST.GET_LIST, true, {
+    categoryPostId,
+  });
 };
 
 export const getCategoryPostsImages = async (
