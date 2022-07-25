@@ -17,13 +17,14 @@ import { GetItemActionResult } from "factories/interfaces/get";
 export const getCategoryPostItemsList = async (
   params: GetCategoryPostListParams
 ): Promise<GetCategoryPostsListActionResult> => {
-  const { paging, categoryId } = params;
+  const { paging, categoryId, controller } = params;
 
   return await getList<CategoryPost>(
     API_URL.CATEGORY_POST.GET_LIST,
     true,
     { categoryId },
-    paging
+    paging,
+    controller
   );
 };
 
@@ -32,34 +33,41 @@ export type GetCategoryPostImageResult = GetItemActionResult<Blob>;
 export const getCategoryPostImage = async (
   params: GetCategoryPostImageParams
 ): Promise<GetCategoryPostImageResult> => {
-  const { categoryPostId } = params;
+  const { categoryPostId, controller } = params;
 
   return await getItem<Blob>(
     API_URL.CATEGORY_POST.GET_CATEGORY_POST_IMAGE,
     true,
-    { categoryPostId },
-    true
+    { categoryPostId: categoryPostId },
+    true,
+    controller
   );
 };
 
 export const getCategoryPostItem = async (
   params: GetCategoryPostParams
 ): Promise<GetCategoryPostActionResult> => {
-  const { categoryPostId } = params;
+  const { categoryPostId, controller } = params;
 
-  return await getItem<CategoryPost>(API_URL.CATEGORY_POST.GET_LIST, true, {
-    categoryPostId,
-  });
+  return await getItem<CategoryPost>(
+    API_URL.CATEGORY_POST.GET_LIST,
+    true,
+    {
+      categoryPostId,
+    },
+    false,
+    controller
+  );
 };
 
 export const getCategoryPostsImages = async (
   params: GetCategoryPostsImagesParams
 ): Promise<GetCategoryPostImageResult[]> => {
-  const { categoryPosts } = params;
+  const { categoryPosts, controller } = params;
 
   const images = await Promise.all([
     ...categoryPosts.map((categoryPost) =>
-      getCategoryPostImage({ categoryPostId: categoryPost.id })
+      getCategoryPostImage({ categoryPostId: categoryPost.id, controller })
     ),
   ]);
 

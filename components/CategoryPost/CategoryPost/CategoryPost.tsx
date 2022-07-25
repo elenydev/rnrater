@@ -1,26 +1,44 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 import { CategoryStackRoutesProps } from "../../../infrastructure/router/interfaces";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
 import { Comments } from "../../../components/Comments/index";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentCategoryPost } from "../domain/selectors";
 import { readImage } from "../../../utils/readImage";
 import { Image } from "react-native";
 import { View } from "../../../components/Themed";
+import { getCategoryPostTrigger } from "../domain/actions";
 
 export const CategoryPost = () => {
   const [postImage, setPostImage] = useState<ArrayBuffer>();
   const currentPost = useSelector(getCurrentCategoryPost);
+  const dispatch = useDispatch();
 
   const { params } =
     useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryPost>>();
 
   const navigation = useNavigation();
 
-  React.useLayoutEffect(() => {
+  useEffect(() => {
+    if (!currentPost) {
+      const controller = new AbortController();
+      dispatch(
+        getCategoryPostTrigger({
+          categoryPostId: params.categoryEntityId,
+          controller,
+        })
+      );
+
+      return () => {
+        controller.abort;
+      };
+    }
+  }, []);
+
+  useLayoutEffect(() => {
     navigation.setOptions({ title: params.categoryEntityTitle });
   }, [params.categoryEntityTitle]);
 
@@ -52,11 +70,11 @@ const styles = StyleSheet.create({
     height: "40%",
     display: "flex",
     flexDirection: "column",
-    alignItems: 'center'
+    alignItems: "center",
   },
   imageStyles: {
-    height: '70%',
+    height: "70%",
     marginTop: 10,
-    width: '80%'
-  }
+    width: "80%",
+  },
 });

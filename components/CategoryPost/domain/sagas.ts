@@ -14,6 +14,8 @@ import {
   getCategoryPostsImages,
 } from "../../../api/categoryPost/get";
 import {
+  GetCategoryPostImageActionParams,
+  GetCategoryPostParams,
   GetCategoryPostsImagesParams,
   GetCategoryPostsListParams,
 } from "./interfaces";
@@ -35,13 +37,14 @@ import { FormInstanceName } from "../../../managers/FormManager/enums";
 
 function* getCategoryPostsListCall(action: Action<GetCategoryPostsListParams>) {
   const paging: Paging = yield select(getCategoryPostsPaging);
-  const { categoryId } = action.payload;
+  const { categoryId, controller } = action.payload;
 
   try {
     const response: GetCategoryPostsListActionResult =
       yield getCategoryPostItemsList({
         paging,
         categoryId,
+        controller
       });
 
     if (response.responseStatus === ResponseStatus.Success) {
@@ -50,6 +53,7 @@ function* getCategoryPostsListCall(action: Action<GetCategoryPostsListParams>) {
       yield put(
         actions.getCategoryPostsImagesTrigger({
           categoryPosts: response.results!,
+          controller
         })
       );
     }
@@ -59,11 +63,12 @@ function* getCategoryPostsListCall(action: Action<GetCategoryPostsListParams>) {
   }
 }
 
-function* getCategoryPostCall(action: Action<string>) {
-  const categoryPostId = action.payload;
+function* getCategoryPostCall(action: Action<GetCategoryPostParams>) {
+  const {categoryPostId, controller} = action.payload;
   try {
     const response: GetCategoryPostActionResult = yield getCategoryPostItem({
       categoryPostId,
+      controller
     });
 
     if (response.responseStatus === ResponseStatus.Success) {
@@ -75,11 +80,12 @@ function* getCategoryPostCall(action: Action<string>) {
   }
 }
 
-function* getCategoryPostImageCall(action: Action<CategoryPost>) {
-  const categoryPost = action.payload;
+function* getCategoryPostImageCall(action: Action<GetCategoryPostImageActionParams>) {
+  const {categoryPost, controller} = action.payload;
   try {
     const response: GetCategoryPostImageResult = yield getCategoryPostImage({
       categoryPostId: categoryPost.id,
+      controller
     });
 
     if (response.responseStatus === ResponseStatus.Success) {
@@ -99,10 +105,10 @@ function* getCategoryPostImageCall(action: Action<CategoryPost>) {
 function* getCategoryPostsImagesCall(
   action: Action<GetCategoryPostsImagesParams>
 ) {
-  const { categoryPosts } = action.payload;
+  const { categoryPosts, controller } = action.payload;
   try {
     const response: GetCategoryPostImageResult[] = yield getCategoryPostsImages(
-      { categoryPosts }
+      { categoryPosts, controller }
     );
 
     if (

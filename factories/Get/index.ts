@@ -12,7 +12,7 @@ export const getList = async <ListItemType>(
     pageNumber: 1,
     pageSize: 10,
   },
-  signal?: AbortController
+  controller?: AbortController
 ): Promise<GetListActionResult<ListItemType> | BaseRequestResponse> => {
   try {
     const token = await getAuthValue(AuthKeys.Token);
@@ -38,7 +38,7 @@ export const getList = async <ListItemType>(
         "Content-Type": "application/json",
         ...authorizationHeader,
       },
-      signal: signal?.signal,
+      signal: controller?.signal,
     });
     const response = await request.json();
     return databaseResponse<ListItemType>(request.ok, response, true);
@@ -51,7 +51,8 @@ export const getItem = async <ListItemType>(
   path: string,
   requireAuth = false,
   queryParams: { [key: string]: unknown } = {},
-  returnFile = false
+  returnFile = false,
+  controller?: AbortController
 ): Promise<GetItemActionResult<ListItemType> | BaseRequestResponse> => {
   try {
     const token = await getAuthValue(AuthKeys.Token);
@@ -72,6 +73,7 @@ export const getItem = async <ListItemType>(
         "Content-Type": "application/json",
         ...authorizationHeader,
       },
+      signal: controller?.signal
     });
     const response = returnFile ? await request : await request.json();
     return databaseResponse<ListItemType>(

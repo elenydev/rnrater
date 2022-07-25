@@ -19,9 +19,14 @@ export const useCategoryItems = (params: HookParams) => {
   const isLoading = useSelector(getCategoryPostsLoading, shallowEqual);
   const list = useSelector(getCategoryPostsList, shallowEqual);
 
-  const loadCategoryItems = useCallback(() => {
-    dispatch(getCategoryPostsTrigger({ categoryId: params.categoryId }));
-  }, [params.categoryId]);
+  const loadCategoryItems = useCallback(
+    (controller: AbortController) => {
+      dispatch(
+        getCategoryPostsTrigger({ categoryId: params.categoryId, controller })
+      );
+    },
+    [params.categoryId]
+  );
 
   const createCategoryPost = useCallback(
     (data: Omit<PostCategoryPostParams, "categoryId">) => {

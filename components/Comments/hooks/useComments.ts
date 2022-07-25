@@ -12,23 +12,18 @@ export const useComments = (categoryPostId: string) => {
   const paging = useSelector(getPaging);
   const dispatch = useDispatch();
 
-  const loadComments = useCallback(() => {
-    const controller = new AbortController();
+  const loadComments = useCallback((controller: AbortController) => {
     dispatch(getCommentsListTrigger({ controller, categoryPostId }));
-
-    return () => {
-      controller.abort();
-    };
   }, []);
 
-  const updatePaging = useCallback(() => {
+  const updatePaging = useCallback((controller: AbortController) => {
     dispatch(
       updatePagingAction({
         pageSize: paging.pageSize,
         pageNumber: paging.pageNumber + 1,
       })
     );
-    loadComments();
+    loadComments(controller);
   }, [[paging]]);
 
   return {

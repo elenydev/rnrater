@@ -18,17 +18,16 @@ const CategoryEntitiesList = () => {
   const { isLoading, loadCategoryItems, list } = useCategoryItems({
     categoryId: params.categoryId,
   });
-  const isMounted = useRef(false);
+  const controller = useRef<AbortController | undefined>();
 
   useEffect(() => {
-    isMounted.current = true;
-
-    if (isMounted) {
-      loadCategoryItems();
+    controller.current = new AbortController();
+    if (controller.current) {
+      loadCategoryItems(controller.current);
     }
 
     return () => {
-      isMounted.current = false;
+      controller.current?.abort();
     };
   }, [params.categoryId]);
 
@@ -42,6 +41,12 @@ const CategoryEntitiesList = () => {
     });
   }, []);
 
+  const refreshCategoryItems = useCallback(() => {
+    if (controller.current) {
+      loadCategoryItems(controller.current);
+    }
+  }, []);
+
   return (
     <View style={styles.entitiesWrapper}>
       {isLoading ? (
@@ -50,7 +55,12 @@ const CategoryEntitiesList = () => {
         <FlatList
           data={list}
           keyExtractor={(item) => item.id}
-          renderItem={(itemData) => <CategoryEntity id={itemData.item.id} categoryId={params.categoryId} />}
+          renderItem={(itemData) => (
+            <CategoryEntity
+              id={itemData.item.id}
+              categoryId={params.categoryId}
+            />
+          )}
           ListEmptyComponent={
             <View style={styles.emptyList}>
               <Text>List of category posts is empty</Text>
@@ -70,7 +80,7 @@ const CategoryEntitiesList = () => {
             </View>
           }
           refreshing={isLoading}
-          onRefresh={loadCategoryItems}
+          onRefresh={refreshCategoryItems}
         />
       )}
     </View>
@@ -87,7 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20
+    padding: 20,
   },
   buttonBox: {
     display: "flex",

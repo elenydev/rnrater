@@ -2,6 +2,8 @@ import { createActionWithPayload } from "../../../utils/redux/actions";
 import { createAction } from "@reduxjs/toolkit";
 import { GetCategoryPostsListActionResult } from "../../../api/categoryPost/get/interfaces";
 import {
+  GetCategoryPostImageActionParams,
+  GetCategoryPostParams,
   GetCategoryPostsImagesParams,
   GetCategoryPostsListParams,
 } from "./interfaces";
@@ -73,7 +75,7 @@ export const setCurrentCategoryPost =
     CategoryPostStoreActions.SetCurrentCategoryPost
   );
 
-export const getCategoryPostTrigger = createActionWithPayload<string>(
+export const getCategoryPostTrigger = createActionWithPayload<GetCategoryPostParams>(
   CategoryPostStoreActions.GetCategoryPostTrigger
 );
 
@@ -85,7 +87,7 @@ export const getCategoryPostSuccess = createActionWithPayload<CategoryPost>(
 );
 
 export const getCategoryPostImageTrigger =
-  createActionWithPayload<CategoryPost>(
+  createActionWithPayload<GetCategoryPostImageActionParams>(
     CategoryPostStoreActions.GetCategoryPostImageTrigger
   );
 

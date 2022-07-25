@@ -8,10 +8,12 @@ import { CategoryPost } from "../../../infrastructure/models/CategoryPost";
 export interface GetCategoryPostListParams {
   categoryId: string;
   paging: Paging;
+  controller: AbortController
 }
 
 export interface GetCategoryPostParams {
   categoryPostId: string;
+  controller: AbortController;
 }
 
 export type GetCategoryPostsListActionResult =

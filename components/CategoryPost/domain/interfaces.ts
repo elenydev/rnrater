@@ -8,17 +8,30 @@ export interface CategoryPostsStore {
   isLoading: boolean;
   paging: Paging;
   list: CategoryPostWithImage[];
-  currentCategoryPost?: CategoryPostWithImage
+  currentCategoryPost?: CategoryPostWithImage;
 }
 
 export interface GetCategoryPostsListParams {
   categoryId: string;
+  controller: AbortController;
 }
 
 export interface GetCategoryPostsImagesParams {
   categoryPosts: CategoryPost[];
+  controller: AbortController;
 }
 
-export interface GetCategoryPostImageParams {
+export interface GetCategoryPostParams {
   categoryPostId: string;
+  controller: AbortController;
 }
+
+export type GetCategoryPostImageParams = {
+  controller: AbortController;
+  categoryPostId: string;
+};
+
+export type GetCategoryPostImageActionParams = {
+  categoryPost: CategoryPost;
+  controller: AbortController;
+};
