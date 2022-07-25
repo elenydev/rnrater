@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useState } from "react";
-import StarRating from 'react-native-star-rating';
 
 import { CategoryStackRoutesProps } from "../../../infrastructure/router/interfaces";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -11,7 +10,6 @@ import { getCurrentCategoryPost } from "../domain/selectors";
 import { readImage } from "../../../utils/readImage";
 import { Image } from "react-native";
 import { View } from "../../../components/Themed";
-import { Rating } from "react-native-elements";
 
 export const CategoryPost = () => {
   const [postImage, setPostImage] = useState<ArrayBuffer>();
@@ -40,8 +38,6 @@ export const CategoryPost = () => {
           resizeMode="stretch"
           resizeMethod="resize"
           style={styles.imageStyles}
-        />
-        <Rating
         />
       </View>
       <Comments />
