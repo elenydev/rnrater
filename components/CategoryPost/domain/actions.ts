@@ -5,7 +5,9 @@ import {
   GetCategoryPostsImagesParams,
   GetCategoryPostsListParams,
 } from "./interfaces";
-import { CategoryPostWithImage } from "../../../infrastructure/models/CategoryPost";
+import {
+  CategoryPostWithImage,
+} from "../../../infrastructure/models/CategoryPost";
 import { PostCategoryPostParams } from "api/categoryPost/post/interfaces";
 
 export enum CategoryPostStoreActions {
@@ -18,6 +20,7 @@ export enum CategoryPostStoreActions {
   PostCategoryPostTrigger = "categoryPostStore/postCategoryPostTrigger",
   PostCategoryPostFailure = "categoryPostStore/postCategoryPostFailure",
   PostCategoryPostSuccess = "categoryPostStore/postCategoryPostSuccess",
+  SetCurrentCategoryPost = "categoryPostStore/setCurrentCategoryPost",
 }
 
 export const getCategoryPostsTrigger =
@@ -56,4 +59,8 @@ export const postCategoryPostFailure = createAction(
 
 export const postCategoryPostSuccess = createAction(
   CategoryPostStoreActions.PostCategoryPostSuccess
+);
+
+export const setCurrentCategoryPost = createActionWithPayload<CategoryPostWithImage>(
+  CategoryPostStoreActions.SetCurrentCategoryPost
 );

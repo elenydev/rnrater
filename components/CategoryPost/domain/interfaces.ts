@@ -8,6 +8,7 @@ export interface CategoryPostsStore {
   isLoading: boolean;
   paging: Paging;
   list: CategoryPostWithImage[];
+  currentCategoryPost?: CategoryPostWithImage
 }
 
 export interface GetCategoryPostsListParams {

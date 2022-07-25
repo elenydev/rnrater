@@ -49,6 +49,13 @@ const categoryPostsStore = createSliceWithSaga({
         (state: CategoryPostsStore) => {
           state.isLoading = false;
         }
+      )
+
+      .addCase(
+        actions.setCurrentCategoryPost,
+        (state: CategoryPostsStore, action) => {
+          state.currentCategoryPost = action.payload;
+        }
       );
   },
   reducers: {},
