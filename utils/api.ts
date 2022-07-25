@@ -20,6 +20,7 @@ export const API_URL = {
     GET_CATEGORY_POST_IMAGE: `${DATABASE_URL}/categoryPost/get/getCategoryPostImage`,
   },
   COMMENT: {
-    POST_COMMENT: `${DATABASE_URL}/comment/post/createComment`
+    POST_COMMENT: `${DATABASE_URL}/comment/post/createComment`,
+    GET_LIST: `${DATABASE_URL}/comment/get/getCommentsList`
   }
 };

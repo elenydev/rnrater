@@ -6,4 +6,5 @@ export interface Comment {
   createdAt: Date;
   author: User;
   post: CategoryPost;
+  content: string;
 }

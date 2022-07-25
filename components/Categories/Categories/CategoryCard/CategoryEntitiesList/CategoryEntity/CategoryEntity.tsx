@@ -1,11 +1,20 @@
 import { Text, View } from "../../../../../Themed";
-import React, { FC, memo, useCallback, useLayoutEffect, useMemo, useState } from "react";
+import React, {
+  FC,
+  memo,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Image, StyleSheet, TouchableHighlight } from "react-native";
 import { CategoryStackScreenRoutes } from "../../../../../../infrastructure/router/interfaces";
 import { useNavigation } from "@react-navigation/native";
 import { CategoryStackRoutes } from "../../../../../../infrastructure/router/enums";
 import { useCategoryItems } from "../../../../../../components/CategoryPost/hooks/useCategoryItems";
 import { readImage } from "../../../../../../utils/readImage";
+import { useDispatch } from "react-redux";
+import { setCurrentCategoryPost } from "../../../../../../components/CategoryPost/domain/actions";
 
 interface ComponentProps {
   id: string;
@@ -16,12 +25,14 @@ const CategoryEntity: FC<ComponentProps> = (props: ComponentProps) => {
   const navigation = useNavigation<CategoryStackScreenRoutes>();
   const [categoryEntityImage, setCategoryEntityImage] = useState<ArrayBuffer>();
   const { list } = useCategoryItems({ categoryId: props.categoryId });
+  const dispatch = useDispatch();
 
   const item = useMemo(() => {
     return list.find(({ id }) => props.id === id)!;
   }, [list, props.id]);
 
   const redirectToCategoryPost = useCallback(() => {
+    dispatch(setCurrentCategoryPost(item));
     navigation.navigate(CategoryStackRoutes.CategoryPost, {
       categoryEntityId: item.id,
       categoryEntityTitle: item.title,
@@ -29,17 +40,17 @@ const CategoryEntity: FC<ComponentProps> = (props: ComponentProps) => {
   }, [item]);
 
   useLayoutEffect(() => {
-    if(item.image) {
+    if (item.image) {
       readImage(item.image, setCategoryEntityImage);
     }
-  }, [item.image])
+  }, [item.image]);
 
   return (
     <View style={styles.wrapper}>
       <TouchableHighlight style={styles.item} onPress={redirectToCategoryPost}>
         <View style={styles.card}>
           <Image
-            source={{ uri: categoryEntityImage as unknown as string}}
+            source={{ uri: categoryEntityImage as unknown as string }}
             resizeMode="stretch"
             resizeMethod="resize"
             style={styles.image}
