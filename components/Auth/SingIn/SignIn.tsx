@@ -1,15 +1,13 @@
 import { Button, StyleSheet, TextInput } from "react-native";
 
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Controller } from "react-hook-form";
 import { Text, View } from "../../Themed";
 import {
   AuthStackScreenRoutes,
   RootStackScreenRoutes,
 } from "../../../infrastructure/router/interfaces";
-import {
-  AuthStackRoutes,
-} from "../../../infrastructure/router/enums";
+import { AuthStackRoutes } from "../../../infrastructure/router/enums";
 import { useNavigation } from "@react-navigation/native";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import { defaultValues, validationRules } from "./formConfig";
@@ -30,17 +28,19 @@ const SignIn = () => {
   });
   const { control, handleSubmit } = formInstance;
 
-  formManager.setFormInstance({
-    formName: FormInstanceName.AuthorizeUser,
-    formInstance,
-  });
-
   const handleLogin = useCallback((credentials: AuthenticateUserParams) => {
     dispatch(authenticateUserTrigger(credentials));
   }, []);
 
   const handleRedirect = useCallback(() => {
     (navigation as AuthStackScreenRoutes).navigate(AuthStackRoutes.SignUp);
+  }, []);
+
+  useEffect(() => {
+    formManager.setFormInstance({
+      formName: FormInstanceName.AuthorizeUser,
+      formInstance,
+    });
   }, []);
 
   return (

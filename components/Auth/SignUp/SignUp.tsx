@@ -1,7 +1,7 @@
 import * as ImagePickerExpo from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
 import { Button, StyleSheet, TextInput, ScrollView, Image } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Text, View } from "../../Themed";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import { Controller } from "react-hook-form";
@@ -22,12 +22,6 @@ export const SignUp = () => {
     defaultValues,
   });
   const { setValue, clearErrors, control, handleSubmit } = formInstance;
-
-  formManager.setFormInstance({
-    formName: FormInstanceName.CreateUser,
-    formInstance,
-    additionalActions: () => setImagePreview(undefined),
-  });
 
   const handleSignUp = useCallback((credentials: CreateUserParams) => {
     dispatch(createUserTrigger(credentials));
@@ -50,6 +44,14 @@ export const SignUp = () => {
         }
       }
     }
+  }, []);
+
+  useEffect(() => {
+    formManager.setFormInstance({
+      formName: FormInstanceName.CreateUser,
+      formInstance,
+      additionalActions: () => setImagePreview(undefined),
+    });
   }, []);
 
   return (

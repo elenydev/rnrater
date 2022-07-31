@@ -9,6 +9,7 @@ export enum CommentStoreActions {
   GetCommentsListTrigger = "commentsStore/getCommentsListTrigger",
   GetCommentsListSuccess = "commentsStore/getCommentsListSuccess",
   GetCommentsListFailure = "commentsStore/getCommentsListFailure",
+  ClearCommentsList = 'commentsStore/clearCommentsList',
   PostCommentTrigger = "commentStore/postCommentTrigger",
   PostCommentFailure = "commentStore/postCommentFailure",
   PostCommentSuccess = "commentStore/postCommentSuccess",
@@ -44,3 +45,5 @@ export const postCommentSuccess = createAction(
 export const updatePaging = createActionWithPayload<Paging>(
   CommentStoreActions.UpdatePaging
 );
+
+export const clearCommentsList = createAction(CommentStoreActions.ClearCommentsList);

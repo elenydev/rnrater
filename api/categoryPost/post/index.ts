@@ -9,6 +9,7 @@ export const createCategoryPost = async (
   const formData = new FormData();
   formData.append("title", data.title);
   formData.append('categoryId', data.categoryId)
+  formData.append('description', data.description);
   const categoryImage = {
     ...data.categoryPostImage,
     type: `image/${data.categoryPostImage.type}`,

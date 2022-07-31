@@ -1,5 +1,5 @@
 import { getFormManager } from "../../../../managers/FormManager/selectors";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FormInstanceName } from "../../../../managers/FormManager/enums";
 import { useCustomForm } from "../../../../hooks/useCustomForm";
@@ -31,12 +31,6 @@ const Form = () => {
   });
   const { setValue, clearErrors, control, handleSubmit } = formInstance;
 
-  formManager.setFormInstance({
-    formName: FormInstanceName.CreateCategoryPost,
-    formInstance,
-    additionalActions: () => setImagePreview(undefined),
-  });
-
   const handleCreateCategoryPost = useCallback(
     (data: Omit<PostCategoryPostParams, "categoryId">) => {
       createCategoryPost(data);
@@ -61,6 +55,14 @@ const Form = () => {
         }
       }
     }
+  }, []);
+
+  useEffect(() => {
+    formManager.setFormInstance({
+      formName: FormInstanceName.CreateCategoryPost,
+      formInstance,
+      additionalActions: () => setImagePreview(undefined),
+    });
   }, []);
 
   return (
@@ -105,7 +107,7 @@ const Form = () => {
         rules={validationRules.title}
       />
 
-<Controller
+      <Controller
         name="description"
         control={control}
         render={({ field }) => (

@@ -60,7 +60,7 @@ const CategoryEntity: FC<ComponentProps> = (props: ComponentProps) => {
               {item.title}
             </Text>
             <Text style={styles.description} numberOfLines={2}>
-              {item.title}
+              {item.description}
             </Text>
           </View>
         </View>

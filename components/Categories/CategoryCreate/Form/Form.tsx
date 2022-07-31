@@ -1,5 +1,5 @@
 import { getFormManager } from "../../../../managers/FormManager/selectors";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormInstanceName } from "../../../../managers/FormManager/enums";
 import { useCustomForm } from "../../../../hooks/useCustomForm";
@@ -21,12 +21,6 @@ const Form = () => {
     defaultValues,
   });
   const { setValue, clearErrors, control, handleSubmit } = formInstance;
-
-  formManager.setFormInstance({
-    formName: FormInstanceName.CreateCategory,
-    formInstance,
-    additionalActions: () => setImagePreview(undefined),
-  });
 
   const handleCreateCategory = useCallback((data: CreateCategoryParams) => {
     dispatch(createCategoryTrigger(data));
@@ -51,10 +45,16 @@ const Form = () => {
     }
   }, []);
 
+  useEffect(() => {
+    formManager.setFormInstance({
+      formName: FormInstanceName.CreateCategory,
+      formInstance,
+      additionalActions: () => setImagePreview(undefined),
+    });
+  }, []);
+
   return (
     <View style={styles.formContainer}>
-    
-
       {imagePreview && (
         <View style={styles.imageBox}>
           <Image
@@ -64,7 +64,7 @@ const Form = () => {
           />
         </View>
       )}
-      
+
       <Controller
         name="categoryImage"
         control={control}
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: "#333",
-    marginVertical: 30
+    marginVertical: 30,
   },
   validationContainer: {
     padding: 10,

@@ -11,6 +11,7 @@ export interface CategoryPost {
   evaluators: User[];
   category: Category;
   title: string;
+  description: string;
 }
 
 export interface CategoryPostWithImage extends CategoryPost {

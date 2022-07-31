@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Controller } from "react-hook-form";
 import { FontAwesome } from "@expo/vector-icons";
 import { Text, View } from "../../Themed";
@@ -25,12 +25,6 @@ const Form = () => {
   const { params } =
     useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryPost>>();
 
-  formManager.setFormInstance({
-    formName: FormInstanceName.CreateComment,
-    formInstance,
-    additionalActions: () => setValue("comment", undefined),
-  });
-
   const handleAddComment = useCallback(
     (data: { comment: string }) => {
       dispatch(
@@ -43,6 +37,14 @@ const Form = () => {
     },
     [params.categoryEntityId, user?.userId]
   );
+
+  useEffect(() => {
+    formManager.setFormInstance({
+      formName: FormInstanceName.CreateComment,
+      formInstance,
+      additionalActions: () => setValue("comment", undefined),
+    });
+  }, []);
 
   return (
     <>
@@ -87,7 +89,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     paddingVertical: 15,
-    marginTop: 10,
+    paddingTop: 5,
+    marginTop: 5,
     elevation: 2,
   },
   input: {

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentCategoryPost } from "../domain/selectors";
 import { readImage } from "../../../utils/readImage";
 import { Image } from "react-native";
-import { View } from "../../../components/Themed";
+import { Text, View } from "../../../components/Themed";
 import { getCategoryPostTrigger } from "../domain/actions";
 
 export const CategoryPost = () => {
@@ -57,6 +57,9 @@ export const CategoryPost = () => {
           resizeMethod="resize"
           style={styles.imageStyles}
         />
+        <Text style={styles.description} numberOfLines={2}>
+          {currentPost?.description}
+        </Text>
       </View>
       <Comments />
     </>
@@ -77,4 +80,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "80%",
   },
+  description: {
+    marginVertical: 7,
+    fontSize: 16
+  }
 });
