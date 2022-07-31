@@ -20,7 +20,7 @@ export const useComments = (categoryPostId: string) => {
     dispatch(
       updatePagingAction({
         pageSize: paging.pageSize,
-        pageNumber: paging.pageNumber + 1,
+        pageNumber: paging.pageNumber + 1
       })
     );
     loadComments(controller);

@@ -1,4 +1,3 @@
-import Loader from "../../../components/Loader";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useComments } from "../hooks/useComments";
 import { Text, View } from "../../../components/Themed";
@@ -41,9 +40,7 @@ const CommentsList = ({ footer }: ComponentProps) => {
       getInifiteScrollCallback(() => updatePaging(controller.current!), paging);
   }, [paging]);
 
-  return isLoading ? (
-    <Loader />
-  ) : (
+  return (
     <View style={styles.listStyle}>
       <FlatList
         style={styles.listStyle}

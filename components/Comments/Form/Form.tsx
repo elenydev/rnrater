@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     paddingVertical: 15,
-    marginTop: 10,
+    paddingTop: 5,
+    marginTop: 5,
     elevation: 2,
   },
   input: {
