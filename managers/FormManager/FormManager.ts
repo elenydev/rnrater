@@ -5,7 +5,16 @@ export default class FormManager {
   forms: FormManagerInstance[] = [];
 
   public setFormInstance(formInstance: FormManagerInstance) {
-    this.forms.push(formInstance);
+    this.forms = this.forms.find(
+      ({ formName }) => formInstance.formName === formName
+    )
+      ? [
+          ...this.forms.filter(
+            ({ formName }) => formInstance.formName === formName
+          ),
+          formInstance,
+        ]
+      : [...this.forms, formInstance];
   }
 
   public clearCurrentForm(currentFormName: FormInstanceName): void {
@@ -14,6 +23,5 @@ export default class FormManager {
     );
     currentForm?.formInstance.reset();
     currentForm?.additionalActions && currentForm.additionalActions();
-    this.forms.filter(({ formName }) => currentFormName !== formName);
   }
 }
