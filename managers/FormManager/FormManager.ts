@@ -14,5 +14,6 @@ export default class FormManager {
     );
     currentForm?.formInstance.reset();
     currentForm?.additionalActions && currentForm.additionalActions();
+    this.forms.filter(({ formName }) => currentFormName !== formName);
   }
 }

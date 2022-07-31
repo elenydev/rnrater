@@ -8,6 +8,8 @@ import { CategoryStackRoutesProps } from "infrastructure/router/interfaces";
 import { CategoryStackRoutes } from "infrastructure/router/enums";
 import Comment from "./Comment/Comment";
 import { getInifiteScrollCallback } from "../../../helpers/getInfiniteScrollCallback";
+import { clearCommentsList } from "../domain/actions";
+import { useDispatch } from "react-redux";
 
 interface ComponentProps {
   footer: JSX.Element;
@@ -20,6 +22,7 @@ const CommentsList = ({ footer }: ComponentProps) => {
     params.categoryEntityId
   );
   const controller = useRef<AbortController | undefined>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     controller.current = new AbortController();
@@ -29,6 +32,7 @@ const CommentsList = ({ footer }: ComponentProps) => {
 
     return () => {
       controller.current?.abort();
+      dispatch(clearCommentsList());
     };
   }, []);
 
