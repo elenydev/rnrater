@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { Controller } from "react-hook-form";
+import { Controller, FieldValues } from "react-hook-form";
 import { FontAwesome } from "@expo/vector-icons";
 import { Text, View } from "../../Themed";
 import { StyleSheet, TextInput } from "react-native";
@@ -26,7 +26,7 @@ const Form = () => {
     useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryPost>>();
 
   const handleAddComment = useCallback(
-    (data: { comment: string }) => {
+    (data: FieldValues) => {
       dispatch(
         postCommentTrigger({
           content: data.comment,

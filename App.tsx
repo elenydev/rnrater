@@ -6,8 +6,9 @@ import { RootSiblingParent } from "react-native-root-siblings";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import store from "./store/configureStore";
+import Notification from "./components/Notification/Notification";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -21,6 +22,7 @@ export default function App() {
         <RootSiblingParent>
           <SafeAreaProvider>
             <Navigation colorScheme={colorScheme} />
+            <Notification />
             <StatusBar />
           </SafeAreaProvider>
         </RootSiblingParent>

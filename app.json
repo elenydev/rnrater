@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "react-native-gesture-handler",
-    "slug": "react-native-gesture-handler",
+    "name": "rnrater",
+    "slug": "rnrater",
+    "owner": "eleny",
     "version": "1.0.0",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
