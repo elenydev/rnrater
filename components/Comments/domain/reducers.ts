@@ -46,6 +46,11 @@ const commentStore = createSliceWithSaga({
           pageSize: 10,
           totalCount: 0,
         };
+      })
+
+      .addCase(actions.addNewComment, (state: CommentStore, action) => {
+        state.list = [action.payload, ...state.list];
+        state.paging.totalCount = state.paging.totalCount++;
       });
   },
   reducers: {},

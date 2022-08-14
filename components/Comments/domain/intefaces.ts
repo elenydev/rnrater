@@ -11,3 +11,7 @@ export interface GetCommentsListParams {
   controller: AbortController;
   categoryPostId: string;
 }
+
+export interface AddNewCommentPayload {
+  
+}

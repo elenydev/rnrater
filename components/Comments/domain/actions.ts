@@ -3,7 +3,8 @@ import { createAction } from "@reduxjs/toolkit";
 import { CreateCommentParams } from "../../../api/comments/intefaces";
 import { GetCommentsListActionResult } from "api/comments/get";
 import { GetCommentsListParams } from "./intefaces";
-import { Paging } from "infrastructure/api/interfaces";
+import { Paging } from "../../../infrastructure/api/interfaces";
+import { Comment } from "../../../infrastructure/models/Comment";
 
 export enum CommentStoreActions {
   GetCommentsListTrigger = "commentsStore/getCommentsListTrigger",
@@ -14,6 +15,7 @@ export enum CommentStoreActions {
   PostCommentFailure = "commentStore/postCommentFailure",
   PostCommentSuccess = "commentStore/postCommentSuccess",
   UpdatePaging = "commentsStore/updatePaging",
+  AddNewComment = "commentsStore/addNewComment"
 }
 
 export const getCommentsListTrigger =
@@ -47,3 +49,5 @@ export const updatePaging = createActionWithPayload<Paging>(
 );
 
 export const clearCommentsList = createAction(CommentStoreActions.ClearCommentsList);
+
+export const addNewComment = createActionWithPayload<Comment>(CommentStoreActions.AddNewComment)

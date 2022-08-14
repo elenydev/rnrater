@@ -46,8 +46,6 @@ export default function Navigation({
 }: {
   colorScheme: ColorSchemeName;
 }) {
-  socket.on("logged", () => console.log("Test im logged"));
-
   return (
     <NavigationContainer
       linking={LinkingConfiguration}

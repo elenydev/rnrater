@@ -7,8 +7,10 @@ import { CategoryStackRoutesProps } from "infrastructure/router/interfaces";
 import { CategoryStackRoutes } from "infrastructure/router/enums";
 import Comment from "./Comment/Comment";
 import { getInifiteScrollCallback } from "../../../helpers/getInfiniteScrollCallback";
-import { clearCommentsList } from "../domain/actions";
+import { addNewComment, clearCommentsList } from "../domain/actions";
 import { useDispatch } from "react-redux";
+import { socket } from "../../../services/sockets";
+import { Comment as CommentModel } from "../../../infrastructure/models/Comment";
 
 interface ComponentProps {
   footer: JSX.Element;
@@ -34,6 +36,17 @@ const CommentsList = ({ footer }: ComponentProps) => {
       dispatch(clearCommentsList());
     };
   }, []);
+
+  useEffect(() => {
+    socket.on(
+      `${params.categoryEntityId}-comment-added`,
+      (data: CommentModel) => dispatch(addNewComment(data))
+    );
+
+    return () => {
+      socket.off(`${params.categoryEntityId}-comment-added`);
+    };
+  }, [params.categoryEntityId]);
 
   const onReachEndedCallback = useCallback(() => {
     controller.current &&
