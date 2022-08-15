@@ -1,8 +1,8 @@
-import React from "react";
-import CommentsList from "./CommentsList/CommentsList";
-import Form from "./Form/Form";
+import React from 'react';
+import CommentsList from './CommentsList/CommentsList';
+import Form from './Form/Form';
 
-const Comments = () => {
+const Comments = (): JSX.Element => {
   return <CommentsList footer={<Form />} />;
 };
 
