@@ -49,11 +49,12 @@ const CommentsList = ({ footer }: ComponentProps): JSX.Element => {
   }, [params.categoryEntityId]);
 
   const onReachEndedCallback = useCallback(() => {
-    (controller.current != null) &&
-      getInifiteScrollCallback(() => updatePaging(controller.current), paging);
+    getInifiteScrollCallback(
+      () =>
+        controller.current !== undefined && updatePaging(controller.current),
+      paging
+    );
   }, [paging]);
-
-  console.log(list);
 
   return (
     <View style={styles.listStyle}>

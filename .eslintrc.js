@@ -17,6 +17,7 @@ module.exports = {
     'comma-dangle': ['error', 'never'],
     'no-unused-vars': 'off',
     '@typescript-eslint/semi': 'off',
-    'no-console': 'on'
+    'no-console': 2,
+    '@typescript-eslint/no-non-null-assertion': 'warn'
   }
 };

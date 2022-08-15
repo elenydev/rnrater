@@ -51,7 +51,6 @@ const commentStore = createSliceWithSaga({
       .addCase(actions.addNewComment, (state: CommentStore, action) => {
         state.list = [action.payload, ...state.list];
         state.paging.totalCount = state.paging.totalCount + 1;
-        console.log(state.paging.totalCount);
         state.paging.pageNumber =
           state.paging.pageNumber * state.paging.pageSize <
           state.paging.totalCount
