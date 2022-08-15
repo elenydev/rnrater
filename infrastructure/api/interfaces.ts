@@ -1,25 +1,25 @@
-import { ResponseStatus } from "./enums";
+import { ResponseStatus } from './enums';
 
 export interface BaseRequestResponse extends Partial<Response> {
-  responseStatus: ResponseStatus;
-  message: string;
+  responseStatus: ResponseStatus
+  message: string
 }
 
 export interface BaseRequestResponse extends Partial<Response> {
-  responseStatus: ResponseStatus;
-  message: string;
+  responseStatus: ResponseStatus
+  message: string
 }
 
 export interface ApiError {
-  message: string;
+  message: string
 }
 
 export interface Paging {
-  pageNumber: number;
-  pageSize: number;
-  totalCount?: number;
+  pageNumber: number
+  pageSize: number
+  totalCount?: number
 }
 
 export interface PagingInfo extends Paging {
-  totalCount: number;
+  totalCount: number
 }

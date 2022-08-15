@@ -1,16 +1,16 @@
 export interface FormState {
-  comment?: string;
+  comment?: string
 }
 
 export const defaultValues: FormState = {
-  comment: undefined,
+  comment: undefined
 };
 
 export const validationRules = {
   comment: {
     required: {
       value: true,
-      message: "You cannot post empty comment",
-    },
-  },
+      message: 'You cannot post empty comment'
+    }
+  }
 };

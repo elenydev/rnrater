@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import SignUp from "../../components/Auth/SignUp/SignUp";
+import SignUp from '../../components/Auth/SignUp/SignUp';
 
 const SignUpScreen = () => <SignUp />;
 

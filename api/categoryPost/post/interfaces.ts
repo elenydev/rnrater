@@ -1,8 +1,8 @@
-import { SerializedImage } from "../../../utils/serializeImage";
+import { SerializedImage } from '../../../utils/serializeImage';
 
 export interface PostCategoryPostParams {
-  title: string;
-  categoryId: string;
-  categoryPostImage: SerializedImage;
-  description: string;
+  title: string
+  categoryId: string
+  categoryPostImage: SerializedImage
+  description: string
 }

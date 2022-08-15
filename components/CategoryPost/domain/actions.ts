@@ -1,35 +1,35 @@
-import { createActionWithPayload } from "../../../utils/redux/actions";
-import { createAction } from "@reduxjs/toolkit";
-import { GetCategoryPostsListActionResult } from "../../../api/categoryPost/get/interfaces";
+import { createActionWithPayload } from '../../../utils/redux/actions';
+import { createAction } from '@reduxjs/toolkit';
+import { GetCategoryPostsListActionResult } from '../../../api/categoryPost/get/interfaces';
 import {
   GetCategoryPostImageActionParams,
   GetCategoryPostParams,
   GetCategoryPostsImagesParams,
-  GetCategoryPostsListParams,
-} from "./interfaces";
+  GetCategoryPostsListParams
+} from './interfaces';
 import {
   CategoryPost,
-  CategoryPostWithImage,
-} from "../../../infrastructure/models/CategoryPost";
-import { PostCategoryPostParams } from "api/categoryPost/post/interfaces";
+  CategoryPostWithImage
+} from '../../../infrastructure/models/CategoryPost';
+import { PostCategoryPostParams } from 'api/categoryPost/post/interfaces';
 
 export enum CategoryPostStoreActions {
-  GetCategoryPostsTrigger = "categoryPostStore/getCategoryPostsTrigger",
-  GetCategoryPostsSuccess = "categoryPostStore/getCategoryPostsSuccess",
-  GetCategoryPostsFailure = "categoryPostStore/getCategoryPostsFailure",
-  GetCategoryPostsImagesTrigger = "categoryPostStore/getCategoryPostsImagesTrigger",
-  GetCategoryPostsImagesSuccess = "categoryPostStore/getCategoryPostsImagesSuccess",
-  GetCategoryPostsImagesFailure = "categoryPostStore/getCategoryPostsImagesFailure",
-  PostCategoryPostTrigger = "categoryPostStore/postCategoryPostTrigger",
-  PostCategoryPostFailure = "categoryPostStore/postCategoryPostFailure",
-  PostCategoryPostSuccess = "categoryPostStore/postCategoryPostSuccess",
-  SetCurrentCategoryPost = "categoryPostStore/setCurrentCategoryPost",
-  GetCategoryPostTrigger = "categoryPostStore/getCategoryPostTrigger",
-  GetCategoryPostFailure = "categoryPostStore/getCategoryPostFailure",
-  GetCategoryPostSuccess = "categoryPostStore/getCategoryPostSuccess",
-  GetCategoryPostImageTrigger = "categoryPostStore/getCategoryPostImageTrigger",
-  GetCategoryPostImageSuccess = "categoryPostStore/getCategoryPostImageSuccess",
-  GetCategoryPostImageFailure = "categoryPostStore/getCategoryPostImageFailure",
+  GetCategoryPostsTrigger = 'categoryPostStore/getCategoryPostsTrigger',
+  GetCategoryPostsSuccess = 'categoryPostStore/getCategoryPostsSuccess',
+  GetCategoryPostsFailure = 'categoryPostStore/getCategoryPostsFailure',
+  GetCategoryPostsImagesTrigger = 'categoryPostStore/getCategoryPostsImagesTrigger',
+  GetCategoryPostsImagesSuccess = 'categoryPostStore/getCategoryPostsImagesSuccess',
+  GetCategoryPostsImagesFailure = 'categoryPostStore/getCategoryPostsImagesFailure',
+  PostCategoryPostTrigger = 'categoryPostStore/postCategoryPostTrigger',
+  PostCategoryPostFailure = 'categoryPostStore/postCategoryPostFailure',
+  PostCategoryPostSuccess = 'categoryPostStore/postCategoryPostSuccess',
+  SetCurrentCategoryPost = 'categoryPostStore/setCurrentCategoryPost',
+  GetCategoryPostTrigger = 'categoryPostStore/getCategoryPostTrigger',
+  GetCategoryPostFailure = 'categoryPostStore/getCategoryPostFailure',
+  GetCategoryPostSuccess = 'categoryPostStore/getCategoryPostSuccess',
+  GetCategoryPostImageTrigger = 'categoryPostStore/getCategoryPostImageTrigger',
+  GetCategoryPostImageSuccess = 'categoryPostStore/getCategoryPostImageSuccess',
+  GetCategoryPostImageFailure = 'categoryPostStore/getCategoryPostImageFailure',
 }
 
 export const getCategoryPostsTrigger =
@@ -54,7 +54,7 @@ export const getCategoryPostsImagesFailure = createAction(
 );
 
 export const getCategoryPostsImagesSuccess = createActionWithPayload<
-  CategoryPostWithImage[]
+CategoryPostWithImage[]
 >(CategoryPostStoreActions.GetCategoryPostsImagesSuccess);
 
 export const postCategoryPostTrigger =

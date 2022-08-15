@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { useEffect, useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 
 interface HookProps {
-  defaultValues: FieldValues;
+  defaultValues: FieldValues
 }
 
 export const useCustomForm = ({ defaultValues }: HookProps) => {
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
   const formInstance = useForm({
-    defaultValues,
+    defaultValues
   });
 
   const {
-    formState: { errors },
+    formState: { errors }
   } = formInstance;
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export const useCustomForm = ({ defaultValues }: HookProps) => {
     const firstErrorKey = formErrors?.length ? formErrors[0] : undefined;
     setFormError(
       firstErrorKey
-        ? errors[firstErrorKey as keyof typeof errors]?.message
+        ? errors[firstErrorKey]?.message
         : undefined
     );
   }, [...Object.keys(defaultValues).map((key) => errors[key]), errors]);

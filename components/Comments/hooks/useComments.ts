@@ -1,10 +1,10 @@
-import { useCallback, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getCommentsListTrigger,
-  updatePaging as updatePagingAction,
-} from "../domain/actions";
-import { getIsLoading, getList, getPaging } from "../domain/selectors";
+  updatePaging as updatePagingAction
+} from '../domain/actions';
+import { getIsLoading, getList, getPaging } from '../domain/selectors';
 
 export const useComments = (categoryPostId: string) => {
   const isLoading = useSelector(getIsLoading);
@@ -31,6 +31,6 @@ export const useComments = (categoryPostId: string) => {
     list,
     paging,
     loadComments,
-    updatePaging,
+    updatePaging
   };
 };

@@ -1,13 +1,13 @@
-import { HistoryStore } from "./interfaces";
-import { createSliceWithSaga } from "redux-toolkit-with-saga";
-import * as actions from "./actions";
+import { HistoryStore } from './interfaces';
+import { createSliceWithSaga } from 'redux-toolkit-with-saga';
+import * as actions from './actions';
 
 const initialState: HistoryStore = {
-  manager: undefined,
+  manager: undefined
 };
 
 const historyManagerStore = createSliceWithSaga({
-  name: "historyStore",
+  name: 'historyStore',
   reducers: {},
   initialState,
   extraReducers: (builder) => {
@@ -17,7 +17,7 @@ const historyManagerStore = createSliceWithSaga({
         state.manager = action.payload;
       }
     );
-  },
+  }
 });
 
 export default historyManagerStore.reducer;

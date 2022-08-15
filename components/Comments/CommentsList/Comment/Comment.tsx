@@ -1,10 +1,10 @@
-import { Comment } from "../../../../infrastructure/models/Comment";
-import React, { memo } from "react";
-import { StyleSheet } from "react-native";
-import { Text, View } from "../../../../components/Themed";
+import { Comment } from '../../../../infrastructure/models/Comment';
+import React, { memo } from 'react';
+import { StyleSheet } from 'react-native';
+import { Text, View } from '../../../../components/Themed';
 
 interface ComponentProps {
-  comment: Comment;
+  comment: Comment
 }
 
 const CommentComponent = ({ comment }: ComponentProps) => {
@@ -24,12 +24,12 @@ export default memo(CommentComponent);
 
 const styles = StyleSheet.create({
   box: {
-    display: "flex",
+    display: 'flex',
     marginBottom: 15,
-    flexDirection: "column",
+    flexDirection: 'column'
   },
   metaBox: {
-    display: "flex",
+    display: 'flex',
     flexDirection: 'row',
     overflow: 'hidden',
     alignItems: 'center'

@@ -1,30 +1,30 @@
-import { put, takeLatest, ForkEffect, select } from "redux-saga/effects";
+import { put, takeLatest, ForkEffect, select } from 'redux-saga/effects';
 
-import { ResponseStatus } from "../../../infrastructure/api/enums";
-import { successToast, errorToast } from "../../../services/toast";
-import { Action } from "redux-actions";
+import { ResponseStatus } from '../../../infrastructure/api/enums';
+import { successToast, errorToast } from '../../../services/toast';
+import { Action } from 'redux-actions';
 
-import * as CategoriesStoreActions from "./actions";
+import * as CategoriesStoreActions from './actions';
 import {
   getCategoriesList,
   GetCategoriesListActionResult,
   getCategoriesCoverImages,
-  GetCategoryCoverImageResult,
-} from "../../../api/categories/get";
-import { getPaging } from "./selectors";
+  GetCategoryCoverImageResult
+} from '../../../api/categories/get';
+import { getPaging } from './selectors';
 import {
   BaseRequestResponse,
-  Paging,
-} from "../../../infrastructure/api/interfaces";
-import { createCategory } from "../../../api/categories/post";
-import { CreateCategoryParams } from "../../../api/categories/post/interfaces";
-import { GetCategoriesCoverImagesParams } from "./interfaces";
-import { CategoryWithCover } from "../../../infrastructure/models/Category";
-import FormManager from "../../../managers/FormManager/FormManager";
-import { FormInstanceName } from "../../../managers/FormManager/enums";
-import { getFormManager } from "../../../managers/FormManager/selectors";
+  Paging
+} from '../../../infrastructure/api/interfaces';
+import { createCategory } from '../../../api/categories/post';
+import { CreateCategoryParams } from '../../../api/categories/post/interfaces';
+import { GetCategoriesCoverImagesParams } from './interfaces';
+import { CategoryWithCover } from '../../../infrastructure/models/Category';
+import FormManager from '../../../managers/FormManager/FormManager';
+import { FormInstanceName } from '../../../managers/FormManager/enums';
+import { getFormManager } from '../../../managers/FormManager/selectors';
 
-function* getCategoriesListCall() {
+function * getCategoriesListCall () {
   const paging: Paging = yield select(getPaging);
   try {
     const response: GetCategoriesListActionResult = yield getCategoriesList(
@@ -35,7 +35,7 @@ function* getCategoriesListCall() {
       yield put(CategoriesStoreActions.getCategoriesListSuccess(response));
       yield put(
         CategoriesStoreActions.getCategoriesCoverImagesTrigger({
-          categories: response.results!,
+          categories: response.results!
         })
       );
     }
@@ -45,7 +45,7 @@ function* getCategoriesListCall() {
   }
 }
 
-function* createCategoryCall(action: Action<CreateCategoryParams>) {
+function * createCategoryCall (action: Action<CreateCategoryParams>) {
   try {
     const response: BaseRequestResponse = yield createCategory(action.payload);
     const formManager: FormManager = yield select(getFormManager);
@@ -62,7 +62,7 @@ function* createCategoryCall(action: Action<CreateCategoryParams>) {
   }
 }
 
-function* getCategoriesCoverImagesCall(
+function * getCategoriesCoverImagesCall (
   action: Action<GetCategoriesCoverImagesParams>
 ) {
   const { categories } = action.payload;
@@ -76,7 +76,7 @@ function* getCategoriesCoverImagesCall(
       const categoriesWithCovers: CategoryWithCover[] = categories.map(
         (category, index) => ({
           ...category,
-          coverImage: response[index].result as Blob,
+          coverImage: response[index].result as Blob
         })
       );
 
@@ -88,17 +88,17 @@ function* getCategoriesCoverImagesCall(
       return;
     }
 
-    errorToast("Failed to load images for categories");
+    errorToast('Failed to load images for categories');
   } catch (error) {
     yield put(CategoriesStoreActions.getCategoriesCoverImagesFailure());
     errorToast(error.message);
   }
 }
 
-export default function* categoriesSagas(): Generator<
-  ForkEffect<never>,
-  void,
-  unknown
+export default function * categoriesSagas (): Generator<
+ForkEffect<never>,
+void,
+unknown
 > {
   yield takeLatest(
     CategoriesStoreActions.getCategoriesListTrigger,

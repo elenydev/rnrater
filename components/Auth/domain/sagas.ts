@@ -1,40 +1,39 @@
-import { put, takeLatest, ForkEffect, select } from "redux-saga/effects";
-import { setSecureItem } from "../../../services/secureStore/index";
-import FormManager from "managers/FormManager/FormManager";
-import { getFormManager } from "../../../managers/FormManager/selectors";
+import { put, takeLatest, ForkEffect, select } from 'redux-saga/effects';
+import { setSecureItem } from '../../../services/secureStore/index';
+import FormManager from 'managers/FormManager/FormManager';
+import { getFormManager } from '../../../managers/FormManager/selectors';
 
-import { ResponseStatus } from "../../../infrastructure/api/enums";
-import { successToast, errorToast } from "../../../services/toast";
+import { ResponseStatus } from '../../../infrastructure/api/enums';
+import { successToast, errorToast } from '../../../services/toast';
 import {
   postAuthenticateUser,
-  PostAuthenticateUserResult,
-} from "../../../api/auth/post/authenticateUser";
+  PostAuthenticateUserResult
+} from '../../../api/auth/post/authenticateUser';
 import {
   getUserAvatar as getUserAvatarCall,
-  GetUserAvatarActionResult,
-} from "../../../api/user/get/userAvatar";
-import { AuthenticateUserParams } from "../../../api/auth/post/interfaces";
-import { GetUserAvatarParams } from "../../../api/user/get/intefaces";
-import { createUser as createUserCall } from "../../../api/auth/post/createUser";
-import { CreateUserParams } from "../../../api/auth/post/interfaces";
+  GetUserAvatarActionResult
+} from '../../../api/user/get/userAvatar';
+import { AuthenticateUserParams, CreateUserParams } from '../../../api/auth/post/interfaces';
+import { GetUserAvatarParams } from '../../../api/user/get/intefaces';
+import { createUser as createUserCall } from '../../../api/auth/post/createUser';
 
-import { Action } from "redux-actions";
-import * as UserStoreActions from "./actions";
+import { Action } from 'redux-actions';
+import * as UserStoreActions from './actions';
 
-import { PostItemActionResult } from "../../../factories/interfaces/post";
-import { BaseRequestResponse } from "../../../infrastructure/api/interfaces";
-import { SecureKeys } from "../../../infrastructure/secure/enums";
-import { FormInstanceName } from "../../../managers/FormManager/enums";
+import { PostItemActionResult } from '../../../factories/interfaces/post';
+import { BaseRequestResponse } from '../../../infrastructure/api/interfaces';
+import { SecureKeys } from '../../../infrastructure/secure/enums';
+import { FormInstanceName } from '../../../managers/FormManager/enums';
 
-import { getHistoryManager } from "../../../managers/HistoryManager/selectors";
+import { getHistoryManager } from '../../../managers/HistoryManager/selectors';
 import {
   AuthStackRoutes,
   RootScreenTabs,
-  RootStackRoutes,
-} from "../../../infrastructure/router/enums";
-import HistoryManager from "../../../managers/HistoryManager/HistoryManager";
+  RootStackRoutes
+} from '../../../infrastructure/router/enums';
+import HistoryManager from '../../../managers/HistoryManager/HistoryManager';
 
-function* authenticateUser(action: Action<AuthenticateUserParams>) {
+function * authenticateUser (action: Action<AuthenticateUserParams>) {
   const user = action.payload;
   const formManager: FormManager = yield select(getFormManager);
   const historyManager: HistoryManager = yield select(getHistoryManager);
@@ -50,7 +49,7 @@ function* authenticateUser(action: Action<AuthenticateUserParams>) {
       formManager.clearCurrentForm(FormInstanceName.AuthorizeUser);
       yield put(
         UserStoreActions.getUserAvatarTrigger({
-          userId: response.result.user.userId,
+          userId: response.result.user.userId
         })
       );
 
@@ -67,7 +66,7 @@ function* authenticateUser(action: Action<AuthenticateUserParams>) {
   }
 }
 
-function* createUser(action: Action<CreateUserParams>) {
+function * createUser (action: Action<CreateUserParams>) {
   const user = action.payload;
   const formManager: FormManager = yield select(getFormManager);
   const historyManager: HistoryManager = yield select(getHistoryManager);
@@ -87,7 +86,7 @@ function* createUser(action: Action<CreateUserParams>) {
   }
 }
 
-function* getUserAvatar(action: Action<GetUserAvatarParams>) {
+function * getUserAvatar (action: Action<GetUserAvatarParams>) {
   const userId = action.payload;
   try {
     const response: GetUserAvatarActionResult = yield getUserAvatarCall(userId);
@@ -102,10 +101,10 @@ function* getUserAvatar(action: Action<GetUserAvatarParams>) {
   }
 }
 
-export default function* userSagas(): Generator<
-  ForkEffect<never>,
-  void,
-  unknown
+export default function * userSagas (): Generator<
+ForkEffect<never>,
+void,
+unknown
 > {
   yield takeLatest(UserStoreActions.authenticateUserTrigger, authenticateUser);
   yield takeLatest(UserStoreActions.createUserTrigger, createUser);

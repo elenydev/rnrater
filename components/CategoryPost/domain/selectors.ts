@@ -1,5 +1,5 @@
-import { createSelector } from "reselect";
-import { Store } from "../../../store/interface";
+import { createSelector } from 'reselect';
+import { Store } from '../../../store/interface';
 
 export const getCategoryPostsList = createSelector(
   [(store: Store) => store.categoryPostsStore.list],

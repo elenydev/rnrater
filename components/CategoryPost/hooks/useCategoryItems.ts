@@ -1,17 +1,17 @@
-import { PostCategoryPostParams } from "../../../api/categoryPost/post/interfaces";
-import { useCallback } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { PostCategoryPostParams } from '../../../api/categoryPost/post/interfaces';
+import { useCallback } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import {
   getCategoryPostsTrigger,
-  postCategoryPostTrigger,
-} from "../domain/actions";
+  postCategoryPostTrigger
+} from '../domain/actions';
 import {
   getCategoryPostsList,
-  getCategoryPostsLoading,
-} from "../domain/selectors";
+  getCategoryPostsLoading
+} from '../domain/selectors';
 
 interface HookParams {
-  categoryId: string;
+  categoryId: string
 }
 
 export const useCategoryItems = (params: HookParams) => {
@@ -29,11 +29,11 @@ export const useCategoryItems = (params: HookParams) => {
   );
 
   const createCategoryPost = useCallback(
-    (data: Omit<PostCategoryPostParams, "categoryId">) => {
+    (data: Omit<PostCategoryPostParams, 'categoryId'>) => {
       dispatch(
         postCategoryPostTrigger({
           ...data,
-          categoryId: params.categoryId,
+          categoryId: params.categoryId
         })
       );
     },
@@ -44,6 +44,6 @@ export const useCategoryItems = (params: HookParams) => {
     loadCategoryItems,
     createCategoryPost,
     isLoading,
-    list,
+    list
   };
 };

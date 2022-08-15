@@ -1,33 +1,33 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import { useComments } from "../hooks/useComments";
-import { Text, View } from "../../../components/Themed";
-import { FlatList, StyleSheet } from "react-native";
-import { useRoute } from "@react-navigation/native";
-import { CategoryStackRoutesProps } from "infrastructure/router/interfaces";
-import { CategoryStackRoutes } from "infrastructure/router/enums";
-import Comment from "./Comment/Comment";
-import { getInifiteScrollCallback } from "../../../helpers/getInfiniteScrollCallback";
-import { addNewComment, clearCommentsList } from "../domain/actions";
-import { useDispatch } from "react-redux";
-import { socket } from "../../../services/sockets";
-import { Comment as CommentModel } from "../../../infrastructure/models/Comment";
+import React, { useCallback, useEffect, useRef } from 'react';
+import { useComments } from '../hooks/useComments';
+import { Text, View } from '../../../components/Themed';
+import { FlatList, StyleSheet } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import { CategoryStackRoutesProps } from 'infrastructure/router/interfaces';
+import { CategoryStackRoutes } from 'infrastructure/router/enums';
+import Comment from './Comment/Comment';
+import { getInifiteScrollCallback } from '../../../helpers/getInfiniteScrollCallback';
+import { addNewComment, clearCommentsList } from '../domain/actions';
+import { useDispatch } from 'react-redux';
+import { socket } from '../../../services/sockets';
+import { Comment as CommentModel } from '../../../infrastructure/models/Comment';
 
 interface ComponentProps {
-  footer: JSX.Element;
+  footer: JSX.Element
 }
 
-const CommentsList = ({ footer }: ComponentProps) => {
+const CommentsList = ({ footer }: ComponentProps): JSX.Element => {
   const { params } =
     useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryPost>>();
   const { isLoading, list, loadComments, updatePaging, paging } = useComments(
     params.categoryEntityId
   );
-  const controller = useRef<AbortController | undefined>();
+  const controller = useRef<AbortController>();
   const dispatch = useDispatch();
 
   useEffect(() => {
     controller.current = new AbortController();
-    if (controller.current) {
+    if (controller.current !== null) {
       loadComments(controller.current);
     }
 
@@ -49,8 +49,11 @@ const CommentsList = ({ footer }: ComponentProps) => {
   }, [params.categoryEntityId]);
 
   const onReachEndedCallback = useCallback(() => {
-    controller.current &&
-      getInifiteScrollCallback(() => updatePaging(controller.current!), paging);
+    getInifiteScrollCallback(
+      () =>
+        controller.current !== undefined && updatePaging(controller.current),
+      paging
+    );
   }, [paging]);
 
   return (
@@ -67,8 +70,8 @@ const CommentsList = ({ footer }: ComponentProps) => {
         }
         contentContainerStyle={{
           flexGrow: 1,
-          display: "flex",
-          padding: 20,
+          display: 'flex',
+          padding: 20
         }}
         refreshing={isLoading}
         onEndReached={onReachEndedCallback}
@@ -83,15 +86,15 @@ export default CommentsList;
 
 const styles = StyleSheet.create({
   listStyle: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     elevation: 2,
     margin: 7,
-    height: "60%",
+    height: '60%'
   },
   emptyList: {
-    display: "flex",
+    display: 'flex',
     flex: 1,
-    justifyContent: "center",
-    paddingVertical: 10,
-  },
+    justifyContent: 'center',
+    paddingVertical: 10
+  }
 });

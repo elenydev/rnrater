@@ -1,19 +1,19 @@
-import { createSliceWithSaga } from "redux-toolkit-with-saga";
-import { CommentStore } from "./intefaces";
-import * as actions from "./actions";
+import { createSliceWithSaga } from 'redux-toolkit-with-saga';
+import { CommentStore } from './intefaces';
+import * as actions from './actions';
 
 const initialState: CommentStore = {
   paging: {
     pageNumber: 1,
     pageSize: 10,
-    totalCount: 0,
+    totalCount: 0
   },
   isLoading: true,
-  list: [],
+  list: []
 };
 
 const commentStore = createSliceWithSaga({
-  name: "commentStore",
+  name: 'commentStore',
   initialState,
   extraReducers: (builder) => {
     builder
@@ -35,7 +35,7 @@ const commentStore = createSliceWithSaga({
         state.paging = {
           ...state.paging,
           pageNumber: action.payload.pageNumber,
-          pageSize: action.payload.pageSize,
+          pageSize: action.payload.pageSize
         };
       })
 
@@ -44,16 +44,21 @@ const commentStore = createSliceWithSaga({
         state.paging = {
           pageNumber: 1,
           pageSize: 10,
-          totalCount: 0,
+          totalCount: 0
         };
       })
 
       .addCase(actions.addNewComment, (state: CommentStore, action) => {
         state.list = [action.payload, ...state.list];
-        state.paging.totalCount = state.paging.totalCount++;
+        state.paging.totalCount = state.paging.totalCount + 1;
+        state.paging.pageNumber =
+          state.paging.pageNumber * state.paging.pageSize <
+          state.paging.totalCount
+            ? state.paging.pageNumber + 1
+            : state.paging.pageNumber;
       });
   },
-  reducers: {},
+  reducers: {}
 });
 
 export default commentStore.reducer;

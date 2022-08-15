@@ -1,5 +1,5 @@
-import HistoryManager from "./HistoryManager";
+import HistoryManager from './HistoryManager';
 
 export interface HistoryStore {
-  manager?: HistoryManager;
+  manager?: HistoryManager
 }

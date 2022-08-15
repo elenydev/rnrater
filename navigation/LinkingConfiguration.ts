@@ -1,62 +1,62 @@
-import { LinkingOptions } from "@react-navigation/native";
-import * as Linking from "expo-linking";
+import { LinkingOptions } from '@react-navigation/native';
+import * as Linking from 'expo-linking';
 
-import { RootStackParamList } from "../infrastructure/router/interfaces";
+import { RootStackParamList } from '../infrastructure/router/interfaces';
 
 const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: [Linking.makeUrl("/")],
+  prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
       auth: {
         screens: {
           signUp: {
             screens: {
-              signUp: "signUp",
-            },
+              signUp: 'signUp'
+            }
           },
           signIn: {
             screens: {
-              signInScreen: "signIn",
-            },
-          },
-        },
+              signInScreen: 'signIn'
+            }
+          }
+        }
       },
       root: {
         screens: {
           categories: {
             screens: {
-              categories: "categories",
-            },
+              categories: 'categories'
+            }
           },
           tabTwo: {
             screens: {
-              tabTwoScreen: "two",
-            },
-          },
-        },
+              tabTwoScreen: 'two'
+            }
+          }
+        }
       },
       category: {
         screens: {
           categoryEntities: {
             screens: {
-              allEntites: "Category Entities",
-            },
+              allEntites: 'Category Entities'
+            }
           },
           categoryEntity: {
             screens: {
-              entity: "Entity",
-            },
+              entity: 'Entity'
+            }
           },
           createCategoryPost: {
             screens: {
               createCategoryPost: 'Create Category Post'
             }
           }
-        },
+        }
       },
-      notFound: "*",
-    },
-  },
+      notFound: '*'
+    }
+  }
 };
 
 export default linking;

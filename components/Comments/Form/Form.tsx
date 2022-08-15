@@ -1,25 +1,25 @@
-import React, { useCallback, useEffect } from "react";
-import { Controller } from "react-hook-form";
-import { FontAwesome } from "@expo/vector-icons";
-import { Text, View } from "../../Themed";
-import { StyleSheet, TextInput } from "react-native";
-import { useCustomForm } from "../../../hooks/useCustomForm";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getFormManager } from "../../../managers/FormManager/selectors";
-import { FormInstanceName } from "../../../managers/FormManager/enums";
-import { defaultValues, validationRules } from "./formConfig";
-import { postCommentTrigger } from "../domain/actions";
-import { CategoryStackRoutesProps } from "../../../infrastructure/router/interfaces";
-import { CategoryStackRoutes } from "../../../infrastructure/router/enums";
-import { useRoute } from "@react-navigation/native";
-import { getCurrentUser } from "../../../components/Auth/domain/selectors";
+import React, { useCallback, useEffect } from 'react';
+import { Controller } from 'react-hook-form';
+import { FontAwesome } from '@expo/vector-icons';
+import { Text, View } from '../../Themed';
+import { StyleSheet, TextInput } from 'react-native';
+import { useCustomForm } from '../../../hooks/useCustomForm';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { getFormManager } from '../../../managers/FormManager/selectors';
+import { FormInstanceName } from '../../../managers/FormManager/enums';
+import { defaultValues, validationRules } from './formConfig';
+import { postCommentTrigger } from '../domain/actions';
+import { CategoryStackRoutesProps } from '../../../infrastructure/router/interfaces';
+import { CategoryStackRoutes } from '../../../infrastructure/router/enums';
+import { useRoute } from '@react-navigation/native';
+import { getCurrentUser } from '../../../components/Auth/domain/selectors';
 
 const Form = () => {
   const dispatch = useDispatch();
   const formManager = useSelector(getFormManager, shallowEqual);
   const user = useSelector(getCurrentUser, shallowEqual);
   const { formInstance, formError } = useCustomForm({
-    defaultValues,
+    defaultValues
   });
   const { setValue, control, handleSubmit } = formInstance;
   const { params } =
@@ -31,7 +31,7 @@ const Form = () => {
         postCommentTrigger({
           content: data.comment,
           categoryPostId: params.categoryEntityId,
-          authorId: user?.userId!,
+          authorId: user?.userId!
         })
       );
     },
@@ -42,7 +42,7 @@ const Form = () => {
     formManager.setFormInstance({
       formName: FormInstanceName.CreateComment,
       formInstance,
-      additionalActions: () => setValue("comment", undefined),
+      additionalActions: () => setValue('comment', undefined)
     });
   }, []);
 
@@ -84,14 +84,14 @@ export default Form;
 
 const styles = StyleSheet.create({
   formContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
     paddingVertical: 15,
     paddingTop: 5,
     marginTop: 5,
-    elevation: 2,
+    elevation: 2
   },
   input: {
     flex: 1,
@@ -99,15 +99,15 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 8,
     borderBottomWidth: 1,
-    borderBottomColor: "#333",
-    marginRight: 15,
+    borderBottomColor: '#333',
+    marginRight: 15
   },
   validationContainer: {
     padding: 10,
-    textAlign: "center",
+    textAlign: 'center'
   },
   validationText: {
-    color: "#ff0000",
-    marginTop: 14,
-  },
+    color: '#ff0000',
+    marginTop: 14
+  }
 });

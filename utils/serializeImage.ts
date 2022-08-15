@@ -1,26 +1,26 @@
-import * as ImagePicker from "expo-image-picker";
+import * as ImagePicker from 'expo-image-picker';
 import { Platform } from 'react-native';
 
 export interface SerializedImage {
-  name: string;
-  type: string;
-  uri: string;
+  name: string
+  type: string
+  uri: string
 }
 
 export const serializeImage = (
   imagePickResult: ImagePicker.ImagePickerResult
 ): SerializedImage | undefined => {
   if (!imagePickResult.cancelled) {
-    const name = imagePickResult.uri!.split("ImagePicker/")[1];
-    const type = name.split(".").pop();
+    const name = imagePickResult.uri.split('ImagePicker/')[1];
+    const type = name.split('.').pop();
 
     return {
       name,
       uri:
-        Platform.OS === "ios"
-          ? imagePickResult.uri!.replace("file://", "")
-          : imagePickResult.uri!,
-      type: type!,
+        Platform.OS === 'ios'
+          ? imagePickResult.uri.replace('file://', '')
+          : imagePickResult.uri,
+      type: type!
     };
   }
 };

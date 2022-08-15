@@ -1,11 +1,11 @@
-import { BaseRequestResponse } from "../../infrastructure/api/interfaces";
+import { BaseRequestResponse } from '../../infrastructure/api/interfaces';
 
 export interface PostItemActionResult<ReturnItemType>
   extends BaseRequestResponse {
-  result: ReturnItemType;
+  result: ReturnItemType
 }
 
 export interface PostItemsActionResult<ReturnItemType>
   extends BaseRequestResponse {
-  results: ReturnItemType[];
+  results: ReturnItemType[]
 }

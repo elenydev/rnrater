@@ -1,6 +1,6 @@
-import { SerializedImage } from "../../../utils/serializeImage";
+import { SerializedImage } from '../../../utils/serializeImage';
 
 export interface CreateCategoryParams {
-  name: string;
-  categoryImage: SerializedImage;
+  name: string
+  categoryImage: SerializedImage
 }

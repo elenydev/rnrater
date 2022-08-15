@@ -1,7 +1,7 @@
-import { GetUserAvatarParams } from "../../../api/user/get/intefaces";
-import { API_URL } from "../../../utils/api";
-import { getItem } from "../../../factories/Get";
-import { GetItemActionResult } from "../../../factories/interfaces/get";
+import { GetUserAvatarParams } from '../../../api/user/get/intefaces';
+import { API_URL } from '../../../utils/api';
+import { getItem } from '../../../factories/Get';
+import { GetItemActionResult } from '../../../factories/interfaces/get';
 
 export type GetUserAvatarActionResult =
   | GetItemActionResult<Blob>
