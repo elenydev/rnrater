@@ -1,8 +1,8 @@
-import { GetItemActionResult, GetListActionResult } from "../interfaces/get";
-import { AuthKeys, ResponseStatus } from "../../infrastructure/api/enums";
-import { BaseRequestResponse } from "../../infrastructure/api/interfaces";
-import { getAuthValue } from "../../services/auth";
-import { getErrorResponse } from "../../utils/getErrorResponse";
+import { GetItemActionResult, GetListActionResult } from '../interfaces/get';
+import { AuthKeys, ResponseStatus } from '../../infrastructure/api/enums';
+import { BaseRequestResponse } from '../../infrastructure/api/interfaces';
+import { getAuthValue } from '../../services/auth';
+import { getErrorResponse } from '../../utils/getErrorResponse';
 
 export const getList = async <ListItemType>(
   path: string,
@@ -10,7 +10,7 @@ export const getList = async <ListItemType>(
   queryParams: { [key: string]: unknown } = {},
   pagination = {
     pageNumber: 1,
-    pageSize: 10,
+    pageSize: 10
   },
   controller?: AbortController
 ): Promise<GetListActionResult<ListItemType> | BaseRequestResponse> => {
@@ -19,7 +19,7 @@ export const getList = async <ListItemType>(
     const mergedParams: { [key: string]: unknown } = {
       ...queryParams,
       pageSize: pagination.pageSize,
-      pageNumber: pagination.pageNumber,
+      pageNumber: pagination.pageNumber
     };
     const params = Object.keys(mergedParams).reduce(
       (allParams: string[], currentParam) => {
@@ -30,20 +30,20 @@ export const getList = async <ListItemType>(
     );
 
     const authorizationHeader = requireAuth && {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`
     };
-    const request = await fetch(`${path}?${params.join("&")}`, {
-      method: "GET",
+    const request = await fetch(`${path}?${params.join('&')}`, {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        ...authorizationHeader,
+        'Content-Type': 'application/json',
+        ...authorizationHeader
       },
-      signal: controller?.signal,
+      signal: controller?.signal
     });
     const response = await request.json();
-    return databaseResponse<ListItemType>(request.ok, response, true);
+    return await databaseResponse<ListItemType>(request.ok, response, true);
   } catch (error) {
-    return Promise.reject(getErrorResponse(error.message));
+    return await Promise.reject(getErrorResponse(error.message));
   }
 };
 
@@ -65,39 +65,39 @@ export const getItem = async <ListItemType>(
     );
 
     const authorizationHeader = requireAuth && {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`
     };
-    const request = await fetch(`${path}?${params.join("&")}`, {
-      method: "GET",
+    const request = await fetch(`${path}?${params.join('&')}`, {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        ...authorizationHeader,
+        'Content-Type': 'application/json',
+        ...authorizationHeader
       },
       signal: controller?.signal
     });
     const response = returnFile ? await request : await request.json();
-    return databaseResponse<ListItemType>(
+    return await databaseResponse<ListItemType>(
       request.ok,
       response,
       false,
       returnFile
     );
   } catch (error) {
-    return Promise.reject(getErrorResponse(error.message));
+    return await Promise.reject(getErrorResponse(error.message));
   }
 };
 
 export const databaseResponse = async <ListItemType>(
   isSuccesfullResponse: boolean,
   response:
-    | GetListActionResult<ListItemType>
-    | GetItemActionResult<ListItemType>,
+  | GetListActionResult<ListItemType>
+  | GetItemActionResult<ListItemType>,
   multipleResults = false,
   returnFile = false
 ): Promise<
-  | GetListActionResult<ListItemType>
-  | GetItemActionResult<ListItemType>
-  | BaseRequestResponse
+| GetListActionResult<ListItemType>
+| GetItemActionResult<ListItemType>
+| BaseRequestResponse
 > => {
   const baseResult = multipleResults
     ? {
@@ -108,19 +108,19 @@ export const databaseResponse = async <ListItemType>(
           pageSize: (response as GetListActionResult<ListItemType>).paging
             ?.pageSize,
           pageNumber: (response as GetListActionResult<ListItemType>).paging
-            ?.pageNumber,
-        },
+            ?.pageNumber
+        }
       }
     : { result: (response as GetItemActionResult<ListItemType>).result };
   if (isSuccesfullResponse) {
     const file = returnFile && response.blob && (await response.blob());
-    return Promise.resolve({
+    return await Promise.resolve({
       ...baseResult,
       ...(returnFile && { result: file }),
       responseStatus: ResponseStatus.Success,
-      message: response.message,
+      message: response.message
     });
   }
 
-  return Promise.reject(getErrorResponse(response.message));
+  return await Promise.reject(getErrorResponse(response.message));
 };

@@ -1,18 +1,18 @@
-import { CategoryPostsStore } from "./interfaces";
-import { createSliceWithSaga } from "redux-toolkit-with-saga";
-import * as actions from "./actions";
+import { CategoryPostsStore } from './interfaces';
+import { createSliceWithSaga } from 'redux-toolkit-with-saga';
+import * as actions from './actions';
 
 const initialState: CategoryPostsStore = {
   paging: {
     pageNumber: 1,
-    pageSize: 10,
+    pageSize: 10
   },
   isLoading: false,
-  list: [],
+  list: []
 };
 
 const categoryPostsStore = createSliceWithSaga({
-  name: "categoryPostsStore",
+  name: 'categoryPostsStore',
   initialState,
   extraReducers: (builder) => {
     builder
@@ -88,7 +88,7 @@ const categoryPostsStore = createSliceWithSaga({
         }
       );
   },
-  reducers: {},
+  reducers: {}
 });
 
 export default categoryPostsStore.reducer;

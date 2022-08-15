@@ -1,15 +1,15 @@
-import { CategoryWithCover } from "../../../../infrastructure/models/Category";
-import React, { FC, useCallback, useLayoutEffect, useState } from "react";
-import { View, Text } from "../../../../components/Themed";
-import { ImageBackground, StyleSheet, TouchableHighlight } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { CategoryStackScreenRoutes } from "../../../../infrastructure/router/interfaces";
-import { CategoryStackRoutes } from "../../../../infrastructure/router/enums";
-import { readImage } from "../../../../utils/readImage";
-import Loader from "../../../../components/Loader";
+import { CategoryWithCover } from '../../../../infrastructure/models/Category';
+import React, { FC, useCallback, useLayoutEffect, useState } from 'react';
+import { View, Text } from '../../../../components/Themed';
+import { ImageBackground, StyleSheet, TouchableHighlight } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { CategoryStackScreenRoutes } from '../../../../infrastructure/router/interfaces';
+import { CategoryStackRoutes } from '../../../../infrastructure/router/enums';
+import { readImage } from '../../../../utils/readImage';
+import Loader from '../../../../components/Loader';
 
 interface ComponentProps {
-  category: CategoryWithCover;
+  category: CategoryWithCover
 }
 
 const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
@@ -19,7 +19,7 @@ const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
   const onCardPress = useCallback(() => {
     navigation.navigate(CategoryStackRoutes.CategoryEntities, {
       categoryId: props.category.id,
-      categoryName: props.category.name,
+      categoryName: props.category.name
     });
   }, [navigation, props.category.id]);
 
@@ -31,7 +31,8 @@ const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
 
   return (
     <View style={styles.container}>
-      {categoryImage ? (
+      {(categoryImage != null)
+        ? (
         <TouchableHighlight style={styles.item} onPress={onCardPress}>
           <ImageBackground
             style={styles.image}
@@ -48,9 +49,10 @@ const CategoryCard: FC<ComponentProps> = (props: ComponentProps) => {
             </View>
           </ImageBackground>
         </TouchableHighlight>
-      ) : (
+          )
+        : (
         <Loader />
-      )}
+          )}
     </View>
   );
 };
@@ -60,8 +62,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     height: 240,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 10
   },
   item: {
@@ -69,21 +71,21 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 10,
     shadowRadius: 8,
-    shadowColor: "black",
+    shadowColor: 'black',
     shadowOpacity: 0.25,
     marginBottom: 20,
-    width: "80%",
+    width: '80%'
   },
   image: {
-    height: "100%",
-    width: "100%",
+    height: '100%',
+    width: '100%'
   },
   contentWrapper: {
     flex: 1,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   text: {
     fontSize: 25,

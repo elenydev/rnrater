@@ -1,24 +1,24 @@
-import { Text, View } from "../../../../../Themed";
+import { Text, View } from '../../../../../Themed';
 import React, {
   FC,
   memo,
   useCallback,
   useLayoutEffect,
   useMemo,
-  useState,
-} from "react";
-import { Image, StyleSheet, TouchableHighlight } from "react-native";
-import { CategoryStackScreenRoutes } from "../../../../../../infrastructure/router/interfaces";
-import { useNavigation } from "@react-navigation/native";
-import { CategoryStackRoutes } from "../../../../../../infrastructure/router/enums";
-import { useCategoryItems } from "../../../../../../components/CategoryPost/hooks/useCategoryItems";
-import { readImage } from "../../../../../../utils/readImage";
-import { useDispatch } from "react-redux";
-import { setCurrentCategoryPost } from "../../../../../../components/CategoryPost/domain/actions";
+  useState
+} from 'react';
+import { Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { CategoryStackScreenRoutes } from '../../../../../../infrastructure/router/interfaces';
+import { useNavigation } from '@react-navigation/native';
+import { CategoryStackRoutes } from '../../../../../../infrastructure/router/enums';
+import { useCategoryItems } from '../../../../../../components/CategoryPost/hooks/useCategoryItems';
+import { readImage } from '../../../../../../utils/readImage';
+import { useDispatch } from 'react-redux';
+import { setCurrentCategoryPost } from '../../../../../../components/CategoryPost/domain/actions';
 
 interface ComponentProps {
-  id: string;
-  categoryId: string;
+  id: string
+  categoryId: string
 }
 
 const CategoryEntity: FC<ComponentProps> = (props: ComponentProps) => {
@@ -35,7 +35,7 @@ const CategoryEntity: FC<ComponentProps> = (props: ComponentProps) => {
     dispatch(setCurrentCategoryPost(item));
     navigation.navigate(CategoryStackRoutes.CategoryPost, {
       categoryEntityId: item.id,
-      categoryEntityTitle: item.title,
+      categoryEntityTitle: item.title
     });
   }, [item]);
 
@@ -75,40 +75,40 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     height: 280,
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10
   },
   item: {
     flex: 1,
-    width: "85%",
+    width: '85%',
     elevation: 5,
     borderRadius: 10,
     shadowRadius: 8,
-    shadowColor: "black",
+    shadowColor: 'black',
     shadowOpacity: 0.25,
-    overflow: "hidden",
+    overflow: 'hidden'
   },
   image: {
-    height: "70%",
-    width: "100%",
+    height: '70%',
+    width: '100%'
   },
   typographyWrapper: {
-    height: "30%",
+    height: '30%',
     flex: 1,
     padding: 10,
-    paddingTop: 5,
+    paddingTop: 5
   },
   card: {
-    flexDirection: "column",
-    flex: 1,
+    flexDirection: 'column',
+    flex: 1
   },
   title: {
     fontSize: 20,
-    fontWeight: "700",
-    marginBottom: 2,
+    fontWeight: '700',
+    marginBottom: 2
   },
   description: {
-    fontSize: 12,
-  },
+    fontSize: 12
+  }
 });

@@ -1,13 +1,13 @@
-import { RootStackRoutes } from "infrastructure/router/enums";
+import { RootStackRoutes } from 'infrastructure/router/enums';
 import {
   GlobalHistory,
-  GlobalHistoryScreen,
-} from "../../infrastructure/router/interfaces";
+  GlobalHistoryScreen
+} from '../../infrastructure/router/interfaces';
 
 export default class HistoryManager {
   history: GlobalHistory;
 
-  constructor(navigationHistory: GlobalHistory) {
+  constructor (navigationHistory: GlobalHistory) {
     this.history = navigationHistory;
   }
 
@@ -25,7 +25,7 @@ export default class HistoryManager {
   ): void {
     this.navigate<Params>(rootScreen, {
       screen,
-      ...params,
+      ...params
     } as unknown as Params);
   }
 }

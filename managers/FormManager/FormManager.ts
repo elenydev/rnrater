@@ -1,27 +1,27 @@
-import { FormManagerInstance } from "./interfaces";
-import { FormInstanceName } from "./enums";
+import { FormManagerInstance } from './interfaces';
+import { FormInstanceName } from './enums';
 
 export default class FormManager {
   forms: FormManagerInstance[] = [];
 
-  public setFormInstance(formInstance: FormManagerInstance) {
-    this.forms = this.forms.find(
+  public setFormInstance (formInstance: FormManagerInstance) {
+    this.forms = (this.forms.find(
       ({ formName }) => formInstance.formName === formName
-    )
+    ) != null)
       ? [
           ...this.forms.filter(
             ({ formName }) => formInstance.formName === formName
           ),
-          formInstance,
+          formInstance
         ]
       : [...this.forms, formInstance];
   }
 
-  public clearCurrentForm(currentFormName: FormInstanceName): void {
+  public clearCurrentForm (currentFormName: FormInstanceName): void {
     const currentForm = this.forms.find(
       ({ formName }) => formName === currentFormName
     );
     currentForm?.formInstance.reset();
-    currentForm?.additionalActions && currentForm.additionalActions();
+    ((currentForm?.additionalActions) != null) && currentForm.additionalActions();
   }
 }

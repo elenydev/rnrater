@@ -1,41 +1,41 @@
 import {
   BaseRequestResponse,
-  Paging,
-} from "../../../infrastructure/api/interfaces";
-import { ForkEffect, put, select, takeLatest } from "redux-saga/effects";
-import * as actions from "./actions";
-import { getCategoryPostsPaging } from "./selectors";
-import { errorToast, successToast } from "../../../services/toast";
+  Paging
+} from '../../../infrastructure/api/interfaces';
+import { ForkEffect, put, select, takeLatest } from 'redux-saga/effects';
+import * as actions from './actions';
+import { getCategoryPostsPaging } from './selectors';
+import { errorToast, successToast } from '../../../services/toast';
 import {
   getCategoryPostImage,
   GetCategoryPostImageResult,
   getCategoryPostItem,
   getCategoryPostItemsList,
-  getCategoryPostsImages,
-} from "../../../api/categoryPost/get";
+  getCategoryPostsImages
+} from '../../../api/categoryPost/get';
 import {
   GetCategoryPostImageActionParams,
   GetCategoryPostParams,
   GetCategoryPostsImagesParams,
-  GetCategoryPostsListParams,
-} from "./interfaces";
-import { Action } from "redux-actions";
+  GetCategoryPostsListParams
+} from './interfaces';
+import { Action } from 'redux-actions';
 import {
   GetCategoryPostsListActionResult,
-  GetCategoryPostActionResult,
-} from "../../../api/categoryPost/get/interfaces";
-import { ResponseStatus } from "../../../infrastructure/api/enums";
+  GetCategoryPostActionResult
+} from '../../../api/categoryPost/get/interfaces';
+import { ResponseStatus } from '../../../infrastructure/api/enums';
 import {
   CategoryPost,
-  CategoryPostWithImage,
-} from "../../../infrastructure/models/CategoryPost";
-import { PostCategoryPostParams } from "api/categoryPost/post/interfaces";
-import { createCategoryPost } from "../../../api/categoryPost/post";
-import FormManager from "../../../managers/FormManager/FormManager";
-import { getFormManager } from "../../../managers/FormManager/selectors";
-import { FormInstanceName } from "../../../managers/FormManager/enums";
+  CategoryPostWithImage
+} from '../../../infrastructure/models/CategoryPost';
+import { PostCategoryPostParams } from 'api/categoryPost/post/interfaces';
+import { createCategoryPost } from '../../../api/categoryPost/post';
+import FormManager from '../../../managers/FormManager/FormManager';
+import { getFormManager } from '../../../managers/FormManager/selectors';
+import { FormInstanceName } from '../../../managers/FormManager/enums';
 
-function* getCategoryPostsListCall(action: Action<GetCategoryPostsListParams>) {
+function * getCategoryPostsListCall (action: Action<GetCategoryPostsListParams>) {
   const paging: Paging = yield select(getCategoryPostsPaging);
   const { categoryId, controller } = action.payload;
 
@@ -63,8 +63,8 @@ function* getCategoryPostsListCall(action: Action<GetCategoryPostsListParams>) {
   }
 }
 
-function* getCategoryPostCall(action: Action<GetCategoryPostParams>) {
-  const {categoryPostId, controller} = action.payload;
+function * getCategoryPostCall (action: Action<GetCategoryPostParams>) {
+  const { categoryPostId, controller } = action.payload;
   try {
     const response: GetCategoryPostActionResult = yield getCategoryPostItem({
       categoryPostId,
@@ -80,8 +80,8 @@ function* getCategoryPostCall(action: Action<GetCategoryPostParams>) {
   }
 }
 
-function* getCategoryPostImageCall(action: Action<GetCategoryPostImageActionParams>) {
-  const {categoryPost, controller} = action.payload;
+function * getCategoryPostImageCall (action: Action<GetCategoryPostImageActionParams>) {
+  const { categoryPost, controller } = action.payload;
   try {
     const response: GetCategoryPostImageResult = yield getCategoryPostImage({
       categoryPostId: categoryPost.id,
@@ -92,7 +92,7 @@ function* getCategoryPostImageCall(action: Action<GetCategoryPostImageActionPara
       yield put(
         actions.getCategoryPostImageSuccess({
           ...categoryPost,
-          image: response.result!,
+          image: response.result!
         })
       );
     }
@@ -102,7 +102,7 @@ function* getCategoryPostImageCall(action: Action<GetCategoryPostImageActionPara
   }
 }
 
-function* getCategoryPostsImagesCall(
+function * getCategoryPostsImagesCall (
   action: Action<GetCategoryPostsImagesParams>
 ) {
   const { categoryPosts, controller } = action.payload;
@@ -117,7 +117,7 @@ function* getCategoryPostsImagesCall(
       const categoryPostsWithImages: CategoryPostWithImage[] =
         categoryPosts.map((el, index) => ({
           ...el,
-          image: response[index].result as Blob,
+          image: response[index].result as Blob
         }));
 
       yield put(actions.getCategoryPostsImagesSuccess(categoryPostsWithImages));
@@ -125,14 +125,14 @@ function* getCategoryPostsImagesCall(
       return;
     }
 
-    errorToast("Failed to load images for category posts");
+    errorToast('Failed to load images for category posts');
   } catch (error) {
     yield put(actions.getCategoryPostsImagesFailure());
     errorToast(error.message);
   }
 }
 
-function* createCategoryPostCall(action: Action<PostCategoryPostParams>) {
+function * createCategoryPostCall (action: Action<PostCategoryPostParams>) {
   try {
     const response: BaseRequestResponse = yield createCategoryPost(
       action.payload
@@ -151,10 +151,10 @@ function* createCategoryPostCall(action: Action<PostCategoryPostParams>) {
   }
 }
 
-export default function* categoryPostsSagas(): Generator<
-  ForkEffect<never>,
-  void,
-  unknown
+export default function * categoryPostsSagas (): Generator<
+ForkEffect<never>,
+void,
+unknown
 > {
   yield takeLatest(actions.getCategoryPostsTrigger, getCategoryPostsListCall);
   yield takeLatest(

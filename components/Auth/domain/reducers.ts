@@ -1,15 +1,15 @@
-import { UserStore } from "./interfaces";
-import { createSliceWithSaga } from "redux-toolkit-with-saga";
-import * as actions from "./actions";
-import { User } from "infrastructure/models/User";
+import { UserStore } from './interfaces';
+import { createSliceWithSaga } from 'redux-toolkit-with-saga';
+import * as actions from './actions';
+import { User } from 'infrastructure/models/User';
 
 const initialState: UserStore = {
   user: undefined,
-  isLoading: false,
+  isLoading: false
 };
 
 const userStore = createSliceWithSaga({
-  name: "userStore",
+  name: 'userStore',
   initialState,
   extraReducers: (builder) => {
     builder
@@ -31,7 +31,7 @@ const userStore = createSliceWithSaga({
       .addCase(actions.getUserAvatarSuccess, (state: UserStore, action) => {
         state.user = {
           ...(state.user as User),
-          avatar: action.payload as unknown as Blob,
+          avatar: action.payload as unknown as Blob
         };
         state.isLoading = false;
       })
@@ -50,7 +50,7 @@ const userStore = createSliceWithSaga({
         state.isLoading = false;
       });
   },
-  reducers: {},
+  reducers: {}
 });
 
 export default userStore.reducer;

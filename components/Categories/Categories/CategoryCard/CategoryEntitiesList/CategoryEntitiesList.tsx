@@ -1,22 +1,21 @@
-import { Text, View } from "../../../../Themed";
-import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
-import { useRoute } from "@react-navigation/native";
-import { CategoryStackRoutesProps } from "../../../../../infrastructure/router/interfaces";
-import { CategoryStackRoutes } from "../../../../../infrastructure/router/enums";
-import { FlatList, StyleSheet } from "react-native";
-import CategoryEntity from "./CategoryEntity/CategoryEntity";
-import { useNavigation } from "@react-navigation/native";
-import { CategoryStackScreenRoutes } from "../../../../../infrastructure/router/interfaces";
-import { Button } from "react-native-elements";
-import { useCategoryItems } from "../../../../../components/CategoryPost/hooks/useCategoryItems";
-import Loader from "../../../../../components/Loader";
+import { Text, View } from '../../../../Themed';
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { CategoryStackRoutesProps, CategoryStackScreenRoutes } from '../../../../../infrastructure/router/interfaces';
+import { CategoryStackRoutes } from '../../../../../infrastructure/router/enums';
+import { FlatList, StyleSheet } from 'react-native';
+import CategoryEntity from './CategoryEntity/CategoryEntity';
+
+import { Button } from 'react-native-elements';
+import { useCategoryItems } from '../../../../../components/CategoryPost/hooks/useCategoryItems';
+import Loader from '../../../../../components/Loader';
 
 const CategoryEntitiesList = () => {
   const { params } =
     useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryEntities>>();
   const navigation = useNavigation<CategoryStackScreenRoutes>();
   const { isLoading, loadCategoryItems, list } = useCategoryItems({
-    categoryId: params.categoryId,
+    categoryId: params.categoryId
   });
   const controller = useRef<AbortController | undefined>();
 
@@ -37,21 +36,23 @@ const CategoryEntitiesList = () => {
 
   const goToAddCategoryPost = useCallback(() => {
     navigation.navigate(CategoryStackRoutes.CreateCategoryPost, {
-      categoryId: params.categoryId,
+      categoryId: params.categoryId
     });
   }, []);
 
   const refreshCategoryItems = useCallback(() => {
-    if (controller.current) {
+    if (controller.current != null) {
       loadCategoryItems(controller.current);
     }
   }, []);
 
   return (
     <View style={styles.entitiesWrapper}>
-      {isLoading ? (
+      {isLoading
+        ? (
         <Loader />
-      ) : (
+          )
+        : (
         <FlatList
           data={list}
           keyExtractor={(item) => item.id}
@@ -68,12 +69,12 @@ const CategoryEntitiesList = () => {
           }
           contentContainerStyle={{
             flexGrow: 1,
-            display: "flex",
+            display: 'flex'
           }}
           ListFooterComponent={
             <View style={styles.buttonBox}>
               <Button
-                title={"Add Category Post"}
+                title={'Add Category Post'}
                 style={styles.button}
                 onPress={goToAddCategoryPost}
               />
@@ -82,33 +83,33 @@ const CategoryEntitiesList = () => {
           refreshing={isLoading}
           onRefresh={refreshCategoryItems}
         />
-      )}
+          )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   entitiesWrapper: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff'
   },
   emptyList: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20
   },
   buttonBox: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    paddingVertical: 20,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingVertical: 20
   },
   button: {
-    width: "30%",
-  },
+    width: '30%'
+  }
 });
 
 export default CategoryEntitiesList;

@@ -8,7 +8,7 @@
     "eject": "expo eject",
     "test": "jest --watchAll",
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001",
-    "lint": "eslint ./ --fix --ext .js,.jsx ."
+    "lint": "eslint ./** --fix --ext .js,.jsx ."
   },
   "jest": {
     "preset": "jest-expo"

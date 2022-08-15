@@ -1,4 +1,4 @@
-import { PagingInfo } from "infrastructure/api/interfaces";
+import { PagingInfo } from 'infrastructure/api/interfaces';
 
 export const getInifiteScrollCallback = (
   cb: () => void,

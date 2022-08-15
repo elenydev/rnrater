@@ -1,30 +1,30 @@
-import { Button, StyleSheet, TextInput } from "react-native";
+import { Button, StyleSheet, TextInput } from 'react-native';
 
-import React, { useCallback, useEffect } from "react";
-import { Controller } from "react-hook-form";
-import { Text, View } from "../../Themed";
+import React, { useCallback, useEffect } from 'react';
+import { Controller } from 'react-hook-form';
+import { Text, View } from '../../Themed';
 import {
   AuthStackScreenRoutes,
-  RootStackScreenRoutes,
-} from "../../../infrastructure/router/interfaces";
-import { AuthStackRoutes } from "../../../infrastructure/router/enums";
-import { useNavigation } from "@react-navigation/native";
-import { useCustomForm } from "../../../hooks/useCustomForm";
-import { defaultValues, validationRules } from "./formConfig";
-import { AuthenticateUserParams } from "../../../api/auth/post/interfaces";
-import { useDispatch, useSelector } from "react-redux";
-import { getFormManager } from "../../../managers/FormManager/selectors";
-import { FormInstanceName } from "../../../managers/FormManager/enums";
-import { authenticateUserTrigger } from "../domain/actions";
+  RootStackScreenRoutes
+} from '../../../infrastructure/router/interfaces';
+import { AuthStackRoutes } from '../../../infrastructure/router/enums';
+import { useNavigation } from '@react-navigation/native';
+import { useCustomForm } from '../../../hooks/useCustomForm';
+import { defaultValues, validationRules } from './formConfig';
+import { AuthenticateUserParams } from '../../../api/auth/post/interfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFormManager } from '../../../managers/FormManager/selectors';
+import { FormInstanceName } from '../../../managers/FormManager/enums';
+import { authenticateUserTrigger } from '../domain/actions';
 
 const SignIn = () => {
   const navigation = useNavigation<
-    RootStackScreenRoutes | AuthStackScreenRoutes
+  RootStackScreenRoutes | AuthStackScreenRoutes
   >();
   const dispatch = useDispatch();
   const formManager = useSelector(getFormManager);
   const { formInstance, formError } = useCustomForm({
-    defaultValues,
+    defaultValues
   });
   const { control, handleSubmit } = formInstance;
 
@@ -39,7 +39,7 @@ const SignIn = () => {
   useEffect(() => {
     formManager.setFormInstance({
       formName: FormInstanceName.AuthorizeUser,
-      formInstance,
+      formInstance
     });
   }, []);
 
@@ -94,40 +94,40 @@ const SignIn = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   formContainer: {
-    width: "60%",
-    alignItems: "center",
+    width: '60%',
+    alignItems: 'center',
     padding: 10,
     paddingHorizontal: 15,
-    shadowColor: "#000",
-    elevation: 2,
+    shadowColor: '#000',
+    elevation: 2
   },
   buttonsContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginTop: 30,
-    marginBottom: 15,
+    marginBottom: 15
   },
   input: {
-    width: "90%",
+    width: '90%',
     fontSize: 16,
     padding: 5,
     marginBottom: 8,
     borderBottomWidth: 1,
-    borderBottomColor: "#333",
+    borderBottomColor: '#333'
   },
   validationContainer: {
     padding: 10,
-    textAlign: "center",
+    textAlign: 'center'
   },
   validationText: {
-    color: "#ff0000",
-  },
+    color: '#ff0000'
+  }
 });
 
 export default SignIn;

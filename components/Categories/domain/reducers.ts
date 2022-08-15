@@ -1,18 +1,18 @@
-import { CategoriesStore } from "./interfaces";
-import { createSliceWithSaga } from "redux-toolkit-with-saga";
-import * as actions from "./actions";
+import { CategoriesStore } from './interfaces';
+import { createSliceWithSaga } from 'redux-toolkit-with-saga';
+import * as actions from './actions';
 
 const initialState: CategoriesStore = {
   paging: {
     pageNumber: 1,
-    pageSize: 10,
+    pageSize: 10
   },
   isLoading: true,
-  list: [],
+  list: []
 };
 
 const categoriesStore = createSliceWithSaga({
-  name: "categoriesStore",
+  name: 'categoriesStore',
   initialState,
   extraReducers: (builder) => {
     builder
@@ -60,7 +60,7 @@ const categoriesStore = createSliceWithSaga({
         }
       );
   },
-  reducers: {},
+  reducers: {}
 });
 
 export default categoriesStore.reducer;

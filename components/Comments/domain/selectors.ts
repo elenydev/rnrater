@@ -1,5 +1,5 @@
-import { createSelector } from "reselect";
-import { Store } from "../../../store/interface";
+import { createSelector } from 'reselect';
+import { Store } from '../../../store/interface';
 
 export const getIsLoading = createSelector(
   [(state: Store) => state.commentStore.isLoading],

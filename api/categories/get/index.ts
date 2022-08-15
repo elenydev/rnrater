@@ -1,11 +1,11 @@
-import { getItem, getList } from "../../../factories/Get";
+import { getItem, getList } from '../../../factories/Get';
 import {
   GetItemActionResult,
-  GetListActionResult,
-} from "../../../factories/interfaces/get";
-import { Paging } from "../../../infrastructure/api/interfaces";
-import { Category } from "../../../infrastructure/models/Category";
-import { API_URL } from "../../../utils/api";
+  GetListActionResult
+} from '../../../factories/interfaces/get';
+import { Paging } from '../../../infrastructure/api/interfaces';
+import { Category } from '../../../infrastructure/models/Category';
+import { API_URL } from '../../../utils/api';
 
 export type GetCategoriesListActionResult = GetListActionResult<Category>;
 
@@ -32,7 +32,7 @@ export const getCategoriesCoverImages = async (
   categories: Category[]
 ): Promise<GetCategoryCoverImageResult[]> => {
   const covers = await Promise.all([
-    ...categories.map((category) => getCategoryCoverImage(category.id)),
+    ...categories.map(async (category) => await getCategoryCoverImage(category.id))
   ]);
 
   return covers;

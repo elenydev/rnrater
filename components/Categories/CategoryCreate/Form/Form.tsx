@@ -1,24 +1,24 @@
-import { getFormManager } from "../../../../managers/FormManager/selectors";
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { FormInstanceName } from "../../../../managers/FormManager/enums";
-import { useCustomForm } from "../../../../hooks/useCustomForm";
-import { defaultValues, validationRules } from "./formConfig";
-import { Controller } from "react-hook-form";
-import { StyleSheet, Image, TextInput, Button } from "react-native";
-import { View, Text } from "../../../../components/Themed";
-import * as ImagePickerExpo from "expo-image-picker";
-import { FontAwesome } from "@expo/vector-icons";
-import { serializeImage } from "../../../../utils/serializeImage";
-import { createCategoryTrigger } from "../../../../components/Categories/domain/actions";
-import { CreateCategoryParams } from "../../../../api/categories/post/interfaces";
+import { getFormManager } from '../../../../managers/FormManager/selectors';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FormInstanceName } from '../../../../managers/FormManager/enums';
+import { useCustomForm } from '../../../../hooks/useCustomForm';
+import { defaultValues, validationRules } from './formConfig';
+import { Controller } from 'react-hook-form';
+import { StyleSheet, Image, TextInput, Button } from 'react-native';
+import { View, Text } from '../../../../components/Themed';
+import * as ImagePickerExpo from 'expo-image-picker';
+import { FontAwesome } from '@expo/vector-icons';
+import { serializeImage } from '../../../../utils/serializeImage';
+import { createCategoryTrigger } from '../../../../components/Categories/domain/actions';
+import { CreateCategoryParams } from '../../../../api/categories/post/interfaces';
 
 const Form = () => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState<string | undefined>();
   const formManager = useSelector(getFormManager);
   const { formInstance, formError } = useCustomForm({
-    defaultValues,
+    defaultValues
   });
   const { setValue, clearErrors, control, handleSubmit } = formInstance;
 
@@ -31,14 +31,14 @@ const Form = () => {
 
     if (permission.granted) {
       const imagePickResult = await ImagePickerExpo.launchImageLibraryAsync({
-        mediaTypes: ImagePickerExpo.MediaTypeOptions.Images,
+        mediaTypes: ImagePickerExpo.MediaTypeOptions.Images
       });
 
       if (imagePickResult) {
         const serializedImage = serializeImage(imagePickResult);
-        if (serializedImage) {
-          setValue("categoryImage", serializedImage);
-          clearErrors("categoryImage");
+        if (serializedImage != null) {
+          setValue('categoryImage', serializedImage);
+          clearErrors('categoryImage');
           setImagePreview(serializedImage.uri);
         }
       }
@@ -49,7 +49,7 @@ const Form = () => {
     formManager.setFormInstance({
       formName: FormInstanceName.CreateCategory,
       formInstance,
-      additionalActions: () => setImagePreview(undefined),
+      additionalActions: () => setImagePreview(undefined)
     });
   }, []);
 
@@ -114,41 +114,41 @@ export default Form;
 const styles = StyleSheet.create({
   formContainer: {
     padding: 20,
-    alignItems: "center",
-    width: "80%",
+    alignItems: 'center',
+    width: '80%',
     paddingHorizontal: 15,
-    shadowColor: "#000",
-    elevation: 2,
+    shadowColor: '#000',
+    elevation: 2
   },
   input: {
-    width: "90%",
+    width: '90%',
     fontSize: 16,
     padding: 5,
     marginBottom: 8,
     borderBottomWidth: 1,
-    borderBottomColor: "#333",
-    marginVertical: 30,
+    borderBottomColor: '#333',
+    marginVertical: 30
   },
   validationContainer: {
     padding: 10,
-    textAlign: "center",
+    textAlign: 'center'
   },
   validationText: {
-    color: "#ff0000",
-    marginTop: 14,
+    color: '#ff0000',
+    marginTop: 14
   },
   categoryImagePicker: {
     marginRight: 0,
-    justifyContent: "center",
+    justifyContent: 'center'
   },
   imageBox: {
-    marginVertical: 30,
+    marginVertical: 30
   },
   buttonsContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginTop: 30,
-    marginBottom: 15,
-  },
+    marginBottom: 15
+  }
 });

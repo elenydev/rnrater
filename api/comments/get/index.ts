@@ -1,8 +1,8 @@
-import { API_URL } from "../../../utils/api";
-import { getList } from "../../../factories/Get";
-import { Paging } from "../../../infrastructure/api/interfaces";
-import { Comment } from "../../../infrastructure/models/Comment";
-import { GetListActionResult } from "../../../factories/interfaces/get";
+import { API_URL } from '../../../utils/api';
+import { getList } from '../../../factories/Get';
+import { Paging } from '../../../infrastructure/api/interfaces';
+import { Comment } from '../../../infrastructure/models/Comment';
+import { GetListActionResult } from '../../../factories/interfaces/get';
 
 export type GetCommentsListActionResult = GetListActionResult<Comment>;
 

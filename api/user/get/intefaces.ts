@@ -1,3 +1,3 @@
 export interface GetUserAvatarParams {
-  userId: string;
+  userId: string
 }

@@ -1,15 +1,15 @@
-import { FormsStore } from "./interfaces";
-import FormManager from "./FormManager";
-import { createSliceWithSaga } from "redux-toolkit-with-saga";
+import { FormsStore } from './interfaces';
+import FormManager from './FormManager';
+import { createSliceWithSaga } from 'redux-toolkit-with-saga';
 
 const initialState: FormsStore = {
-  manager: new FormManager(),
+  manager: new FormManager()
 };
 
 const formManagerStore = createSliceWithSaga({
-  name: "formsStore",
+  name: 'formsStore',
   initialState,
-  reducers: {},
+  reducers: {}
 });
 
 export default formManagerStore.reducer;

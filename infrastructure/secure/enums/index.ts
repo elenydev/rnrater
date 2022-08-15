@@ -1,5 +1,5 @@
 export enum SecureKeys {
-  Token = "Token",
-  UserId = "UserId",
-  Email = "Email",
+  Token = 'Token',
+  UserId = 'UserId',
+  Email = 'Email',
 }

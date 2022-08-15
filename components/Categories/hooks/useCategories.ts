@@ -1,7 +1,7 @@
-import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getCategoriesListTrigger } from "../domain/actions";
-import { getCategorieslist, getIsLoadingCategories } from "../domain/selectors";
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategoriesListTrigger } from '../domain/actions';
+import { getCategorieslist, getIsLoadingCategories } from '../domain/selectors';
 
 export const useCategories = () => {
   const isLoading = useSelector(getIsLoadingCategories);

@@ -1,8 +1,8 @@
-import { getErrorResponse } from "../../utils/getErrorResponse";
-import { AuthKeys, ResponseStatus } from "../../infrastructure/api/enums";
-import { BaseRequestResponse } from "../../infrastructure/api/interfaces";
-import { getAuthValue } from "../../services/auth";
-import { PostItemActionResult } from "../interfaces/post";
+import { getErrorResponse } from '../../utils/getErrorResponse';
+import { AuthKeys, ResponseStatus } from '../../infrastructure/api/enums';
+import { BaseRequestResponse } from '../../infrastructure/api/interfaces';
+import { getAuthValue } from '../../services/auth';
+import { PostItemActionResult } from '../interfaces/post';
 
 export const post = async <ReturnItemType extends {}>(
   path: string,
@@ -22,50 +22,50 @@ export const post = async <ReturnItemType extends {}>(
     );
 
     const authorizationHeader = requireAuth && {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`
     };
 
     const contentTypeHeader = !includeFile && {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json'
     };
 
     const request = await fetch(
-      `${path}${params.length ? "?" + params.join("&") : ""}`,
+      `${path}${(params.length > 0) ? '?' + params.join('&') : ''}`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
           ...contentTypeHeader,
-          ...authorizationHeader,
+          ...authorizationHeader
         },
-        body: (includeFile ? body : JSON.stringify(body)) as BodyInit_,
+        body: (includeFile ? body : JSON.stringify(body)) as BodyInit_
       }
     );
     const response = await request.json();
-    return databaseResponse<ReturnItemType>(request.ok, response);
+    return await databaseResponse<ReturnItemType>(request.ok, response);
   } catch (error) {
-    return Promise.reject(getErrorResponse(error.message));
+    return await Promise.reject(getErrorResponse(error.message));
   }
 };
 
-export const databaseResponse = <ReturnItemType>(
+export const databaseResponse = async <ReturnItemType>(
   isSuccesfullResponse: boolean,
   response: PostItemActionResult<ReturnItemType> | BaseRequestResponse
 ): Promise<PostItemActionResult<ReturnItemType> | BaseRequestResponse> => {
   if (isSuccesfullResponse) {
     if (isResultTypeIncluded(response)) {
-      return Promise.resolve({
+      return await Promise.resolve({
         responseStatus: ResponseStatus.Success,
         message: response.message,
-        result: response.result,
+        result: response.result
       });
     }
 
-    return Promise.resolve({
+    return await Promise.resolve({
       responseStatus: ResponseStatus.Success,
-      message: response.message,
+      message: response.message
     });
   }
-  return Promise.reject(getErrorResponse(response.message));
+  return await Promise.reject(getErrorResponse(response.message));
 };
 
 const isResultTypeIncluded = <ReturnItemType>(
