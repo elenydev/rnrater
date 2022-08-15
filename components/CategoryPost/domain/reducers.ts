@@ -40,7 +40,7 @@ const categoryPostsStore = createSliceWithSaga({
         actions.getCategoryPostsImagesSuccess,
         (state: CategoryPostsStore, action) => {
           state.isLoading = false;
-          state.list = action.payload;
+          state.list = [...new Set([...action.payload])];
         }
       )
 

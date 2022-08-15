@@ -28,7 +28,9 @@ const commentStore = createSliceWithSaga({
         (state: CommentStore, action) => {
           state.isLoading = false;
           state.paging = action.payload.paging!;
-          state.list = [...state.list, ...action.payload.results!];
+          state.list = [
+            ...new Set([...state.list, ...action.payload.results!])
+          ];
         }
       )
       .addCase(actions.updatePaging, (state: CommentStore, action) => {
@@ -49,7 +51,7 @@ const commentStore = createSliceWithSaga({
       })
 
       .addCase(actions.addNewComment, (state: CommentStore, action) => {
-        state.list = [action.payload, ...state.list];
+        state.list = [...new Set([action.payload, ...state.list])];
         state.paging.totalCount = state.paging.totalCount + 1;
         state.paging.pageNumber =
           state.paging.pageNumber * state.paging.pageSize <

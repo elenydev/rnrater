@@ -48,14 +48,17 @@ const categoriesStore = createSliceWithSaga({
         }
       )
 
-      .addCase(actions.getCategoriesCoverImagesTrigger, (state: CategoriesStore) => {
-        state.isLoading = true;
-      })
+      .addCase(
+        actions.getCategoriesCoverImagesTrigger,
+        (state: CategoriesStore) => {
+          state.isLoading = true;
+        }
+      )
 
       .addCase(
         actions.getCategoriesCoverImagesSuccess,
         (state: CategoriesStore, action) => {
-          state.list = action.payload;
+          state.list = [...new Set([...action.payload])];
           state.isLoading = false;
         }
       );
