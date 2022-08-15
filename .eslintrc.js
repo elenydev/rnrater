@@ -16,6 +16,7 @@ module.exports = {
     quotes: ['error', 'single'],
     'comma-dangle': ['error', 'never'],
     'no-unused-vars': 'off',
-    '@typescript-eslint/semi': 'off'
+    '@typescript-eslint/semi': 'off',
+    'no-console': 'on'
   }
 };

@@ -16,18 +16,18 @@ interface ComponentProps {
   footer: JSX.Element
 }
 
-const CommentsList = ({ footer }: ComponentProps) => {
+const CommentsList = ({ footer }: ComponentProps): JSX.Element => {
   const { params } =
     useRoute<CategoryStackRoutesProps<CategoryStackRoutes.CategoryPost>>();
   const { isLoading, list, loadComments, updatePaging, paging } = useComments(
     params.categoryEntityId
   );
-  const controller = useRef<AbortController | undefined>();
+  const controller = useRef<AbortController>();
   const dispatch = useDispatch();
 
   useEffect(() => {
     controller.current = new AbortController();
-    if (controller.current) {
+    if (controller.current !== null) {
       loadComments(controller.current);
     }
 
@@ -50,8 +50,10 @@ const CommentsList = ({ footer }: ComponentProps) => {
 
   const onReachEndedCallback = useCallback(() => {
     (controller.current != null) &&
-      getInifiteScrollCallback(() => updatePaging(controller.current!), paging);
+      getInifiteScrollCallback(() => updatePaging(controller.current), paging);
   }, [paging]);
+
+  console.log(list);
 
   return (
     <View style={styles.listStyle}>

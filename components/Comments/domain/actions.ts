@@ -7,15 +7,15 @@ import { Paging } from '../../../infrastructure/api/interfaces';
 import { Comment } from '../../../infrastructure/models/Comment';
 
 export enum CommentStoreActions {
-  GetCommentsListTrigger = 'commentsStore/getCommentsListTrigger',
-  GetCommentsListSuccess = 'commentsStore/getCommentsListSuccess',
-  GetCommentsListFailure = 'commentsStore/getCommentsListFailure',
-  ClearCommentsList = 'commentsStore/clearCommentsList',
+  GetCommentsListTrigger = 'commentStore/getCommentsListTrigger',
+  GetCommentsListSuccess = 'commentStore/getCommentsListSuccess',
+  GetCommentsListFailure = 'commentStore/getCommentsListFailure',
+  ClearCommentsList = 'commentStore/clearCommentsList',
   PostCommentTrigger = 'commentStore/postCommentTrigger',
   PostCommentFailure = 'commentStore/postCommentFailure',
   PostCommentSuccess = 'commentStore/postCommentSuccess',
-  UpdatePaging = 'commentsStore/updatePaging',
-  AddNewComment = 'commentsStore/addNewComment'
+  UpdatePaging = 'commentStore/updatePaging',
+  AddNewComment = 'commentStore/addNewComment'
 }
 
 export const getCommentsListTrigger =
